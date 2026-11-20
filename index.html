@@ -439,7 +439,7 @@ footer a{color:var(--purple);font-weight:600}
 <script>
 (function(){
   // Set this to your deployed Worker address (see the payments README), for example https://sparkiq-pay.yourname.workers.dev
-  var PAY_API="WORKER_URL";
+  var PAY_API="https://sparkiq-pay.maheshrudra-m.workers.dev";
   var pm=document.getElementById("pm"), box=document.getElementById("pmbox");
   function esc(t){ return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
   function show(html){ box.innerHTML=html; pm.classList.add("show"); var c=document.getElementById("pmclose"); if(c) c.onclick=function(){ pm.classList.remove("show"); }; }
