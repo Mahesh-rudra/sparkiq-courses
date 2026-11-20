@@ -1,1 +1,43 @@
-window.__E=window.__E||{};window.__E["3-2"]="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";
+(window.__L = window.__L || {})["3-2"] = {
+  kind: "explainer",
+  num: "3.2",
+  level: "Level 1 · Basics",
+  title: "digitalWrite: HIGH and LOW",
+  lead: "Switch a pin on and off from code, and see what goes wrong if you skip pinMode. About 4 minutes.",
+  parts: "You need: nothing to wire. Pin 13 and an LED, as in Lesson 3.3, are shown on screen.",
+
+  sections: [
+    {
+      title: "Setting a pin",
+      html:
+        "<p><b>digitalWrite(pin, value)</b> sets an output pin to one of two levels.</p>" +
+        "<ul><li><b>HIGH</b> is about 5 volts. It is the same as the number 1.</li>" +
+        "<li><b>LOW</b> is 0 volts. It is the same as the number 0.</li></ul>" +
+        "<p>The pin keeps that level until you change it, so one HIGH keeps the LED on with no further code.</p>"
+    },
+    {
+      title: "Try it",
+      html: "<p>Press HIGH and LOW. Then tick the box to leave out pinMode and see what happens.</p>",
+      widget: "dwrite"
+    },
+    {
+      title: "Handy names",
+      html:
+        "<p>On the Uno, <b>LED_BUILTIN</b> means pin 13, the pin with the built-in LED. You can write <b>digitalWrite(LED_BUILTIN, HIGH)</b>, which also keeps working on boards where the LED is on a different pin.</p>" +
+        "<p>Order matters. A pin must be set to OUTPUT with pinMode before digitalWrite does what you expect.</p>"
+    }
+  ],
+
+  quiz: [
+    { q: "What voltage does digitalWrite(13, HIGH) put on the pin of an Uno?",
+      a: ["0 V", "About 3.3 V", "About 5 V", "About 12 V"],
+      c: 2, e: "The Uno works at 5 volts, so HIGH is about 5 V." },
+    { q: "What does digitalWrite(13, 0) do?",
+      a: ["The same as LOW", "The same as HIGH", "Nothing", "An error"],
+      c: 0, e: "LOW is the number 0, so both set the pin to 0 volts." },
+    { q: "You call digitalWrite(13, HIGH) without pinMode. What happens?",
+      a: ["The LED lights fully", "The LED glows very faintly", "The board resets", "Nothing and the pin is damaged"],
+      c: 1, e: "The pin is still an input, so HIGH only enables its weak internal pull-up." }
+  ],
+  next: "Next: delay(), making the Uno wait."
+};

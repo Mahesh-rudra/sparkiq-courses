@@ -1,1 +1,87 @@
-window.__E=window.__E||{};window.__E["3-4"]="ARHPwU7FG7tSlaLno/Bm4vHjXi4M2JN40G4pItaCIWJO/QPFw7FE+byg5SUIyETN6NUOT78xyg4RlhLee/DtlZnlkTm3V+l5ZliLpfppsChen9ipTafTc3N8Kj0fLRWCjJncfxuNRQo41i+8Zy7tEy+nZvSp1XUVkpiGS79McsEHuIdOP76gZRjYI1CN9NNS3jZBUTvkLD9umlt74mViXAVsU2QeDnGe358Si7ieTtIzH7tlhtpJUDh2SolmA5DF+1hwNO2OphJWCoIpBWZqQuloODF7DuKteWCrs9bRC6BhZjgieHXryq1a3/mdw77ysOKf+meGAdb2YEQ0h0RdxfQgwPTo/FQJ8Ya3NGvtk7TSxY8HNgtSLJTGSXwLgn0QAQ0ru8FgIXtV5VIFPgr4d7/D1E84ZFVF/htUEhaUZTLzmo3T46zUQk/y2itTVcRJVdTecZDN3SkzKSR5H85SgoRrRb9kWTVsZO401M9rxjpBu/MADRDiW7wcsIytvwXkZ9KQ1lsyAuUh/2cIZYrbWRvCPdsmgUV4kQ8op7QV0kQmzT071s0NEeB6UbhpvvyUjb7K2Q5bugQAbc9vxp3U8yyETQgTYvZS1NMoNWq9BQjwhPss3v36WUTJKu5KcGT+Yegz1kZ0JCGDHaC0v8NYTkhlH/mfDETffSKma9053nkJRJ0homyAxwZTQYzq5bAy8eIYI0Q4kK9GMvhOP5Kdhlk1X23QTwEjlXTm8PEIMGpuFglBXwr0VHW48cD/Bhgh6lTUZK56h61h3rX+U2ahWUpkKK8Hh0wBWwmXNek6lon1VOS9OURU6pXdM6q+Ep8b9KBYJhrzizEcaKszISPHTC90FkBQBQST2p+CylNb6WAwhczn1MYjxU2U1pKIoLUBEcW50I9ccirGNfXOH+rRgz27S1wMb53hMGN2wcYukRHnfNIKZ8PFsg7lkSedNVNczHsGqDQ3/XJzTNfCRaCtsh8V6jfrC42mOycRaZHbnVriYCX5Mozp4fKJ24SqM57oU33kkbnaAep7WxEBM9wNSuY8K/wWVNXSqfghj2Ihx78sMqqFwD+hF2pwiLh6mTx2i7IQJHuNFZwd3Cs+GpmiUv546vlRNOu2/JMB9by4VU8z05+uGdJnod9zbBLZS/VEKHHyae6+P0VZNmsTPHfFd3hlvyo+Flr06WruBwF9cBX622aeMbp7QqHr7Q1OAt6BMPLlL31aArVLKwtmZ16qd1+TA2oB2RljVWgzbRCfP6w/vrurO4XSNxxFTjTgiD0cMBlXs7BxIS4QukRHYe+l9wkGD70LqQWJkLa8fIiKUONWry48AvzbAHIScp33AZN+AVKpu7L+Alo0jujJD/y8+zOvkFpScNm5JL58anR9nDW6hZKYNLMqqlJDmn1XpHBaS0/UzTkmuViqrXw7dolnudigYyycUhIDB/pTSQ3XD0Xkr05vnhuD3jjlAPamJ2FvX95MkpNXOVT2rmZeaXa3DA5gHaQPUnBzZ0Pr63qoh9KspkCNfF33/TsJMfsw0BAmrsm5mLwR4fZIYAqH0QaTPP00+1s9XzFGOOsGtfU/D+Txg7bFNG0IvkF3OCZfd3a/DmBv2PhaFRXNyXQxSMqSGvMBfNxe3Nr+dp7IQmrh0jJuvpTtbWPTsVw7MwEWSFRw3NvIUON88elwr7y4IiZoY1LWG9CjWuwl/PzZjyLyB1FjIi2p+3lEJH2T/O6vj+ZlAawJ1PsR8DrWfhCaOTLi80wjVwjKC9SKFG9NRXZlRjy53fnQm2xIyT/V1Ql7Oyu8yN/9MAzYsE72N638KiIkguFof5TerVHZY5U+lIgp55ZU/cNxQiczFWa0D7GAFbc/6QdYM6Ute/PA92xjOHtPPhlt9fGfzHhlWG1edoqwzPJzrEMB4KJuVmpbm8m8PPAEoOULR/hA/Ii6OIlPgChcsXVVmL/0YGPD3BW1hbTowQh5sNYc3NJAYDOSQgx4vZAiuNSvtJIUQyPS1eHbUAO6GmG78OKJUYm4ZluLRZ6M0OsiFDbzGK+pWzLPvOYCAysUDFw03U419P69CZmW0ZKXLCBsZxQGu/BF7ZoIXvnkAJMDXYPcyMg5iPtVvoevSsmQFUXVRUnHE2F9qwedbmRYu7vLEo95gQESdfTFfukR3CEbpetZl3RpvL+g/HIEqTo+WXBfchjwll9YBgeXy1toNXKf5WR5htDcrK5Gxl/nsElQYaOWuLug7GAINhH30J431FvnQu78AJIPgZHp+/Y5WEUn3/dDuL8sJBXfXIMhdL6CgGiIZ21lxlPETjSODfVSqFLyC+CaC/h0ZEFLe/ZB2QeJSaxWKjUxz3Z0hrFkrphfhJ4KyEpYi5dweKlSRstpuaPlFNNue1aNADTTdioAREZmVokOs17OzDo0iuLoJQGfcokb1wbvmh1ZfaV4XZi2jAKOpDETY+lnLAIPfPEsYRHCjTjQcN1OEoE5IoB5ymbbo3koVKw5vv4yBYUEBmoGULsuffZK5UgzFJDwCwAQ/rp1XY45HSuZWrujaGF91nLkx48+lbHafBIPtZ8cEL39TuCbsm9FhRP32FQccmhqXESH7SRQ4/XBjaT2BtfFxEFqURMjQXAgQ7pXAgUn7LANqUPIJvRdYiIukjY+JtrZ/QZfnFShuFCkh7/XPiLl8fiwxWFUhERkUJrMpcFb5P6wavpD4HhlT6jB6dI+tJB3Xo3pY9QJtFMhsntN26aTo6YgY8S2RXzXrhsdjYWWN3hvr0mzIW/WdYS/RcAzSchB9W6ctNonAwRbd5WNI+ShNbVRs6x1F6p1p+6671HNnIcalFXgfleYs4XjTzSegCXjbTEXfp7GpkgNTgU1SYcPeuNLrXCiOI4ZxPONjqQcaZbwDeytq0U3MLANRsAHzeX8I3sxXnb4UZ5wR7+VKkn0IkIuqlNyP4EW49JNrcedOwe2EwAk6D0+7ieFWiWEAmCI4p5cmtPoUc6Lb0HKOv3pZpMhGlkkPoDZlYX0I2nSlMCXm42yQB0sxMw0x+SBzAXS9Uq3ldU44L8IxTvZQNRgjV3OF+5jK79bx7Gzkx5d5x3s4KrG+Y02v9ihKuRBq9x2Ll9KYvTAaT+VbXJlUfWqKopcbyK1x4Dphc2gJ5TrGQ9QqkuL4TcmvlCKOlmYY99oKWimfJmR5L7VmBzDd5TP2JP/45YQnEsgcswIfBe51kqdH/sVESzRaB8nMZXcpfmBfaRmZRISr9zvvShMyBR8n/JDON/cr911O7zmamghb4OBd6Hzt5Ni6qoARpr789zyHPH40O1bWyON02qEcelNKpk5lGwULgX9QCWOMYygUmZ3gsxhTbinppKxdx06oJR/VB54MoqM1QbrQe7VfMoCnfDV3QTtCly7ceKPb8fvfgfSx9FaUwKjKBUppWKCxRrDm5JlCAGcDduDI6xLf38WtdjrJb+KZNTpM+WC54DE5QQqDb3xMD6ZLjauhIcLxg5X+EtL/uBd+sBgtv+9UMnUSBsakhKTu83VYcszhOhfk+BTt984enS2R+Xr3GXg/CJsckLlF8NNV8qfnZsTq6uvm0awvIUJm4E4Fp9t2scK4laSc5xz6G2W28xfeOtaII6y+ap4k31QpygJ53+6C2CHnzcXjd2Ik0fU4rJ7LraTMWTyj/pNqQiE9GBpFKlkIdrcDHPZp80PU0sgT/lvkm/cVPOVwBuIvwAaq4bw7MeYWZy7vqizgcPt8IQbnYKvjZ6OgMs0ct+E/XalMIQjRGMWxZ2w6mY1hAj1ehS7JfooYpZL/pUO3ZuBNYo+IzNO0fAgXsHxQRPM++X4qUkuyK2PF3wMBweUZJbxwH79lCGxsS3DBo2nQWKsUhc24jANyJqWa0ULZSROPnVtr0aSJehfZTatq6M8LtYJZkAdHSzJN9WIHWN3TQEYdbQtJMwamXA1onhDrpAD9TggxT3CDpE0SdC3mcakhy0owEr3CXVy7WLoOd7LArSGG/iZjh+OqBPPiMa5OWMobTayKflrMOAWgI9k7w5Ml+clbsuLGY5vkkYb75a3DfgwcgXsdurnyTc/Jmuf8AoiSkbuev04KGam+CC+p626oy9glYaNsfbNWk7WZ8crJG7SxLucermPIh3glV91uYu4pVLnfw68GfcYj7L+NIFla/jdTo9Bd2ERA0AiyLV6jyXr+fSd45L91biUPk5KprCB2s/TX6HLJXeETea/8IQ5ziL1obJPqql0zRnI5o0slJBANMLKZ0gdkyL+Cc+63JX4Vh4mczLl4ySc7n4KBNN/nXpAjKZk93eG9u1jiH3LvzYh+LAHIx4qqebWjdp4VkP6alliIm38pj00WKzaC+BZxB7/pp0yzpV96Uu0dSFy5rKmK1A5wimH7D11shbP/4IwcMwOFEif6BSyYE6NUydhMnpZqp2AB0zpFgwBmvPj/k050208HmTLQmkk3zVJKRasxqsCad40Bs5uroHdna2GNYqynx+32U4amTwSPMDUOoUm5RLnaIY+QFatUJZXaM07FSmrBGcxXKw7YH7qsugtA3T++lWrr0JBacpgL+jLPjdxbxuDBRtgOM0Mnxv6raWNtMrB1WQpSMK3B9Be4jK47n7Cq2pa0wY13ZiuLs5M0K+wL/0eI9j8DrmUd80JbeLTF6hyMISqXSYsMGBQzlL0TCyemh+C2+kgkIYY4qi5Z8mgxHj3u1pEgWOvoLp4BAviqY6U+qndUf2phCjnXGbZga9Bl700zHr2sSc5gCd172rgRdiUfXdEBC8NMtoRcVIAj8u+rjZ5zaxsCQ+szHa5WdDR/0Ke4pG+4XalXIhhKs9synMo+Tnc7lboVPlgOPpycwp+chZVloVxGWJ6bDsVAOMAyGI2id2OF7SJe7LJ42QEr/6zDhXpjnP3D3zIXwlBK3Kw379Jh5EW42Jyv0oozCRvCdSxVOiNESfPN4AWKuGLozh0oI76YCR1k9f6xyEq005UzffjDiFoklbEL98/a9pOWpbhRcp0/pEyNdIMxlZ98imR5KK/DBgM/E4FdpSeukwy0lfTycUx38Muv9IxJnAqVRuddT/KSXJy1KQVmHT2Uzh0oTs7UOJcFE6jGy+U7KmOYenYXByKMyxy4CJH76fYZWptWvEj3qO8ZomOI0Vmuclmb3cUCx+L6wjpZeNMyTAMitdQjclxiibZ8v3yv5c733YHNmvX41yEFKph5nqmNZfLz+/5vORyPaf43Iv/QAS3Hw9uGEeMCbyZeN+Gi+r6cjmg0pHZuy5R2z4m55qOLT7BHu9vKXmzJtq1arLJTgktW/aSHZeBXXjDhxDUp95lyso51k9El7497hQIAMX0Bbn7Bec6FavMGfNg1D7cAe4SRCx8rRU81Z3SPlMD4RNt3wZxjBYWa5TislPzPH6EN5MWNJdNxEqWKTvqOhxUaCC51uQnT+NaJt+VWFIz45oADWeHFyy/bdsMX3O7RSKU6BOgSqrn++OCcoxkTCKeqvIzrLqxO8Nim3KaYReJ+6Ah+1XTq3nDcpdH3+DpLidVueWTCz/VQTSu/Nb5MpFP6zTmxwPRB62jQcJni0gvogFs8L5Pn49MH2R9WvGNH+ikeNFgsL6hxMQKyUqflAkdbNlk1Y7QmzU996UIUYFPPMXGN2SV7JDzAfTeCAjfSf/chSsW8JIXw1OyWH4MKrEQV2IPtkDYLtqE/ks6";
+(window.__L = window.__L || {})["3-4"] = {
+  num: "3.4",
+  level: "Level 1 · Basics",
+  title: "delay(): making the Uno wait",
+  lead: "delay() pauses the program, which is useful and also a trap. See why the Uno cannot read a button while it waits. About 5 minutes.",
+  parts: "Parts: the LED circuit from Lesson 3.3 and the push button from Lesson 4.3.",
+
+  circuit: {
+    type: "button",
+    prewired: true,
+    pin: 13,
+    pinIn: 2,
+    resistor: "220 Ω",
+    steps: ["", "", "<b>Same circuit as Lesson 4.3.</b> Press Run, then hold the button and watch how long the LED takes to react."],
+    math: "delay(1000) pauses the program for 1000 milliseconds, which is 1 second. While it waits, the Uno does nothing else. It cannot read the button, so a press is only noticed when the delay ends."
+  },
+
+  code: [
+    "void setup() {",
+    "  pinMode(13, OUTPUT);",
+    "  pinMode(2, INPUT_PULLUP);",
+    "}",
+    "",
+    "void loop() {",
+    "  if (digitalRead(2) == LOW) {  // pressed?",
+    "    digitalWrite(13, LOW);      // stay off",
+    "  } else {",
+    "    digitalWrite(13, HIGH);",
+    "    delay({{wait}});",
+    "    digitalWrite(13, LOW);",
+    "    delay({{wait}});",
+    "  }",
+    "}"
+  ],
+  setupLines: [2, 3],
+  params: [
+    { id: "wait", type: "select", label: "Delay in milliseconds", options: ["100", "500", "1000", "2000"], value: "1000" }
+  ],
+
+  channels: [{ label: "Pin 2 (button)" }, { label: "Pin 13 (LED)" }],
+  graphWindow: 6000,
+  idle: function (inp) { return [inp.btn ? 0 : 1, 0]; },
+
+  reactive: function (inp, P, now, S) {
+    var W = parseInt(P.wait, 10) || 1000;
+    if (S.init !== 1) { S.init = 1; S.state = "check"; S.until = 0; S.led = 0; S.pressAt = null; S.prev = false; S.resp = null; }
+    if (inp.btn && !S.prev) { S.pressAt = now; S.resp = null; }
+    S.prev = inp.btn;
+    var pin = inp.btn ? 0 : 1, lines = [], ro = "";
+
+    if (S.state === "check") {
+      if (pin === 0) {
+        S.led = 0; lines = [7, 8];
+        if (S.resp === null && S.pressAt !== null) S.resp = now - S.pressAt;
+        ro = "Button read: pressed, LED stays off. The Uno reacted after " + Math.round(S.resp || 0) + " ms.";
+      } else {
+        S.led = 1; S.state = "on"; S.until = now + W; lines = [10, 11];
+        ro = "Button not pressed, so the LED blinks.";
+      }
+    } else if (S.state === "on") {
+      lines = [11]; if (now >= S.until) { S.state = "off"; S.led = 0; S.until = now + W; lines = [12, 13]; }
+    } else if (S.state === "off") {
+      lines = [13]; if (now >= S.until) { S.state = "check"; }
+    }
+    if (S.state === "on" || S.state === "off") {
+      ro = inp.btn ? "Button held, but the Uno is stuck in delay() and cannot see it yet." : "In delay(): the Uno is waiting and not reading the button.";
+    }
+    return { vals: [pin, S.led], led: S.led, lines: lines, readout: ro };
+  },
+
+  timingTitle: "Experiment: the delay length",
+  timingText: "Press Run, then hold the button while the LED is mid-blink. Try the delay at 100, 500, 1000 and 2000 and see how long the Uno takes to notice. The longer the delay, the longer the Uno is deaf to the button. Lesson 4.5 shows a way around this with millis().",
+  challenge: "<b>Challenge on your real Uno:</b> make the LED blink with a 300 ms delay, and measure how long it takes to react to a button held at a random moment. It will vary between 0 and 600 ms.",
+
+  quiz: [
+    { q: "What does delay(1000) do?",
+      a: ["Waits 1000 seconds", "Waits 1000 milliseconds, or 1 second", "Repeats the code 1000 times", "Sets pin 1000"],
+      c: 1, e: "delay takes a time in milliseconds. 1000 ms is 1 second." },
+    { q: "While the Uno is inside delay(), what does it do?",
+      a: ["Reads buttons faster", "Nothing else, it just waits", "Runs setup() again", "Turns the LED off"],
+      c: 1, e: "delay() blocks the program, so nothing else runs until it finishes." },
+    { q: "Why is a long delay a problem when you also want to read a button?",
+      a: ["It uses too much power", "The press is only noticed after the delay ends", "The button breaks", "The LED gets brighter"],
+      c: 1, e: "A press during the delay is not seen until the program reaches digitalRead again." }
+  ],
+  next: "Next: blink patterns and SOS."
+};

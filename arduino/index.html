@@ -1935,6 +1935,15 @@ button.primary:active{transform:translateY(2px);box-shadow:0 2px 0 color-mix(in 
   var savedList=[]; try{ savedList=JSON.parse(localStorage.getItem("course_codes")||"[]"); }catch(e){}
   if(G&&savedList.length&&window.crypto&&crypto.subtle){ Promise.all(savedList.map(function(c){ return tryCode(c).catch(function(){}); })).then(function(){ fillPick(); route(); }); }
   else route();
+  var urlCode=""; try{ urlCode=(new URLSearchParams(location.search).get("code")||"").trim().toUpperCase(); }catch(e){}
+  if(urlCode&&G&&window.crypto&&crypto.subtle){
+    tryCode(urlCode).then(function(ids){
+      try{ history.replaceState(null,"",location.pathname+location.hash); }catch(e){}
+      fillPick();
+      var first=M.filter(function(m){ return ids.indexOf(m.course)>=0; })[0];
+      if(first&&!location.hash) location.hash=first.id; else route();
+    }).catch(function(){ try{ history.replaceState(null,"",location.pathname+location.hash); }catch(e){} });
+  }
   requestAnimationFrame(frame);
 })();
 </script>

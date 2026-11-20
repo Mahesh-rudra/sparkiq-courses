@@ -1,1 +1,93 @@
-window.__E=window.__E||{};window.__E["3-5"]="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";
+(window.__L = window.__L || {})["3-5"] = {
+  num: "3.5",
+  level: "Level 1 · Basics",
+  title: "Blink patterns and SOS",
+  lead: "Use your own functions to blink the Morse code for SOS. About 5 minutes.",
+  parts: "Same circuit as Lesson 3.3: Uno, 220 ohm resistor, LED on pin 13.",
+
+  circuit: {
+    prewired: true,
+    pin: 13,
+    resistor: "220 Ω",
+    steps: ["", "", "", "<b>Same circuit as Lesson 3.3.</b> Only the code changes."],
+    math: "A function such as dot() holds a few lines you can call by name as many times as you like."
+  },
+
+  code: [
+    "void dot() {",
+    "  digitalWrite(13, HIGH);",
+    "  delay({{dot}});",
+    "  digitalWrite(13, LOW);",
+    "  delay({{gap}});",
+    "}",
+    "",
+    "void dash() {",
+    "  digitalWrite(13, HIGH);",
+    "  delay({{dash}});",
+    "  digitalWrite(13, LOW);",
+    "  delay({{gap}});",
+    "}",
+    "",
+    "void setup() {",
+    "  pinMode(13, OUTPUT);",
+    "}",
+    "",
+    "void loop() {",
+    "  dot(); dot(); dot();     // S",
+    "  dash(); dash(); dash();  // O",
+    "  dot(); dot(); dot();     // S",
+    "  delay({{pause}});        // rest",
+    "}"
+  ],
+  setupLines: [16],
+  params: [
+    { id: "dot", label: "Dot length in milliseconds", value: 200, min: 50, max: 600, step: 50 },
+    { id: "dash", label: "Dash length in milliseconds", value: 600, min: 150, max: 1500, step: 50 },
+    { id: "gap", label: "Gap in milliseconds", value: 200, min: 50, max: 600, step: 50 },
+    { id: "pause", label: "Rest in milliseconds", value: 1400, min: 200, max: 3000, step: 100 }
+  ],
+
+  timeline: function (p) {
+    var t = [];
+    function call(callLine, bodyHigh, bodyLowGap, on) {
+      t.push({ line: [callLine, bodyHigh], pin: 1, ms: on });
+      t.push({ line: [callLine, bodyLowGap], pin: 0, ms: p.gap });
+    }
+    var i;
+    for (i = 0; i < 3; i++) call(20, 3, 5, p.dot);
+    for (i = 0; i < 3; i++) call(21, 10, 12, p.dash);
+    for (i = 0; i < 3; i++) call(22, 3, 5, p.dot);
+    t.push({ line: 23, pin: 0, ms: p.pause });
+    return t;
+  },
+  graphWindow: 8000,
+
+  timingTitle: "Change the pattern",
+  timingText: "Edit the numbers in the code. A dash is usually three times as long as a dot.",
+  presets: [
+    { label: "Standard SOS", values: { dot: 200, dash: 600, gap: 200, pause: 1400 } },
+    { label: "Fast", values: { dot: 100, dash: 300, gap: 100, pause: 700 } },
+    { label: "Slow", values: { dot: 400, dash: 1200, gap: 400, pause: 2800 } }
+  ],
+  stats: function (p) {
+    var total = 6 * (p.dot + p.gap) + 3 * (p.dash + p.gap) + p.pause;
+    return [
+      { v: (total / 1000).toFixed(1) + " s", l: "for one full SOS" },
+      { v: String(Math.round(60000 / total * 10) / 10), l: "SOS signals per minute" }
+    ];
+  },
+  challenge: "<b>Challenge on your real Uno:</b> write a function called flash() that blinks 5 times quickly, and call it from loop().",
+
+  quiz: [
+    { q: "What is the main benefit of writing dot() as a function?",
+      a: ["The LED gets brighter", "Repeated code is written once and reused", "The delay becomes shorter", "It removes the need for setup()"],
+      c: 1, e: "A function holds code once, so you can call it many times and fix it in a single place." },
+    { q: "In the loop, which part makes the rest between SOS signals?",
+      a: ["dash();", "digitalWrite(13, LOW);", "delay(pause);", "pinMode(13, OUTPUT);"],
+      c: 2, e: "The final delay keeps the LED off before the next SOS starts." },
+    { q: "With the standard timing (dot 200, gap 200), how long is one dot including its gap?",
+      a: ["200 ms", "400 ms", "600 ms", "1000 ms"],
+      c: 1, e: "The dot is on for 200 ms and then off for a 200 ms gap, so 400 ms in total." }
+  ],
+  next: "Next up: loops, so you do not have to type dot() three times."
+};

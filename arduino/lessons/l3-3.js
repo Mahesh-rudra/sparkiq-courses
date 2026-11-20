@@ -1,1 +1,81 @@
-window.__E=window.__E||{};window.__E["3-3"]="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";
+(window.__L = window.__L || {})["3-3"] = {
+  num: "3.3",
+  level: "Level 1 · Basics",
+  title: "Make an LED blink",
+  lead: "Wire the circuit, run the code, then change the timing. About 4 minutes.",
+  parts: "Parts: Arduino Uno, 220 ohm resistor, LED, breadboard, 2 jumper wires.",
+
+  // Circuit card. prewired:true skips the step-by-step wiring.
+  circuit: {
+    pin: 13,
+    resistor: "220 Ω",
+    steps: [
+      "<b>Step 1 of 3.</b> Connect Uno <b>pin 13</b> to one end of the <b>220 Ω resistor</b>.",
+      "<b>Step 2 of 3.</b> Connect the other end of the resistor to the LED's <b>long leg</b> (anode, +).",
+      "<b>Step 3 of 3.</b> Connect the LED's <b>short leg</b> (cathode, −) to <b>GND</b> to complete the loop.",
+      "<b>Circuit complete.</b> Go to step 2 and press Run."
+    ],
+    math: "With the resistor: (5 V − about 2 V across the LED) ÷ 220 Ω ≈ 14 mA, safe for the LED and the pin."
+  },
+
+  // Code lines. {{id}} becomes an editable number box. // starts a comment.
+  code: [
+    "void setup() {",
+    "  pinMode(13, OUTPUT);  // pin 13 sends voltage out",
+    "}",
+    "",
+    "void loop() {",
+    "  digitalWrite(13, HIGH);  // LED on",
+    "  delay({{d1}});",
+    "  digitalWrite(13, LOW);   // LED off",
+    "  delay({{d2}});",
+    "}"
+  ],
+  setupLines: [2],
+  params: [
+    { id: "d1", label: "First delay in milliseconds", value: 1000, min: 50, max: 3000, step: 50 },
+    { id: "d2", label: "Second delay in milliseconds", value: 1000, min: 50, max: 3000, step: 50 }
+  ],
+
+  // One pass of loop(): which line(s) run, the pin level, and for how long.
+  timeline: function (p) {
+    var f1 = Math.min(80, p.d1 * 0.3), f2 = Math.min(80, p.d2 * 0.3);
+    return [
+      { line: 6, pin: 1, ms: f1 },
+      { line: 7, pin: 1, ms: p.d1 - f1 },
+      { line: 8, pin: 0, ms: f2 },
+      { line: 9, pin: 0, ms: p.d2 - f2 }
+    ];
+  },
+  graphWindow: 4000,
+
+  timingTitle: "Change the timing",
+  timingText: "Edit the numbers in the code, or try a preset. Delays are in milliseconds (1000 ms = 1 second).",
+  presets: [
+    { label: "1000 / 1000", values: { d1: 1000, d2: 1000 } },
+    { label: "200 / 200", values: { d1: 200, d2: 200 } },
+    { label: "100 / 900", values: { d1: 100, d2: 900 } },
+    { label: "2000 / 500", values: { d1: 2000, d2: 500 } }
+  ],
+  stats: function (p) {
+    var c = p.d1 + p.d2;
+    return [
+      { v: String(Math.round(1000 / c * 100) / 100), l: "blinks per second" },
+      { v: Math.round(p.d1 / c * 100) + "%", l: "of the time the LED is on" }
+    ];
+  },
+  challenge: "<b>Challenge on your real Uno:</b> make the LED blink twice quickly, pause for one second, then repeat.",
+
+  quiz: [
+    { q: "What does pinMode(13, OUTPUT) do?",
+      a: ["Reads a button on pin 13", "Sets pin 13 to send voltage out", "Turns the LED on", "Waits for 13 milliseconds"],
+      c: 1, e: "pinMode only sets the direction of the pin. digitalWrite is what actually turns the voltage on or off." },
+    { q: "The LED turns on but never blinks. Which line is most likely missing?",
+      a: ["pinMode(13, OUTPUT);", "void setup() {", "digitalWrite(13, LOW);", "Serial.begin(9600);"],
+      c: 2, e: "Without a LOW (and its delay), the pin stays at 5 V, so the LED never goes off." },
+    { q: "Both delays are 250 ms. How many blinks per second?",
+      a: ["1", "2", "4", "250"],
+      c: 1, e: "250 ms on plus 250 ms off is a 0.5 second cycle, so there are 2 blinks every second." }
+  ],
+  next: "Next: blink patterns and SOS."
+};

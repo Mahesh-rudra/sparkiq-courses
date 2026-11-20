@@ -1,1 +1,50 @@
-window.__E=window.__E||{};window.__E["3-1"]="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";
+(window.__L = window.__L || {})["3-1"] = {
+  kind: "explainer",
+  num: "3.1",
+  level: "Level 1 · Basics",
+  title: "pinMode: input or output?",
+  lead: "Every pin must be told whether it sends or listens. Learn the three modes and when to use each. About 5 minutes.",
+  parts: "You need: nothing to wire. Just follow along.",
+
+  sections: [
+    {
+      title: "Pins have a direction",
+      html:
+        "<p>A digital pin can either <b>send</b> a voltage out or <b>listen</b> for one coming in. You tell the Uno which one with <b>pinMode(pin, mode)</b>.</p>" +
+        "<p>You normally write it once in <b>setup()</b>, because the direction rarely changes.</p>"
+    },
+    {
+      title: "Try the three modes",
+      html: "<p>Tap a mode and watch the arrow and the part on the pin change.</p>",
+      widget: "pinmode"
+    },
+    {
+      title: "Which mode for which part?",
+      html:
+        '<table class="cmp"><tr><th>Part</th><th>Mode</th></tr>' +
+        "<tr><td>LED, buzzer</td><td>OUTPUT</td></tr>" +
+        "<tr><td>Push button wired from the pin to GND</td><td>INPUT_PULLUP</td></tr>" +
+        "<tr><td>Sensor module with its own digital output</td><td>INPUT</td></tr></table>" +
+        "<p>Pins start as INPUT when the board powers up, so any pin you want to drive must be set to OUTPUT first.</p>"
+    },
+    {
+      title: "Predict, then check",
+      html:
+        "<details><summary>What if you write digitalWrite(13, HIGH) but forget pinMode?</summary><p>The pin stays an input. HIGH only switches on its internal pull-up, so the LED glows very faintly. The next lesson lets you try it.</p></details>" +
+        "<details><summary>Can you change a pin's mode while the program runs?</summary><p>Yes. pinMode can be called again at any time, although most projects set each pin once.</p></details>"
+    }
+  ],
+
+  quiz: [
+    { q: "Which mode makes a pin send voltage out?",
+      a: ["INPUT", "OUTPUT", "INPUT_PULLUP", "ANALOG"],
+      c: 1, e: "OUTPUT lets the pin drive a part, such as an LED." },
+    { q: "A button is wired between a pin and GND, with no extra resistor. Which mode should the pin use?",
+      a: ["OUTPUT", "INPUT", "INPUT_PULLUP", "None, it works by default"],
+      c: 2, e: "INPUT_PULLUP uses the built-in resistor to hold the pin HIGH until the button connects it to GND." },
+    { q: "Where does pinMode normally go?",
+      a: ["Inside loop()", "Inside setup()", "After the last brace", "Inside delay()"],
+      c: 1, e: "Directions are set once at the start, so setup() is the usual place." }
+  ],
+  next: "Next: digitalWrite, setting a pin HIGH or LOW."
+};

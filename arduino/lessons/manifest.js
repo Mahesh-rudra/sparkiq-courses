@@ -1,4 +1,4 @@
-window.GATE={"courses":{"l1":{"name":"Level 1 · Basics","freeText":"Sections 1 and 2 are free.","buy":"/#level1","wraps":[{"salt":"dw8/jQ+9UL5k+2G+kxK4OQ==","iters":150000,"wrap":"xSt9WKgEeX44Ytx2kGS/LE6lB1gPZzxRXEA91Tu7oX/ENNt9wvDpqbvb05CBZUjiC26QgcNZuPwYC06c"},{"salt":"RuySTnygX6moSgmfoayMUw==","iters":150000,"wrap":"FosCu6rSUTWEeiy8uOBBAHvkJAxmHFAGCH4RhKiGD/3qE2hs384gn6ZfUbFJs/Eg/WQkmoC/eExz6hRT"}]},"l2":{"name":"Level 2 · Intermediate","freeText":"The first lesson of every section is free to try.","buy":"/#level2","wraps":[{"salt":"FT7wfG3OsDdOAyGqc9oEmw==","iters":150000,"wrap":"gka2TP8Chkto09yl7AO13CJv31H1qlsEdxxU6FLgNyz90uuH9LAXXgUPwjNTKUHmqxvdgowQHmWApuuJ"},{"salt":"3LKN/4ZAjBmDUZQ4vHqikQ==","iters":150000,"wrap":"1X/wLRB36+UzEi0aw37p27UOhBkIgT29ZSQsKU4ZL3YvPhi4QGy01r6lS4eXCXuZTOBePgdm0PJfbysx"}]},"l3":{"name":"Level 3 · Advanced","freeText":"The first lesson of every section is free to try.","buy":"/#level3","wraps":[{"salt":"urdzGwjbTdiaicGuBDftfQ==","iters":150000,"wrap":"nEzSxHurmXiLlFZt/BtNhxmBQjbuBh7reK2qGPRYTEc3Jt9UIqfoiBC0V4x/PpQyJlloVj9lUgvo4NXR"},{"salt":"kFlU9NcHtWpLG+6MQxC3jA==","iters":150000,"wrap":"3vZFdgh09UUeNzFqKbW8B4pPjCh1kVaihQOMEhQWaoqYLc9n51j4gAaDjJUpZO6eaSiJ5ZFx9psq85ps"}]}}};
+window.GATE={"courses":{"l1":{"name":"Level 1 · Basics","freeText":"Sections 1 to 3 are free.","buy":"/#level1","wraps":[{"salt":"vO8xjJ7BHgsQ0LJclMZu4g==","iters":150000,"wrap":"kzcUbWcC8wk7Dl7uhNeE/QqoPEfB/g7h1keK+9O9HdbPhNuR7pIZqbHm+5XizNsVCrMa73YvH460oaOE"},{"salt":"deQThArysO9tc5hWu7ykvg==","iters":150000,"wrap":"M5+BEWDtJjdnY9nGUFsQcaG9x+8nXubKoVVB0OSAF2j4gK3aRqYq5YPIsHEycysbDnff3lG4DYHeAjf5"}]},"l2":{"name":"Level 2 · Intermediate","freeText":"The first lesson of every section is free to try.","buy":"/#level2","wraps":[{"salt":"HWHaOkq0qeCJhXJzJKAQWg==","iters":150000,"wrap":"MQMQ3DkSoVqhBchyx3/g6MLLpTPIk4tNibLCJPvksKg+HIGLJYVhwki334ZC4CHa50jEurGqI9TOJrl8"},{"salt":"147Zfa5YcSx4kov78jenNw==","iters":150000,"wrap":"x35rsifnJ5eAlK+DNgEFggoxzL7ycu3HC9U3W6fe1lH3k4tDYVDE9lt8+NswIeK5cbOU/KnJdjh2PqXF"}]},"l3":{"name":"Level 3 · Advanced","freeText":"The first lesson of every section is free to try.","buy":"/#level3","wraps":[{"salt":"GTd5XM623G2oFj9UHNCjUA==","iters":150000,"wrap":"ZyOm11fj/yo74NCJOAGSIPrHIpPmyQrSzsEBJZAKR70x8rs2O34Zjle29Znzmfgbmlb+6S+H6H0OGNxC"},{"salt":"fmW7iEch3Q4jHyfkQOmUCw==","iters":150000,"wrap":"IvaxMWoiRN68YxOt/MFFU0Mv7kz590RiZaAKGJBpZhL5MubAa1t3IJjK4r3ACw4JhQzKPy2Zw33b/JXD"}]}}};
 window.MANIFEST=[
  {
   "id": "1-1",
@@ -78,8 +78,7 @@ window.MANIFEST=[
   "level": "Level 1 · Basics",
   "title": "pinMode: input or output?",
   "file": "l3-1.js",
-  "course": "l1",
-  "locked": true
+  "course": "l1"
  },
  {
   "id": "3-2",
@@ -87,8 +86,7 @@ window.MANIFEST=[
   "level": "Level 1 · Basics",
   "title": "digitalWrite: HIGH and LOW",
   "file": "l3-2.js",
-  "course": "l1",
-  "locked": true
+  "course": "l1"
  },
  {
   "id": "3-3",
@@ -96,8 +94,7 @@ window.MANIFEST=[
   "level": "Level 1 · Basics",
   "title": "Make an LED blink",
   "file": "l3-3.js",
-  "course": "l1",
-  "locked": true
+  "course": "l1"
  },
  {
   "id": "3-4",
@@ -105,8 +102,7 @@ window.MANIFEST=[
   "level": "Level 1 · Basics",
   "title": "delay(): making the Uno wait",
   "file": "l3-4.js",
-  "course": "l1",
-  "locked": true
+  "course": "l1"
  },
  {
   "id": "3-5",
@@ -114,8 +110,7 @@ window.MANIFEST=[
   "level": "Level 1 · Basics",
   "title": "Blink patterns and SOS",
   "file": "l3-5.js",
-  "course": "l1",
-  "locked": true
+  "course": "l1"
  },
  {
   "id": "4-1",
