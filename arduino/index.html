@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SparkIQ Arduino Course: Interactive Lessons</title>
+<style>
+:root{
+  --bg:#f6f7fb;--card:#ffffff;--ink:#1b2430;--muted:#5d6b7c;--line:#dfe4ec;
+  --accent:#2563eb;--accent-ink:#ffffff;--ok:#16a34a;--bad:#dc2626;--warn-bg:#fef3c7;--warn-ink:#7c4a03;
+  --code-bg:#0f172a;--code-ink:#e2e8f0;--code-hl:#1e3a8a;--code-dim:#64748b;
+  --board:#0e7490;--wire:#334155;--ghost:#b6c0cf;--led:#ef4444;--graph:#2563eb;--graph2:#d97706;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0b1020;--card:#141b2e;--ink:#e8edf6;--muted:#93a1b5;--line:#26324b;
+    --accent:#60a5fa;--accent-ink:#0b1020;--ok:#4ade80;--bad:#f87171;--warn-bg:#3b2a07;--warn-ink:#fcd34d;
+    --code-bg:#070b16;--code-hl:#1d3a7a;--board:#0e7490;--wire:#cbd5e1;--ghost:#3a4764;--graph:#60a5fa;--graph2:#fbbf24;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:600px;margin:0 auto;padding:12px 14px 48px}
+.nav{display:flex;gap:8px;align-items:center;margin-bottom:14px}
+.nav select{flex:1;min-width:0;font:inherit;min-height:44px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:0 10px}
+.tag{font-size:13px;color:var(--muted);letter-spacing:.02em}
+h1{font-size:26px;line-height:1.2;margin:4px 0 6px}
+.lead{color:var(--muted);margin:0 0 4px}
+.parts{color:var(--muted);margin:0 0 16px;font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:0 0 14px}
+h2{font-size:18px;margin:0 0 4px;display:flex;gap:8px;align-items:center}
+h2 .n{background:var(--accent);color:var(--accent-ink);border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex:none}
+.sub{color:var(--muted);font-size:14px;margin:0 0 10px}
+svg{width:100%;height:auto;display:block}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+button{font:inherit;min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+#hold{min-height:60px;flex:1;font-weight:600;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+#hold.down{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.step{background:var(--bg);border-radius:10px;padding:10px 12px;font-size:15px;min-height:64px}
+.warn{background:var(--warn-bg);color:var(--warn-ink);border-radius:10px;padding:10px 12px;font-size:14px;margin-top:10px}
+.hide{display:none!important}
+.opt{display:flex;gap:8px;align-items:center;margin-top:10px;font-size:15px}
+.opt input{width:20px;height:20px}
+pre.code{background:var(--code-bg);color:var(--code-ink);border-radius:10px;padding:8px 0;margin:0;font:14px/1.9 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-x:auto}
+.ln{display:flex;gap:10px;padding:0 12px;white-space:pre;min-width:max-content}
+.ln i{font-style:normal;color:var(--code-dim);width:20px;text-align:right;flex:none;user-select:none}
+.ln.on{background:var(--code-hl)}
+.ln .c{color:#7dd3a8}
+.ln input,.ln select{font:inherit;background:#1e293b;color:#fff;border:1px solid #475569;border-radius:6px;padding:0 6px}
+.ln input{width:64px;text-align:center}
+.pinrow{display:flex;justify-content:space-between;align-items:center;margin:12px 0 6px;font-size:14px}
+.pill{border-radius:999px;padding:2px 12px;font-weight:600;font-size:14px;border:1px solid var(--line)}
+.pill.hi{background:var(--led);color:#fff;border-color:var(--led)}
+canvas{width:100%;display:block;background:var(--bg);border-radius:10px}
+.readout{margin-top:8px;font:14px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--muted);min-height:22px}
+.presets{display:flex;flex-wrap:wrap;gap:8px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.stats:empty{display:none}
+.stat{background:var(--bg);border-radius:10px;padding:10px 12px}
+.stat b{display:block;font-size:22px}
+.stat span{font-size:13px;color:var(--muted)}
+.q{margin:14px 0 0}
+.q p{margin:0 0 6px;font-weight:600}
+.q .ch{display:flex;flex-direction:column;gap:6px}
+.q .ch button{text-align:left;min-height:44px}
+.q .ch button.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--card))}
+.q .ch button.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 15%,var(--card))}
+.exp{font-size:14px;color:var(--muted);margin-top:6px}
+.score{font-weight:700;margin-top:14px}
+.math{font-size:14px;color:var(--muted);margin-top:8px}
+.chain{display:flex;gap:6px;align-items:stretch;margin:10px 0}
+.chain .box{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 6px;text-align:center;font-size:13px}
+.chain .box b{display:block;font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.chain .arrow{align-self:center;color:var(--muted)}
+.chain .box.act{border-color:var(--accent)}
+.bulb{width:28px;height:28px;border-radius:50%;margin:4px auto 2px;background:var(--line);border:2px solid var(--ink)}
+.bulb.on{background:var(--led);box-shadow:0 0 14px 4px var(--led)}
+input[type=range]{width:100%;height:44px;accent-color:var(--accent)}
+.rv{display:flex;justify-content:space-between;font-size:14px;color:var(--muted)}
+table.cmp{border-collapse:collapse;width:100%;font-size:14px;margin-top:8px}
+table.cmp th,table.cmp td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+table.cmp th{color:var(--muted);font-weight:600}
+.reg{cursor:pointer}
+.reg.sel rect,.reg.sel circle{stroke:#fbbf24;stroke-width:3}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chips button{min-height:40px;padding:4px 12px;font-size:14px}
+.chips button.sel{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.desc{background:var(--bg);border-radius:10px;padding:10px 12px;margin-top:10px;font-size:15px;min-height:72px}
+.prose p{margin:0 0 10px}
+.prose ul{margin:0 0 10px;padding-left:20px}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px;cursor:pointer}
+.chk input{width:22px;height:22px;flex:none;margin-top:1px}
+.chk.done span{color:var(--muted);text-decoration:line-through}
+details{border-bottom:1px solid var(--line);padding:8px 0;font-size:15px}
+summary{cursor:pointer;min-height:36px;display:flex;align-items:center;font-weight:600}
+details p{margin:6px 0 4px;color:var(--muted)}
+.stages{display:flex;gap:4px;font-size:13px}
+.stages span{flex:1;text-align:center;padding:6px 2px;border-radius:8px;background:var(--bg);color:var(--muted)}
+.stages span.on{background:var(--accent);color:var(--accent-ink);font-weight:600}
+.stages span.done{color:var(--ok);font-weight:600}
+.bar{height:10px;background:var(--bg);border-radius:6px;overflow:hidden;margin:10px 0}
+#upbar{height:100%;width:0;background:var(--accent)}
+.leds{display:flex;gap:16px;align-items:center;margin:8px 0}
+.ld{display:inline-flex;flex-direction:column;align-items:center;font-size:12px;color:var(--muted)}
+.ld i{width:16px;height:16px;border-radius:50%;background:var(--line);border:1px solid var(--ink);display:block;margin-bottom:2px}
+.ld.on i{background:#fbbf24;box-shadow:0 0 8px #fbbf24}
+.console{background:var(--code-bg);color:#7dd3a8;border-radius:10px;padding:10px 12px;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;min-height:96px;white-space:pre-wrap;margin:0}
+.pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}
+.pgrid button{min-height:44px;padding:4px;font-weight:600}
+.pgrid button.hl{border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
+.pgrid button.dim{opacity:.3}
+.pgrid button.sel{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.frow{display:flex;gap:8px;align-items:center;margin:6px 0}
+.frow label{min-width:120px;font-size:14px;color:var(--muted)}
+.ldsel{flex:1;min-width:0;font:inherit;min-height:44px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:0 8px}
+.ans{font:inherit;min-height:44px;border-radius:10px;border:1px solid var(--line);padding:0 12px;width:120px;background:var(--card);color:var(--ink)}
+.formula{font-size:20px;font-weight:700;text-align:center;background:var(--bg);border-radius:10px;padding:12px;margin:8px 0}
+.bulb.faint{background:var(--led);opacity:.35;box-shadow:none}
+#pthold.down{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+#pthold{min-height:56px;flex:1;font-weight:600;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.tf{display:inline-block;padding:2px 10px;border-radius:999px;font-weight:600;font-size:14px}
+.tf.t{background:color-mix(in srgb,var(--ok) 20%,var(--card));color:var(--ok)}
+.tf.f{background:color-mix(in srgb,var(--bad) 15%,var(--card));color:var(--bad)}
+#tfhold.down{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+#tfhold{min-height:56px;flex:1;font-weight:600;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+code{font:13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+</style>
+<script src="lessons/manifest.js"></script>
+</head>
+<body>
+<main>
+  <nav class="nav" aria-label="Lessons">
+    <button id="prev" aria-label="Previous lesson">‹</button>
+    <select id="pick" aria-label="Choose a lesson"></select>
+    <button id="next" aria-label="Next lesson">›</button>
+  </nav>
+  <div id="app"></div>
+</main>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var SVGNS="http://www.w3.org/2000/svg";
+  var M=window.MANIFEST||[];
+  var L=null, R={}, wired=0, running=false, noRes=false, btn=false, inVal=0, P={}, tl=[], cycle=1;
+  var S={}, loopStart=0, setupUntil=0, curLines="", hist=[], W=0, H=0, total=1, dots=[];
+  window.__L=window.__L||{};
+  window.UNO={seq:function(segs,now,S){ if(S.t0===undefined) S.t0=now; var tot=0,i; for(i=0;i<segs.length;i++) tot+=segs[i].ms; var u=(now-S.t0)%tot, acc=0; for(i=0;i<segs.length;i++){ acc+=segs[i].ms; if(u<acc) return {seg:segs[i],i:i,cycle:tot}; } return {seg:segs[segs.length-1],i:segs.length-1,cycle:tot}; }, garble:function(str,seed){ var ch="#@%&?~^*¿Ø¤§",o="",h=seed; for(var i=0;i<str.length;i++){ if(str[i]==="\n"){ o+="\n"; continue; } h=(h*31+str.charCodeAt(i)+7)%9973; o+=(str[i]===" "&&h%3)?" ":ch[h%ch.length]; } return o; }, adcOf:function(v){ return Math.max(0,Math.min(1023,Math.floor(v*1024/5))); }, ldrOhms:function(l){ return 100000*Math.pow(0.01,l/100); }};
+
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+  function isAnalog(){ return L.circuit.type==="pot"||L.circuit.type==="ldr"; }
+  function plain(){ return L.circuit.type==="disp"||L.circuit.type==="usb"||L.circuit.type==="row"||L.circuit.type==="traffic"||L.circuit.type==="rgb"||(isAnalog()&&!L.circuit.led); }
+  function hasLed(){ return !plain(); }
+  function wireIds(){
+    var t=L.circuit.type;
+    if(t==="disp"){ var da=[]; for(var dq=0;dq<L.circuit.groups;dq++) da.push("d"+dq); return da; }
+    if(t==="usb") return ["u1"];
+    if(t==="rgb") return ["g0","g1","g2","g3"];
+    if(t==="traffic") return ["t0","t1","t2","t3"];
+    if(t==="row") return ["r0","r1","r2","r3","r4"];
+    if(t==="pot"||t==="ldr"){ var b=t==="pot"?["p1","p2","p3"]:["l1","l2","l3","l4"]; return L.circuit.led?b.concat(["n5","n6","n7"]):b; }
+    return t==="button"?["b1","b2"]:["w1","w2","w3"];
+  }
+  function need(){ return wireIds().length; }
+
+
+  /* ---------- access gate (locked lessons are AES-GCM encrypted files) ---------- */
+  var G=window.GATE||null, KEYS={};
+  function b64(s){ var b=atob(s),a=new Uint8Array(b.length); for(var i=0;i<b.length;i++) a[i]=b.charCodeAt(i); return a; }
+  function kekFor(code,w){
+    var enc=new TextEncoder();
+    return crypto.subtle.importKey("raw",enc.encode(code.trim().toUpperCase()),"PBKDF2",false,["deriveKey"]).then(function(k){
+      return crypto.subtle.deriveKey({name:"PBKDF2",salt:b64(w.salt),iterations:w.iters,hash:"SHA-256"},k,{name:"AES-GCM",length:256},false,["decrypt"]);
+    });
+  }
+  function decryptB64(key,s){
+    var a=b64(s);
+    return crypto.subtle.decrypt({name:"AES-GCM",iv:a.slice(0,12)},key,a.slice(12)).then(function(p){ return new TextDecoder().decode(p); });
+  }
+  function unwrap(code,w){
+    return kekFor(code,w).then(function(kek){
+      var a=b64(w.wrap);
+      return crypto.subtle.decrypt({name:"AES-GCM",iv:a.slice(0,12)},kek,a.slice(12));
+    }).then(function(raw){ return crypto.subtle.importKey("raw",raw,"AES-GCM",false,["decrypt"]); });
+  }
+  function tryCode(code){
+    var jobs=[], ids=Object.keys((G&&G.courses)||{});
+    ids.forEach(function(id){
+      G.courses[id].wraps.forEach(function(w){
+        jobs.push(unwrap(code,w).then(function(key){ KEYS[id]=key; return id; }).catch(function(){ return null; }));
+      });
+    });
+    return Promise.all(jobs).then(function(r){
+      var ok=r.filter(function(x){ return x; });
+      if(!ok.length) throw new Error("bad");
+      try{ var arr=JSON.parse(localStorage.getItem("course_codes")||"[]"), c=code.trim().toUpperCase(); if(arr.indexOf(c)<0) arr.push(c); localStorage.setItem("course_codes",JSON.stringify(arr)); }catch(e){}
+      return ok;
+    });
+  }
+  function isLocked(m){ return !!m.locked&&!KEYS[m.course]; }
+
+  /* ---------- navigation ---------- */
+  var pick=$("pick");
+  function fillPick(){
+    var cur=pick.value; pick.innerHTML="";
+    M.forEach(function(m){ var o=document.createElement("option"); o.value=m.id; o.textContent=m.num+"  "+m.title+(isLocked(m)?"  (locked)":""); pick.appendChild(o); });
+    if(cur) pick.value=cur;
+  }
+  fillPick();
+  function idx(){ for(var i=0;i<M.length;i++) if(M[i].id===pick.value) return i; return 0; }
+  function go(id){ if(location.hash!=="#"+id) location.hash=id; else route(); }
+  pick.onchange=function(){ go(pick.value); };
+  $("prev").onclick=function(){ var i=idx(); if(i>0) go(M[i-1].id); };
+  $("next").onclick=function(){ var i=idx(); if(i<M.length-1) go(M[i+1].id); };
+  window.addEventListener("hashchange",route);
+
+  function route(){
+    var id=(location.hash||"").replace("#","");
+    var m=M.filter(function(x){return x.id===id})[0]||M[0];
+    if(!m){ $("app").textContent="No lessons yet."; return; }
+    pick.value=m.id;
+    $("prev").disabled=idx()===0; $("next").disabled=idx()===M.length-1;
+    running=false; L=null; if(R.upTimer){ clearInterval(R.upTimer); R.upTimer=null; } if(R.stTimer){ clearInterval(R.stTimer); R.stTimer=null; } R.anim=null;
+    if(window.__L[m.id]){ render(window.__L[m.id]); return; }
+    if(m.locked){
+      if(!KEYS[m.course]){ showLock(m); return; }
+      $("app").innerHTML='<p class="sub">Loading lesson…</p>';
+      var ls=document.createElement("script"); ls.src="lessons/"+m.file;
+      ls.onload=function(){
+        var e=(window.__E||{})[m.id];
+        if(!e){ $("app").textContent="This lesson file did not load correctly."; return; }
+        decryptB64(KEYS[m.course],e).then(function(code){
+          var s2=document.createElement("script"); s2.text=code; document.head.appendChild(s2);
+          if(window.__L[m.id]) render(window.__L[m.id]); else $("app").textContent="This lesson file did not load correctly.";
+        }).catch(function(){ delete KEYS[m.course]; fillPick(); showLock(m,"Your saved code no longer works. Please enter your current code."); });
+      };
+      ls.onerror=function(){ $("app").textContent="Could not load this lesson."; };
+      document.head.appendChild(ls);
+      return;
+    }
+    $("app").innerHTML='<p class="sub">Loading lesson…</p>';
+    var s=document.createElement("script"); s.src="lessons/"+m.file;
+    s.onload=function(){ if(window.__L[m.id]) render(window.__L[m.id]); else $("app").textContent="This lesson file did not load correctly."; };
+    s.onerror=function(){ $("app").textContent="Could not load this lesson."; };
+    document.head.appendChild(s);
+  }
+
+
+  function showLock(m,msg){
+    var C=(G&&G.courses&&G.courses[m.course])||{};
+    var buy=C.buy?'<p class="sub"><a href="'+esc(C.buy)+'">Enrol to get your access code</a></p>':"";
+    $("app").innerHTML='<section class="card"><h2>This lesson is for enrolled students</h2>'+
+      '<p class="sub">Lesson '+esc(m.num)+', '+esc(m.title)+', is part of <b>'+esc(C.name||"the course")+'</b>. Enter your access code to unlock it. '+esc(C.freeText||"")+'</p>'+
+      '<div class="btns"><input id="code" class="ans" style="width:220px" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Access code" aria-label="Access code">'+
+      '<button class="primary" id="unlock">Unlock</button></div>'+
+      '<p class="sub" id="lockmsg" role="status" aria-live="polite">'+esc(msg||"")+'</p>'+buy+'</section>';
+    var go1=function(){
+      var v=$("code").value; if(!v.trim()) return;
+      $("lockmsg").textContent="Checking…";
+      tryCode(v).then(function(){ fillPick(); route(); }).catch(function(){ $("lockmsg").textContent="That code is not correct. Check it and try again."; });
+    };
+    $("unlock").onclick=go1;
+    $("code").onkeydown=function(e){ if(e.key==="Enter") go1(); };
+  }
+
+  /* ---------- rendering ---------- */
+  function paramHtml(id){
+    var p=null; L.params.forEach(function(q){ if(q.id===id) p=q; });
+    if(p.type==="select"){
+      return '<select data-param="'+id+'" aria-label="'+esc(p.label)+'">'+p.options.map(function(o){return '<option'+(o===p.value?' selected':'')+'>'+esc(o)+'</option>'}).join("")+'</select>';
+    }
+    return '<input data-param="'+id+'" type="number" inputmode="numeric" min="'+p.min+'" max="'+p.max+'" step="'+p.step+'" value="'+p.value+'" aria-label="'+esc(p.label)+'">';
+  }
+  function codeHtml(){
+    return L.code.map(function(line,i){
+      var parts=line.split("//"), codePart=parts[0], com=parts.length>1?"//"+parts.slice(1).join("//"):"";
+      var html=esc(codePart).replace(/\{\{(\w+)\}\}/g,function(_,id){ return paramHtml(id); });
+      if(com) html+='<span class="c">'+esc(com)+'</span>';
+      return '<div class="ln" data-l="'+(i+1)+'"><i>'+(i+1)+'</i><span>'+(html||" ")+'</span></div>';
+    }).join("");
+  }
+  function ledGroup(y,c){
+    return '<g id="res"><rect x="170" y="'+(y-12)+'" width="50" height="24" rx="5" fill="#d6b48a" stroke="#8b6b3d"/>'+
+    '<rect x="182" y="'+(y-12)+'" width="5" height="24" fill="#7c2d12"/><rect x="193" y="'+(y-12)+'" width="5" height="24" fill="#7c2d12"/><rect x="204" y="'+(y-12)+'" width="5" height="24" fill="#b45309"/>'+
+    '<text x="195" y="'+(y+30)+'" font-size="12" text-anchor="middle" fill="var(--muted)">'+esc(c.resistor)+'</text></g>'+
+    '<path id="bypass" class="hide" d="M170 '+y+' L220 '+y+'" fill="none" stroke="var(--wire)" stroke-width="3"/>'+
+    '<circle id="glow" cx="295" cy="'+y+'" r="34" fill="var(--led)" opacity="0"/>'+
+    '<polygon points="274,'+(y-18)+' 274,'+(y+18)+' 306,'+y+'" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/>'+
+    '<line x1="306" y1="'+(y-18)+'" x2="306" y2="'+(y+18)+'" stroke="var(--ink)" stroke-width="3"/>'+
+    '<circle id="ledfill" cx="290" cy="'+y+'" r="9" fill="var(--led)" opacity="0.15"/>'+
+    '<text x="270" y="'+(y-24)+'" font-size="12" fill="var(--muted)" text-anchor="middle">+</text>'+
+    '<text x="322" y="'+(y-24)+'" font-size="12" fill="var(--muted)" text-anchor="middle">−</text>'+
+    '<text x="295" y="'+(y+42)+'" font-size="12" fill="var(--muted)" text-anchor="middle">LED</text>';
+  }
+  function wirePath(id,d,dur){
+    return '<path id="'+id+'" pathLength="1" d="'+d+'" fill="none" stroke="var(--wire)" stroke-width="4" stroke-linecap="round" stroke-dasharray="1" stroke-dashoffset="1" style="transition:stroke-dashoffset '+dur+'s"/>';
+  }
+  function ghost(d){ return '<path d="'+d+'" fill="none" stroke="var(--ghost)" stroke-width="3" stroke-dasharray="4 5"/>'; }
+  function boardLed(c){
+    return '<svg id="board" viewBox="0 0 360 200" role="img" aria-label="Circuit: Uno pin '+c.pin+' to resistor to LED to GND">'+
+    '<rect x="8" y="20" width="112" height="160" rx="10" fill="var(--board)"/>'+
+    '<text x="64" y="44" fill="#fff" font-size="13" text-anchor="middle" font-weight="600">Arduino Uno</text>'+
+    '<circle cx="120" cy="70" r="5" fill="#fbbf24"/><text x="108" y="74" fill="#fff" font-size="12" text-anchor="end">Pin '+c.pin+'</text>'+
+    '<circle cx="120" cy="150" r="5" fill="#94a3b8"/><text x="108" y="154" fill="#fff" font-size="12" text-anchor="end">GND</text>'+
+    ghost("M120 70 L170 70")+ghost("M220 70 L270 70")+ghost("M320 70 L336 70 L336 150 L120 150")+
+    ledGroup(70,c)+
+    wirePath("w1","M120 70 L170 70",.6)+wirePath("w2","M220 70 L270 70",.6)+wirePath("w3","M306 70 L336 70 L336 150 L120 150",.8)+
+    '<path id="full" d="M120 70 L336 70 L336 150 L120 150" fill="none" stroke="none"/><g id="dots"></g></svg>';
+  }
+  function boardButton(c){
+    var solid='<path d="M120 60 L170 60" fill="none" stroke="var(--wire)" stroke-width="4" stroke-linecap="round"/>'+
+      '<path d="M220 60 L270 60" fill="none" stroke="var(--wire)" stroke-width="4" stroke-linecap="round"/>'+
+      '<path d="M306 60 L336 60 L336 200 L120 200" fill="none" stroke="var(--wire)" stroke-width="4" stroke-linecap="round"/>';
+    return '<svg id="board" viewBox="0 0 360 250" role="img" aria-label="Circuit: LED on pin '+c.pin+', push button between pin '+c.pinIn+' and GND">'+
+    '<rect x="8" y="20" width="112" height="215" rx="10" fill="var(--board)"/>'+
+    '<text x="64" y="44" fill="#fff" font-size="13" text-anchor="middle" font-weight="600">Arduino Uno</text>'+
+    '<circle cx="120" cy="60" r="5" fill="#fbbf24"/><text x="108" y="64" fill="#fff" font-size="12" text-anchor="end">Pin '+c.pin+'</text>'+
+    '<circle cx="120" cy="130" r="5" fill="#fbbf24"/><text x="108" y="134" fill="#fff" font-size="12" text-anchor="end">Pin '+c.pinIn+'</text>'+
+    '<circle cx="120" cy="200" r="5" fill="#94a3b8"/><text x="108" y="204" fill="#fff" font-size="12" text-anchor="end">GND</text>'+
+    ghost("M120 130 L200 130")+ghost("M260 130 L336 130")+
+    solid+ledGroup(60,c)+
+    '<circle cx="200" cy="130" r="5" fill="var(--ink)"/><circle cx="260" cy="130" r="5" fill="var(--ink)"/>'+
+    '<line id="bridge" x1="200" y1="130" x2="260" y2="130" stroke="var(--ink)" stroke-width="4" opacity="0"/>'+
+    '<g id="cap" style="transition:transform .06s"><rect x="212" y="102" width="36" height="14" rx="4" fill="var(--accent)"/><line x1="230" y1="116" x2="230" y2="124" stroke="var(--ink)" stroke-width="3"/></g>'+
+    '<text x="230" y="162" font-size="12" text-anchor="middle" fill="var(--muted)">Push button</text>'+
+    wirePath("b1","M120 130 L200 130",.6)+wirePath("b2","M260 130 L336 130",.6)+
+    '<path id="full" d="M120 60 L336 60 L336 200 L120 200" fill="none" stroke="none"/><g id="dots"></g></svg>';
+  }
+
+  function boardUsb(c){
+    var g='<rect x="8" y="20" width="112" height="120" rx="10" fill="var(--board)"/><text x="64" y="48" fill="#fff" font-size="13" text-anchor="middle" font-weight="600">Arduino Uno</text>'+
+      '<rect x="2" y="64" width="34" height="34" rx="4" fill="#cbd5e1"/><text x="19" y="85" font-size="10" text-anchor="middle" fill="#0f172a">USB</text>'+
+      ghost("M36 81 L236 81")+
+      '<rect x="236" y="48" width="110" height="68" rx="6" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/><rect x="244" y="56" width="94" height="44" rx="3" fill="var(--code-bg)"/><text x="291" y="82" font-size="11" text-anchor="middle" fill="#7dd3a8">Serial Monitor</text>'+
+      '<rect x="226" y="116" width="130" height="8" rx="3" fill="var(--ink)"/><text x="291" y="146" font-size="12" text-anchor="middle" fill="var(--muted)">Computer</text>'+
+      wirePath("u1","M36 81 L236 81",1)+
+      '<path id="full" d="M36 81 L236 81" fill="none" stroke="none"/><g id="dots"></g>';
+    return '<svg id="board" viewBox="0 0 360 160" role="img" aria-label="Circuit: USB cable from the Arduino Uno to the computer">'+g+'</svg>';
+  }
+
+  function boardRow(c){
+    var ys=[44,88,132,176,220], g='<rect x="8" y="14" width="112" height="262" rx="10" fill="var(--board)"/><text x="64" y="268" fill="#fff" font-size="13" text-anchor="middle" font-weight="600">Arduino Uno</text>';
+    var W=ys.map(function(y,i){ return ["r"+i,"M120 "+y+" L340 "+y,.5]; });
+    ys.forEach(function(y,i){ g+='<circle cx="120" cy="'+y+'" r="5" fill="#fbbf24"/><text x="108" y="'+(y+4)+'" fill="#fff" font-size="12" text-anchor="end">Pin '+(2+i)+'</text>'; });
+    g+='<circle cx="120" cy="250" r="5" fill="#94a3b8"/><text x="108" y="254" fill="#fff" font-size="12" text-anchor="end">GND</text>';
+    g+='<path d="M340 44 L340 250 L120 250" fill="none" stroke="var(--wire)" stroke-width="4" stroke-linecap="round"/>';
+    W.forEach(function(w){ g+=ghost(w[1]); });
+    W.forEach(function(w){ g+=wirePath(w[0],w[1],w[2]); });
+    ys.forEach(function(y,i){
+      g+='<rect x="160" y="'+(y-9)+'" width="40" height="18" rx="4" fill="#d6b48a" stroke="#8b6b3d"/><rect x="170" y="'+(y-9)+'" width="4" height="18" fill="#7c2d12"/><rect x="179" y="'+(y-9)+'" width="4" height="18" fill="#7c2d12"/><rect x="188" y="'+(y-9)+'" width="4" height="18" fill="#b45309"/>'+
+        '<circle id="cg'+i+'" cx="262" cy="'+y+'" r="22" fill="var(--led)" opacity="0"/><polygon points="248,'+(y-12)+' 248,'+(y+12)+' 272,'+y+'" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/><line x1="272" y1="'+(y-12)+'" x2="272" y2="'+(y+12)+'" stroke="var(--ink)" stroke-width="3"/>'+
+        '<circle id="cl'+i+'" cx="260" cy="'+y+'" r="6" fill="var(--led)" opacity="0.15"/>';
+    });
+    g+='<text x="180" y="30" font-size="11" text-anchor="middle" fill="var(--muted)">220 Ω each</text><text x="262" y="30" font-size="11" text-anchor="middle" fill="var(--muted)">LEDs</text><text x="318" y="270" font-size="11" text-anchor="middle" fill="var(--muted)">GND rail</text>';
+    g+='<path id="full" d="M120 44 L340 44" fill="none" stroke="none"/><g id="dots"></g>';
+    return '<svg id="board" viewBox="0 0 360 280" role="img" aria-label="Circuit: five LEDs on pins 2 to 6, each with a 220 ohm resistor, sharing a GND rail">'+g+'</svg>';
+  }
+
+  function boardTraffic(c){
+    var ys=[44,88,132], cols=["#ef4444","#facc15","#22c55e"], nm=["13","12","11"], by=190;
+    var g='<rect x="8" y="14" width="112" height="252" rx="10" fill="var(--board)"/><text x="64" y="258" fill="#fff" font-size="13" text-anchor="middle" font-weight="600">Arduino Uno</text>';
+    var W=ys.map(function(y,i){ return ["t"+i,"M120 "+y+" L340 "+y,.5]; }); W.push(["t3","M120 "+by+" L200 "+by+" M260 "+by+" L340 "+by,.8]);
+    ys.forEach(function(y,i){ g+='<circle cx="120" cy="'+y+'" r="5" fill="#fbbf24"/><text x="108" y="'+(y+4)+'" fill="#fff" font-size="12" text-anchor="end">Pin '+nm[i]+'</text>'; });
+    g+='<circle cx="120" cy="'+by+'" r="5" fill="#fbbf24"/><text x="108" y="'+(by+4)+'" fill="#fff" font-size="12" text-anchor="end">Pin 2</text><circle cx="120" cy="234" r="5" fill="#94a3b8"/><text x="108" y="238" fill="#fff" font-size="12" text-anchor="end">GND</text>';
+    g+='<path d="M340 44 L340 234 L120 234" fill="none" stroke="var(--wire)" stroke-width="4" stroke-linecap="round"/>';
+    W.forEach(function(w){ g+=ghost(w[1]); });
+    W.forEach(function(w){ g+=wirePath(w[0],w[1],w[2]); });
+    ys.forEach(function(y,i){
+      g+='<rect x="160" y="'+(y-9)+'" width="40" height="18" rx="4" fill="#d6b48a" stroke="#8b6b3d"/><rect x="170" y="'+(y-9)+'" width="4" height="18" fill="#7c2d12"/><rect x="179" y="'+(y-9)+'" width="4" height="18" fill="#7c2d12"/><rect x="188" y="'+(y-9)+'" width="4" height="18" fill="#b45309"/>'+
+        '<circle id="cg'+i+'" cx="262" cy="'+y+'" r="22" fill="'+cols[i]+'" opacity="0"/><polygon points="248,'+(y-12)+' 248,'+(y+12)+' 272,'+y+'" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/><line x1="272" y1="'+(y-12)+'" x2="272" y2="'+(y+12)+'" stroke="var(--ink)" stroke-width="3"/>'+
+        '<circle id="cl'+i+'" cx="260" cy="'+y+'" r="6" fill="'+cols[i]+'" opacity="0.15"/>';
+    });
+    g+='<circle cx="200" cy="'+by+'" r="5" fill="var(--ink)"/><circle cx="260" cy="'+by+'" r="5" fill="var(--ink)"/><line id="bridge" x1="200" y1="'+by+'" x2="260" y2="'+by+'" stroke="var(--ink)" stroke-width="4" opacity="0"/>'+
+      '<g id="cap" style="transition:transform .06s"><rect x="212" y="'+(by-28)+'" width="36" height="14" rx="4" fill="var(--accent)"/><line x1="230" y1="'+(by-14)+'" x2="230" y2="'+(by-6)+'" stroke="var(--ink)" stroke-width="3"/></g><text x="230" y="'+(by+30)+'" font-size="12" text-anchor="middle" fill="var(--muted)">Push button</text>';
+    g+='<text x="180" y="28" font-size="11" text-anchor="middle" fill="var(--muted)">220 Ω each</text><text x="262" y="28" font-size="11" text-anchor="middle" fill="var(--muted)">LEDs</text><text x="318" y="254" font-size="11" text-anchor="middle" fill="var(--muted)">GND rail</text>';
+    g+='<path id="full" d="M120 44 L340 44" fill="none" stroke="none"/><g id="dots"></g>';
+    return '<svg id="board" viewBox="0 0 360 272" role="img" aria-label="Circuit: red LED on pin 13, yellow on pin 12, green on pin 11, each with a 220 ohm resistor, and a push button between pin 2 and GND">'+g+'</svg>';
+  }
+
+  function boardRgb(c){
+    var ys=[60,110,160], cols=["#ef4444","#22c55e","#3b82f6"], nm=["9 (red)","10 (green)","11 (blue)"];
+    var g='<rect x="8" y="14" width="112" height="252" rx="10" fill="var(--board)"/><text x="64" y="258" fill="#fff" font-size="13" text-anchor="middle" font-weight="600">Arduino Uno</text>';
+    var W=ys.map(function(y,i){ return ["g"+i,"M120 "+y+" L290 "+y,.6]; }); W.push(["g3","M312 178 L312 234 L120 234",.9]);
+    ys.forEach(function(y,i){ g+='<circle cx="120" cy="'+y+'" r="5" fill="#fbbf24"/><text x="108" y="'+(y+4)+'" fill="#fff" font-size="12" text-anchor="end">Pin '+nm[i]+'</text>'; });
+    g+='<circle cx="120" cy="234" r="5" fill="#94a3b8"/><text x="108" y="238" fill="#fff" font-size="12" text-anchor="end">GND</text>';
+    W.forEach(function(w){ g+=ghost(w[1]); });
+    W.forEach(function(w){ g+=wirePath(w[0],w[1],w[2]); });
+    ys.forEach(function(y,i){
+      g+='<rect x="160" y="'+(y-9)+'" width="40" height="18" rx="4" fill="#d6b48a" stroke="#8b6b3d"/><rect x="170" y="'+(y-9)+'" width="4" height="18" fill="#7c2d12"/><rect x="179" y="'+(y-9)+'" width="4" height="18" fill="#7c2d12"/><rect x="188" y="'+(y-9)+'" width="4" height="18" fill="#b45309"/>'+
+        '<circle cx="290" cy="'+y+'" r="5" fill="'+cols[i]+'"/>';
+    });
+    g+='<rect x="290" y="44" width="44" height="134" rx="14" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/>'+
+      '<circle id="rgbled" cx="316" cy="111" r="20" fill="#cbd5e1" stroke="var(--ink)" stroke-width="1.5"/>'+
+      ys.map(function(y,i){ return '<circle cx="290" cy="'+y+'" r="5" fill="'+cols[i]+'"/>'; }).join("")+
+      '<text x="180" y="30" font-size="11" text-anchor="middle" fill="var(--muted)">220 Ω each</text><text x="312" y="36" font-size="11" text-anchor="middle" fill="var(--muted)">RGB LED</text><text x="250" y="252" font-size="11" text-anchor="middle" fill="var(--muted)">longest leg to GND</text>';
+    g+='<path id="full" d="M120 60 L290 60" fill="none" stroke="none"/><g id="dots"></g>';
+    return '<svg id="board" viewBox="0 0 360 272" role="img" aria-label="Circuit: RGB LED with red on pin 9, green on pin 10, blue on pin 11, each through a 220 ohm resistor, and the common leg to GND">'+g+'</svg>';
+  }
+
+  function boardAnalog(c){
+    var led=!!c.led, pot=c.type==="pot";
+    var Y5=led?86:46, YA=led?136:96, YG=led?214:174, VH=led?262:217;
+    var W=[];
+    if(pot){
+      W.push(["p1","M120 "+Y5+" L190 "+Y5+" L190 "+(Y5+14),.6],["p2","M120 "+YA+" L172 "+YA,.6],["p3","M190 "+(YG-38)+" L190 "+YG+" L120 "+YG,.8]);
+    } else {
+      W.push(["l1","M120 "+Y5+" L190 "+Y5+" L190 "+(Y5+10),.6],["l2","M190 "+(Y5+40)+" L190 "+(YA+12),.5],["l3","M120 "+YA+" L190 "+YA,.5],["l4","M190 "+(YA+44)+" L190 "+YG+" L120 "+YG,.8]);
+    }
+    var ids=wireIds().length, full;
+    if(led){
+      W.push(["n5","M120 36 L170 36",.6],["n6","M220 36 L270 36",.6],["n7","M306 36 L336 36 L336 "+YG+" L190 "+YG,.9]);
+      full="M120 36 L336 36 L336 "+YG+" L190 "+YG;
+    } else full="M120 "+Y5+" L190 "+Y5+" L190 "+YG+" L120 "+YG;
+    var g='<rect x="8" y="10" width="112" height="'+(YG+36-10)+'" rx="10" fill="var(--board)"/><text x="64" y="'+(YG+26)+'" fill="#fff" font-size="13" text-anchor="middle" font-weight="600">Arduino Uno</text>';
+    if(led) g+='<circle cx="120" cy="36" r="5" fill="#fbbf24"/><text x="108" y="40" fill="#fff" font-size="12" text-anchor="end">Pin '+(c.pin||13)+'</text>';
+    g+='<circle cx="120" cy="'+Y5+'" r="5" fill="#ef4444"/><text x="108" y="'+(Y5+4)+'" fill="#fff" font-size="12" text-anchor="end">5V</text>'+
+       '<circle cx="120" cy="'+YA+'" r="5" fill="#38bdf8"/><text x="108" y="'+(YA+4)+'" fill="#fff" font-size="12" text-anchor="end">A0</text>'+
+       '<circle cx="120" cy="'+YG+'" r="5" fill="#94a3b8"/><text x="108" y="'+(YG+4)+'" fill="#fff" font-size="12" text-anchor="end">GND</text>';
+    W.forEach(function(w){ g+=ghost(w[1]); });
+    if(led) g+=ledGroup(36,c);
+    if(pot){
+      var top=Y5+14, bot=YG-38;
+      g+='<rect x="178" y="'+top+'" width="24" height="'+(bot-top)+'" rx="5" fill="#d6b48a" stroke="#8b6b3d"/>'+
+         '<circle id="marker" data-y0="'+(bot-8)+'" data-y1="'+(top+8)+'" cx="190" cy="'+((top+bot)/2)+'" r="6" fill="var(--accent)" stroke="var(--ink)" stroke-width="1.5"/>'+
+         '<path d="M164 '+(YA-5)+' L172 '+YA+' L164 '+(YA+5)+'" fill="none" stroke="var(--ink)" stroke-width="2"/>'+
+         '<text x="214" y="'+(Y5+8)+'" font-size="12" fill="var(--muted)">left pin (5V)</text><text x="214" y="'+(YA+4)+'" font-size="12" fill="var(--muted)">wiper</text><text x="214" y="'+(YG-26)+'" font-size="12" fill="var(--muted)">right pin (GND)</text>'+
+         '<text x="214" y="'+(YA+20)+'" font-size="11" fill="var(--muted)">10 kΩ pot</text>';
+    } else {
+      g+='<rect x="182" y="'+(Y5+10)+'" width="16" height="30" fill="#d6b48a" stroke="#8b6b3d"/><circle cx="190" cy="'+(Y5+25)+'" r="17" fill="none" stroke="var(--ink)" stroke-width="2"/>'+
+         '<g id="sun" opacity=".4" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M146 '+(Y5+12)+' l12 12 m-1 -9 l1 9 l-9 1"/><path d="M146 '+(Y5+28)+' l12 12 m-1 -9 l1 9 l-9 1"/></g>'+
+         '<rect x="182" y="'+(YA+12)+'" width="16" height="32" fill="#d6b48a" stroke="#8b6b3d"/>'+
+         '<circle cx="190" cy="'+YA+'" r="3.5" fill="var(--ink)"/>'+
+         '<text x="214" y="'+(Y5+29)+'" font-size="12" fill="var(--muted)">LDR</text><text x="214" y="'+(YA+32)+'" font-size="12" fill="var(--muted)">10 kΩ</text>';
+    }
+    if(led) g+='<circle cx="190" cy="'+YG+'" r="3.5" fill="var(--ink)"/>';
+    W.forEach(function(w){ g+=wirePath(w[0],w[1],w[2]); });
+    g+='<path id="full" d="'+full+'" fill="none" stroke="none"/><g id="dots"></g>';
+    return '<svg id="board" viewBox="0 0 360 '+VH+'" role="img" aria-label="Circuit diagram: '+(pot?"potentiometer":"LDR with 10 kilo-ohm resistor")+' connected to A0'+(led?", LED on pin "+(c.pin||13):"")+'">'+g+'</svg>';
+  }
+
+  /* ---------- display modules (7-segment, 74HC595, LCD, OLED) ---------- */
+  function boardDisp(c){
+    var rows=c.rows, y0=64, dy=26, yl=y0+(rows.length-1)*dy, H=yl+52, g="", groups=[], i;
+    for(i=0;i<c.groups;i++) groups.push("");
+    g+='<rect x="8" y="14" width="112" height="'+(yl+40-14)+'" rx="10" fill="var(--board)"/><text x="64" y="'+(yl+30)+'" fill="#fff" font-size="13" text-anchor="middle" font-weight="600">Arduino Uno</text>';
+    g+='<rect x="236" y="26" width="116" height="'+(yl+22-26)+'" rx="8" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/><text x="294" y="46" font-size="12" font-weight="600" text-anchor="middle" fill="var(--ink)">'+esc(c.dev)+'</text>';
+    rows.forEach(function(r,k){
+      var y=y0+k*dy, col=r.t==="g"?"#94a3b8":(r.t==="p"?"#ef4444":"#fbbf24");
+      g+='<circle cx="120" cy="'+y+'" r="5" fill="'+col+'"/><text x="108" y="'+(y+4)+'" fill="#fff" font-size="12" text-anchor="end">'+esc(r.u)+'</text>';
+      g+='<circle cx="236" cy="'+y+'" r="4" fill="var(--ink)"/><text x="246" y="'+(y+4)+'" font-size="11" fill="var(--ink)">'+esc(r.d)+'</text>';
+      groups[r.g]+=(groups[r.g]?" ":"")+"M120 "+y+" L236 "+y;
+    });
+    groups.forEach(function(d){ g+=ghost(d); });
+    groups.forEach(function(d,k){ g+=wirePath("d"+k,d,.7); });
+    g+='<path id="full" d="M120 '+y0+' L236 '+y0+'" fill="none" stroke="none"/><g id="dots"></g>';
+    return '<svg id="board" viewBox="0 0 360 '+H+'" role="img" aria-label="Circuit: '+esc(c.dev)+' connected to the Arduino Uno">'+g+'</svg>';
+  }
+  function buildDisp(){
+    var k=L.circuit.kind, w=$("dispwrap"), h="", i;
+    if(k==="seg7"){
+      h='<svg viewBox="-10 -8 116 146" style="height:150px;display:block;margin:0 auto" role="img" aria-label="Seven-segment display"><rect x="-10" y="-8" width="116" height="146" rx="10" fill="#111827"/>';
+      [["a",14,4,52,10],["b",66,14,10,48],["c",66,68,10,48],["d",14,116,52,10],["e",4,68,10,48],["f",4,14,10,48],["g",14,60,52,10]].forEach(function(q){ h+='<rect id="sg_'+q[0]+'" x="'+q[1]+'" y="'+q[2]+'" width="'+q[3]+'" height="'+q[4]+'" rx="4" fill="#3a1d1d"/>'; });
+      h+='<circle id="sg_p" cx="88" cy="121" r="6" fill="#3a1d1d"/></svg>';
+    } else if(k==="hc595"){
+      h='<svg viewBox="0 0 330 100" style="width:100%;max-width:380px;display:block;margin:0 auto" role="img" aria-label="Eight LEDs on the 74HC595 outputs"><rect width="330" height="100" rx="10" fill="#111827"/>';
+      for(i=0;i<8;i++){ var x=26+i*40; h+='<circle id="hg'+i+'" cx="'+x+'" cy="34" r="20" fill="#fbbf24" opacity="0"/><circle id="hq'+i+'" cx="'+x+'" cy="34" r="12" fill="#3a2a0a" stroke="#92400e" stroke-width="2"/><text x="'+x+'" y="70" font-size="11" text-anchor="middle" fill="#94a3b8">Q'+i+'</text>'; }
+      h+='<text id="hbin" x="165" y="92" font-size="13" text-anchor="middle" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace"></text></svg>';
+    } else if(k==="lcd"||k==="i2c"){
+      h='<div id="lcdbox" style="background:#334155;border-radius:10px;padding:12px;margin:0 auto;width:min(100%,360px);box-sizing:border-box" role="img" aria-label="16 by 2 character display"><div style="display:grid;grid-template-columns:repeat(16,1fr);gap:2px;font:600 15px/1.7 ui-monospace,Menlo,Consolas,monospace;text-align:center">';
+      for(i=0;i<32;i++) h+='<span id="lc'+i+'" style="border-radius:2px;background:rgba(0,0,0,.25);color:'+(k==="i2c"?"#f0f9ff":"#0f2a08")+'">&nbsp;</span>';
+      h+='</div></div>';
+    } else if(k==="oled"){
+      h='<canvas id="oled" width="256" height="128" style="display:block;margin:0 auto;border-radius:6px;background:#000;width:min(100%,384px);height:auto" role="img" aria-label="128 by 64 pixel OLED screen"></canvas>';
+    }
+    w.innerHTML=h; R.dkey=undefined; paintDisp(null);
+  }
+  function paintDisp(d){
+    var k=L.circuit.kind, key=JSON.stringify(d===undefined?null:d), i;
+    if(R.dkey===key) return; R.dkey=key;
+    if(k==="seg7"){
+      var on=(d&&d.segs)||"";
+      "abcdefg".split("").concat(["p"]).forEach(function(sg){ var e=$("sg_"+sg); if(e) e.setAttribute("fill",on.indexOf(sg)>-1?"#ff3b30":"#3a1d1d"); });
+    } else if(k==="hc595"){
+      var b=(d&&d.bits)||0;
+      for(i=0;i<8;i++){ var lit=(b>>i)&1; $("hq"+i).setAttribute("fill",lit?"#fbbf24":"#3a2a0a"); $("hg"+i).setAttribute("opacity",lit?0.35:0); }
+      $("hbin").textContent=d?("B"+("00000000"+b.toString(2)).slice(-8)+"  =  "+b):"";
+    } else if(k==="lcd"||k==="i2c"){
+      var lit2=d!==null&&d!==undefined, ln=(d&&d.lines)||["",""];
+      $("lcdbox").style.background=lit2?(k==="i2c"?"#2563eb":"#6aa84f"):"#334155";
+      for(i=0;i<32;i++){ var r=i>>4, cc=i&15, ch=(lit2&&ln[r]&&ln[r][cc])||"", sp=$("lc"+i); sp.textContent=ch||" "; sp.style.background=lit2?"rgba(0,0,0,.2)":"rgba(0,0,0,.25)"; }
+    } else if(k==="oled"){
+      var cv=$("oled"), cx=cv.getContext("2d");
+      cx.setTransform(1,0,0,1,0,0); cx.fillStyle="#000"; cx.fillRect(0,0,256,128);
+      if(!d||!d.ops) return;
+      cx.setTransform(2,0,0,2,0,0); cx.fillStyle="#bae6fd"; cx.strokeStyle="#bae6fd"; cx.lineWidth=1; cx.textBaseline="top";
+      d.ops.forEach(function(o){
+        if(o.t==="text"){ cx.font=(10*o.size)+'px "Courier New",monospace'; cx.fillText(o.s,o.x,o.y); }
+        else if(o.t==="rect"){ cx.strokeRect(o.x+0.5,o.y+0.5,o.w-1,o.h-1); }
+        else if(o.t==="fill"){ cx.fillRect(o.x,o.y,o.w,o.h); }
+        else if(o.t==="line"){ cx.beginPath(); cx.moveTo(o.x1+0.5,o.y1+0.5); cx.lineTo(o.x2+0.5,o.y2+0.5); cx.stroke(); }
+        else if(o.t==="circle"){ cx.beginPath(); cx.arc(o.x+0.5,o.y+0.5,o.r,0,6.2832); if(o.fill) cx.fill(); else cx.stroke(); }
+      });
+    }
+  }
+
+  function render(lesson){
+
+    L=lesson; if(L.kind==="explainer"){ running=false; curLines=""; hist=[]; renderExplainer(); return; } wired=L.circuit.prewired?need():0; running=false; noRes=false; btn=false; curLines=""; hist=[];
+    if(L.kind==="explainer"){ renderExplainer(); return; }
+    var react=!!L.reactive, holdBtn=react&&!L.input&&(L.circuit.type==="button"||L.circuit.type==="traffic"); inVal=L.input?L.input.value:0;
+    var h='<div class="tag">'+esc(L.level)+' · Lesson '+esc(L.num)+'</div><h1>'+esc(L.title)+'</h1><p class="lead">'+esc(L.lead)+'</p><p class="parts">'+esc(L.parts)+'</p>';
+    h+='<section class="card"><h2><span class="n">1</span>'+(L.circuit.prewired?"The circuit":"Build the circuit")+'</h2>'+(L.circuit.type==="disp"?boardDisp(L.circuit):L.circuit.type==="rgb"?boardRgb(L.circuit):L.circuit.type==="traffic"?boardTraffic(L.circuit):L.circuit.type==="row"?boardRow(L.circuit):L.circuit.type==="usb"?boardUsb(L.circuit):isAnalog()?boardAnalog(L.circuit):L.circuit.type==="button"?boardButton(L.circuit):boardLed(L.circuit))+
+       '<div class="step" id="step" aria-live="polite"></div>'+
+       (L.circuit.prewired?'':'<div class="btns"><button class="primary" id="addwire">Add wire</button><button id="resetwire">Reset wiring</button></div>')+
+       '<label class="opt hide" id="optres"><input type="checkbox" id="nores"> Remove the LED resistor (see why it matters)</label>'+
+       '<div class="warn hide" id="warnres"><b>Too much current.</b> Without the resistor, the LED can draw far more current than it is rated for. On a real board this can burn out the LED or damage the pin. Always use a resistor.</div>'+
+       '<p class="math">'+esc(L.circuit.math).replace(/&lt;(\/?)(code|b)&gt;/g,"<$1$2>")+'</p></section>';
+    h+='<section class="card"><h2><span class="n">2</span>Run the code</h2><p class="sub">'+(L.input?'Press Run, then move the slider. The highlighted line is the one the Uno is running.':holdBtn?'Press Run, then hold the button. The highlighted line is the one the Uno is running.':'The highlighted line is the one the Uno is running right now.')+'</p>'+
+       '<pre class="code" id="code">'+codeHtml()+'</pre>'+
+       '<div class="pinrow"><span>'+esc(L.circuit.pinLabel||('LED on pin '+L.circuit.pin))+'</span><span class="pill" id="pill">'+(plain()?'Press Run':'0 V · LOW')+'</span></div>'+
+       (L.circuit.type==="disp"?'<div id="dispwrap" style="margin-top:10px"></div>':'')+(L.scope?'<canvas id="scope" style="width:100%;height:84px;display:block;margin-top:10px" aria-label="PWM waveform on the pin, zoomed in"></canvas>':'')+
+       (L.monitor?monHtml():'')+
+       '<canvas id="graph" aria-label="Live graph of the pin voltages"></canvas>'+
+       (react?'<div class="readout" id="readout"></div>':'')+(L.input?'<div class="rv" style="margin-top:8px"><span>'+esc(L.input.label)+'</span><b id="inval"></b></div><input type="range" id="inrange" min="'+L.input.min+'" max="'+L.input.max+'" value="'+L.input.value+'" aria-label="'+esc(L.input.label)+'">':'')+
+       '<div class="btns"><button class="primary" id="run">Run</button>'+(holdBtn?'<button id="hold" aria-label="Hold to press the button">Hold to press</button>':'')+
+       '<span id="runhint" style="align-self:center;color:var(--muted);font-size:14px">Finish the wiring first.</span></div></section>';
+    h+='<section class="card"><h2><span class="n">3</span>'+esc(L.timingTitle)+'</h2><p class="sub">'+L.timingText+'</p><div class="presets" id="presets"></div>'+
+       '<div class="stats" id="stats"></div><p class="sub" style="margin-top:12px">'+L.challenge+'</p></section>';
+    h+='<section class="card"><h2><span class="n">4</span>Check yourself</h2><div id="quiz"></div><div class="score" id="score" aria-live="polite"></div></section>';
+    $("app").innerHTML=h;
+    window.scrollTo(0,0);
+
+    (L.presets||[]).forEach(function(pr){
+      var b=document.createElement("button"); b.textContent=pr.label;
+      b.onclick=function(){ for(var k in pr.values){ var el=document.querySelector('[data-param="'+k+'"]'); if(el) el.value=pr.values[k]; } recompute(true); };
+      $("presets").appendChild(b);
+    });
+    document.querySelectorAll("[data-param]").forEach(function(el){
+      function sync(){ var v=el.value; document.querySelectorAll('[data-param="'+el.getAttribute("data-param")+'"]').forEach(function(o){ if(o!==el) o.value=v; }); recompute(true); }
+      el.addEventListener("input",sync); el.addEventListener("change",sync);
+    });
+    if(!L.circuit.prewired){
+      $("addwire").onclick=function(){ if(wired<need()){ wired++; renderStep(); } };
+      $("resetwire").onclick=function(){ wired=0; renderStep(); };
+    }
+    $("nores").onchange=function(){ noRes=this.checked; applyRes(); };
+    $("run").onclick=function(){ if(running) stopRun(); else startRun(); };
+    if(holdBtn) bindHold();
+    if(L.circuit.type==="disp") buildDisp();
+    if(L.monitor) bindMon();
+    if(L.input){ var ir=$("inrange"); var setIn=function(){ inVal=parseFloat(ir.value); $("inval").textContent=inVal+(L.input.unit||""); }; ir.addEventListener("input",setIn); setIn(); }
+    var full=$("full"); total=full.getTotalLength(); dots=[];
+    for(var i=0;i<6;i++){ var c=document.createElementNS(SVGNS,"circle"); c.setAttribute("r","3.5"); c.setAttribute("fill","#fbbf24"); c.setAttribute("opacity","0"); $("dots").appendChild(c); dots.push(c); }
+    R.cv=$("graph"); R.ctx=R.cv.getContext("2d");
+    R.ch=L.channels||[{label:"D"+L.circuit.pin}];
+    R.cv.style.height=(R.ch.length===1?130:90+R.ch.length*50)+"px";
+    if(L.noGraph) R.cv.style.display="none";
+    sizeCanvas();
+    buildQuiz();
+    renderStep(); recompute(false);
+  }
+
+  function monHtml(){
+    var m=L.monitor, opts=[4800,9600,19200,57600,115200];
+    return '<div class="rv" style="margin-top:12px"><span>Serial Monitor</span><b id="monb">9600 baud</b></div>'+
+      '<pre class="console" id="monlog" style="min-height:110px;max-height:190px;overflow:auto"></pre>'+
+      (m.baudSelect?'<div class="frow"><label for="monbaud">Monitor speed</label><select class="ldsel" id="monbaud">'+opts.map(function(o){return '<option'+(o===9600?' selected':'')+'>'+o+'</option>'}).join("")+'</select></div>':'')+
+      (m.input?'<div class="frow"><input id="monin" type="text" class="ldsel" placeholder="Type here, then Send" aria-label="Text to send to the Uno" autocapitalize="off" autocomplete="off" autocorrect="off"><button class="primary" id="monsend">Send</button></div>':'')+
+      '<div class="btns"><button id="monclr">Clear</button><span id="monnote" style="align-self:center;color:var(--muted);font-size:14px"></span></div>';
+  }
+  function monPaint(){
+    var el=$("monlog"); if(!el) return;
+    var lines=R.mon.split("\n"); if(lines.length>60) lines=lines.slice(lines.length-60);
+    el.textContent=lines.join("\n"); el.scrollTop=el.scrollHeight;
+  }
+  function monAppend(t){ R.mon=(R.mon+t).slice(-5000); monPaint(); }
+  function bindMon(){
+    R.mon=""; R.sent=[];
+    $("monclr").onclick=function(){ R.mon=""; monPaint(); };
+    if($("monbaud")) $("monbaud").onchange=function(){ $("monb").textContent=this.value+" baud"; };
+    if($("monin")){
+      var send=function(){
+        var v=$("monin").value; if(!v) return;
+        if(!running){ $("monnote").textContent="Press Run first."; return; }
+        $("monnote").textContent=""; R.sent.push(v); $("monin").value="";
+      };
+      $("monsend").onclick=send; $("monin").addEventListener("keydown",function(e){ if(e.key==="Enter") send(); });
+    }
+  }
+
+  function bindHold(){
+    var b=$("hold");
+    function down(e){ if(e&&e.preventDefault) e.preventDefault(); btn=true; b.classList.add("down"); }
+    function up(){ btn=false; b.classList.remove("down"); }
+    b.addEventListener("pointerdown",function(e){ try{ b.setPointerCapture(e.pointerId); }catch(x){} down(e); });
+    ["pointerup","pointercancel","lostpointercapture"].forEach(function(t){ b.addEventListener(t,up); });
+    b.addEventListener("contextmenu",function(e){ e.preventDefault(); });
+    b.addEventListener("keydown",function(e){ if((e.key===" "||e.key==="Enter")&&!e.repeat){ e.preventDefault(); down(); } });
+    b.addEventListener("keyup",function(e){ if(e.key===" "||e.key==="Enter"){ e.preventDefault(); up(); } });
+    b.addEventListener("blur",up);
+  }
+
+  function renderStep(){
+    $("step").innerHTML=L.circuit.steps[wired];
+    wireIds().forEach(function(id,i){ $(id).style.strokeDashoffset = wired>i?0:1; });
+    if(!L.circuit.prewired) $("addwire").disabled=wired>=need();
+    $("run").disabled=wired<need();
+    $("runhint").style.display=wired<need()?"":"none";
+    $("optres").classList.toggle("hide",wired<need()||!hasLed()||parseInt(L.num,10)>3);
+    if($("hold")) $("hold").disabled=wired<need();
+    if(wired<need()){ $("nores").checked=false; noRes=false; applyRes(); stopRun(); }
+  }
+  function applyRes(){
+    if(!$("res")){ return; }
+    $("res").style.display=noRes?"none":"";
+    $("bypass").classList.toggle("hide",!noRes);
+    $("warnres").classList.toggle("hide",!noRes);
+  }
+
+  /* ---------- program model ---------- */
+  function recompute(restart){
+    L.params.forEach(function(p){
+      var el=document.querySelector('[data-param="'+p.id+'"]');
+      if(p.type==="select"){ P[p.id]=el.value; return; }
+      var v=parseInt(el.value,10); if(isNaN(v)) v=p.value; P[p.id]=Math.max(p.min,Math.min(p.max,v));
+    });
+    if(L.timeline){
+      tl=L.timeline(P).filter(function(s){return s.ms>0});
+      cycle=tl.reduce(function(a,s){return a+s.ms},0)||1;
+    }
+    var st=L.stats?L.stats(P):[];
+    $("stats").innerHTML=st.map(function(s){return '<div class="stat"><b>'+esc(s.v)+'</b><span>'+esc(s.l)+'</span></div>'}).join("");
+    if(restart){ S={}; if(running) loopStart=performance.now(); }
+  }
+  function startRun(){ S={}; if(L.monitor){ R.mon=""; monPaint(); R.sent=[]; } running=true; $("run").textContent="Stop"; var n=performance.now(); setupUntil=n+600; loopStart=setupUntil; }
+  function stopRun(){ running=false; var r=$("run"); if(r) r.textContent="Run"; setLines([]); }
+  function setLines(a){
+    var key=a.join(",");
+    if(key===curLines) return; curLines=key;
+    document.querySelectorAll("#code .ln").forEach(function(l){ l.classList.toggle("on", a.indexOf(parseInt(l.getAttribute("data-l"),10))>=0); });
+  }
+
+  /* ---------- graph ---------- */
+  function sizeCanvas(){
+    if(!R.cv) return;
+    var r=R.cv.getBoundingClientRect(), dpr=window.devicePixelRatio||1;
+    W=r.width; H=r.height; R.cv.width=Math.round(W*dpr); R.cv.height=Math.round(H*dpr); R.ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  window.addEventListener("resize",sizeCanvas);
+  function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+  function drawGraph(now){
+    var ctx=R.ctx, win=L.graphWindow||4000, n=R.ch.length, laneH=H/n, left=40;
+    ctx.clearRect(0,0,W,H);
+    ctx.font="11px system-ui,sans-serif"; ctx.textBaseline="middle";
+    var colors=[css("--graph"),css("--graph2")];
+    for(var c=0;c<n;c++){
+      var top=c*laneH+14, bot=(c+1)*laneH-14;
+      ctx.strokeStyle=css("--line"); ctx.fillStyle=css("--muted"); ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(left,top); ctx.lineTo(W,top); ctx.moveTo(left,bot); ctx.lineTo(W,bot); ctx.stroke();
+      var chd=R.ch[c];
+      ctx.fillText(chd.top||"5 V",2,top); ctx.fillText(chd.bot||"0 V",2,bot);
+      ctx.fillStyle=colors[c%2]; ctx.textAlign="right"; ctx.fillText(R.ch[c].label,W-4,top-6<8?top+10:(top+bot)/2); ctx.textAlign="left";
+      ctx.strokeStyle=colors[c%2]; ctx.lineWidth=3; ctx.lineJoin="round"; ctx.beginPath();
+      var started=false,lastY=null;
+      for(var i=0;i<hist.length;i++){
+        var hh=hist[i], x=left+(W-left)*(1-(now-hh.t)/win); if(x<left) x=left;
+        var y=chd.max?bot-(Math.max(0,Math.min(chd.max,hh.v[c]))/chd.max)*(bot-top):(hh.v[c]?top:bot);
+        if(!started){ ctx.moveTo(x,y); started=true; } else { if(!chd.max&&lastY!==y) ctx.lineTo(x,lastY); ctx.lineTo(x,y); }
+        lastY=y;
+      }
+      if(started) ctx.lineTo(W,lastY);
+      ctx.stroke();
+    }
+  }
+
+  function drawScope(duty,live){
+    var cv=$("scope"); if(!cv) return;
+    var r=cv.getBoundingClientRect(), dpr=window.devicePixelRatio||1, w=r.width, h=r.height;
+    if(!w) return;
+    if(cv.width!==Math.round(w*dpr)){ cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); }
+    var c=cv.getContext("2d"); c.setTransform(dpr,0,0,dpr,0,0); c.clearRect(0,0,w,h);
+    c.font="11px system-ui,sans-serif"; c.textBaseline="middle"; c.fillStyle=css("--muted");
+    var left=40, top=14, bot=h-14, per=(w-left-8)/4;
+    c.fillText("5 V",2,top); c.fillText("0 V",2,bot);
+    c.strokeStyle=css("--line"); c.lineWidth=1; c.beginPath(); c.moveTo(left,top); c.lineTo(w,top); c.moveTo(left,bot); c.lineTo(w,bot); c.stroke();
+    c.strokeStyle=css("--graph"); c.lineWidth=3; c.lineJoin="round"; c.beginPath();
+    if(duty>=0.999){ c.moveTo(left,top); c.lineTo(w-8,top); }
+    else if(duty<=0.001){ c.moveTo(left,bot); c.lineTo(w-8,bot); }
+    else { c.moveTo(left,bot); for(var k=0;k<4;k++){ var x0=left+k*per; c.lineTo(x0,bot); c.lineTo(x0,top); c.lineTo(x0+duty*per,top); c.lineTo(x0+duty*per,bot); c.lineTo(x0+per,bot); } }
+    c.stroke();
+    c.fillStyle=css("--muted"); c.textAlign="right";
+    c.fillText(live?("duty cycle "+Math.round(duty*100)+"%   ·   4 cycles ≈ 8 ms, zoomed in"):"Press Run to see the signal on the pin",w-6,top+(h>60?12:0)); c.textAlign="left";
+  }
+
+  /* ---------- animation loop ---------- */
+  function frame(now){
+    if(R.anim) R.anim(now);
+    if(L && $("pill") && R.ch){
+      var lines=[], vals=[0], led=0, ro="", pillT=null, ledsArr=null, dutyV=null, levelV=null, colorV=null, dispV, inp={btn:btn,val:inVal,sent:(R.sent?R.sent.splice(0):[]),mbaud:($("monbaud")?parseInt($("monbaud").value,10):9600)};
+      var idle=L.idle?L.idle(inp):[0];
+      if(running){
+        if(now<setupUntil){ vals=idle; lines=L.setupLines||[]; }
+        else if(L.reactive){ var r=L.reactive(inp,P,now,S); vals=r.vals; led=r.led; lines=r.lines; ro=r.readout||""; pillT=r.pill||null; ledsArr=r.leds||null; dutyV=(r.duty===undefined?null:r.duty); levelV=(r.level===undefined?null:r.level); colorV=r.color||null; dispV=r.disp; if(r.out) monAppend(r.out); }
+        else{
+          var u=(now-loopStart)%cycle, acc=0, seg=tl[tl.length-1];
+          for(var i=0;i<tl.length;i++){ acc+=tl[i].ms; if(u<acc){ seg=tl[i]; break; } }
+          vals=[seg.pin]; led=seg.pin; lines=[].concat(seg.line);
+        }
+      } else vals=idle;
+      setLines(lines);
+      if(L.circuit.type==="disp") paintDisp(running&&wired>=need()&&now>=setupUntil&&dispV!==undefined?dispV:null);
+      var on=led===1 && wired>=need();
+      if($("glow")){
+        $("glow").setAttribute("opacity",on?(noRes?0.75:0.35):0);
+        $("ledfill").setAttribute("opacity",on?1:0.15);
+        $("ledfill").setAttribute("fill",on&&noRes?"#ffffff":"var(--led)");
+      }
+      if(levelV!==null&&$("glow")){ $("glow").setAttribute("opacity",0.4*levelV); $("ledfill").setAttribute("opacity",0.12+0.88*levelV); $("ledfill").setAttribute("fill","var(--led)"); }
+      if($("rgbled")) $("rgbled").setAttribute("fill",colorV||"#cbd5e1");
+      if(L.scope) drawScope(dutyV===null?0:dutyV,running&&dutyV!==null);
+      if(L.circuit.type==="row"||L.circuit.type==="traffic"){ for(var q=0;q<5;q++){ var ce=$("cl"+q); if(ce){ var lq=ledsArr&&ledsArr[q]; ce.setAttribute("opacity",lq?1:0.15); $("cg"+q).setAttribute("opacity",lq?0.35:0); } } }
+      if(plain()){ $("pill").textContent=running&&pillT?pillT:"Press Run"; $("pill").classList.toggle("hi",running); }
+      else { $("pill").textContent=pillT||(led?"5 V · HIGH":"0 V · LOW"); $("pill").classList.toggle("hi",!!led); }
+      if(L.input){
+        var fr=(inVal-L.input.min)/(L.input.max-L.input.min), mk=$("marker"), sn=$("sun");
+        if(mk){ var y0=+mk.getAttribute("data-y0"), y1=+mk.getAttribute("data-y1"); mk.setAttribute("cy",y0+(y1-y0)*fr); }
+        if(sn) sn.setAttribute("opacity",0.15+0.85*fr);
+      }
+      if($("readout")) $("readout").textContent=running?ro:"";
+      if($("cap")){ $("cap").style.transform=btn?"translateY(10px)":"none"; $("bridge").setAttribute("opacity",btn?1:0); }
+      var full=$("full");
+      var flow=(L.circuit.type==="row"||L.circuit.type==="traffic")?false:plain()?(running&&wired>=need()):on;
+      for(var j=0;j<dots.length;j++){
+        if(flow){ var pt=full.getPointAtLength(((now*(noRes?0.0009:0.0004)+j/dots.length)%1)*total); dots[j].setAttribute("cx",pt.x); dots[j].setAttribute("cy",pt.y); dots[j].setAttribute("opacity",1); }
+        else dots[j].setAttribute("opacity",0);
+      }
+      hist.push({t:now,v:vals});
+      var win=L.graphWindow||4000;
+      while(hist.length>2 && now-hist[1].t>win+200) hist.shift();
+      if(!L.noGraph) drawGraph(now);
+    }
+    requestAnimationFrame(frame);
+  }
+
+
+  /* ---------- explainer lessons ---------- */
+  var TOURS={
+    uno:{
+      regions:{
+        usb:{n:"USB port",d:"Powers the board from your computer and uploads your program. It also carries Serial messages back to the computer."},
+        jack:{n:"Power jack",d:"Takes power from an adapter or battery when the board is not plugged into a computer. The recommended input is 7 to 12 volts."},
+        reset:{n:"Reset button",d:"Restarts your program from the beginning, like turning the board off and on."},
+        chip:{n:"ATmega328P chip",d:"This is the microcontroller itself: a 16 MHz processor, 32 KB of flash memory that stores your program, 2 KB of RAM for variables and 1 KB of EEPROM."},
+        digital:{n:"Digital pins 0 to 13",d:"Each pin can be an input or an output, and is either HIGH (5 V) or LOW (0 V). Pins 3, 5, 6, 9, 10 and 11 can also do PWM."},
+        analog:{n:"Analog pins A0 to A5",d:"These read a voltage between 0 and 5 V and turn it into a number from 0 to 1023. You will use them in the ADC lessons."},
+        power:{n:"Power pins",d:"5V and 3.3V give out power for parts you connect, GND is the common return, and VIN is the board's input voltage."},
+        led:{n:"Built-in LED (L)",d:"A small LED wired to pin 13. It lets you test your first program without any wiring."}
+      },
+      svg:'<svg viewBox="0 0 340 220" role="img" aria-label="Simplified Arduino Uno board, top view">'+
+      '<rect x="2" y="2" width="336" height="216" rx="12" fill="var(--board)"/>'+
+      '<g class="reg" data-r="usb"><rect x="2" y="28" width="52" height="54" fill="#cbd5e1" stroke="none"/><text x="28" y="59" text-anchor="middle" font-size="11" fill="#0f172a">USB</text></g>'+
+      '<g class="reg" data-r="jack"><rect x="2" y="138" width="46" height="48" fill="#1f2937" stroke="none"/><text x="25" y="159" text-anchor="middle" font-size="10" fill="#fff">Power</text><text x="25" y="172" text-anchor="middle" font-size="10" fill="#fff">jack</text></g>'+
+      '<g class="reg" data-r="reset"><circle cx="90" cy="46" r="11" fill="#ef4444" stroke="none"/><text x="90" y="74" text-anchor="middle" font-size="10" fill="#fff">Reset</text></g>'+
+      '<g class="reg" data-r="chip"><rect x="150" y="98" width="124" height="36" rx="3" fill="#111827" stroke="none"/><text x="212" y="120" text-anchor="middle" font-size="12" fill="#fff">ATmega328P</text></g>'+
+      '<g class="reg" data-r="digital"><rect x="100" y="8" width="226" height="18" rx="3" fill="#111827" stroke="none"/><text x="213" y="21" text-anchor="middle" font-size="11" fill="#fff">Digital pins 0–13</text></g>'+
+      '<g class="reg" data-r="analog"><rect x="218" y="192" width="106" height="18" rx="3" fill="#111827" stroke="none"/><text x="271" y="205" text-anchor="middle" font-size="11" fill="#fff">A0–A5</text></g>'+
+      '<g class="reg" data-r="power"><rect x="104" y="192" width="104" height="18" rx="3" fill="#111827" stroke="none"/><text x="156" y="205" text-anchor="middle" font-size="11" fill="#fff">5V 3.3V GND VIN</text></g>'+
+      '<g class="reg" data-r="led"><circle cx="302" cy="56" r="7" fill="#fbbf24" stroke="none"/><text x="302" y="78" text-anchor="middle" font-size="10" fill="#fff">L (pin 13)</text></g>'+
+      '</svg>'
+    },
+    uno2:{
+      regions:{
+        usb:{n:"USB port",d:"Connects to your computer. It powers the board and carries your uploaded sketch and Serial messages."},
+        jack:{n:"Power jack",d:"Takes power from an adapter or battery when the board is not on USB. The recommended input is 7 to 12 volts."},
+        reg:{n:"Voltage regulator",d:"Turns the 7 to 12 V from the power jack down to the steady 5 V that the chip and your parts need."},
+        usbchip:{n:"USB-to-serial chip",d:"Translates USB signals so the main chip can talk to your computer. Original R3 boards use an ATmega16U2; many clones use a CH340, which is why some need a driver."},
+        crystal:{n:"Crystal (16 MHz)",d:"Gives the main chip its 16 MHz clock, the steady beat that times every instruction."},
+        chip:{n:"ATmega328P (main chip)",d:"The microcontroller that stores and runs your sketch."},
+        reset:{n:"Reset button",d:"Restarts your sketch from the beginning."},
+        leds:{n:"Indicator LEDs",d:"ON shows that the board has power. L is the built-in LED on pin 13. TX and RX flicker when data travels over USB."},
+        digital:{n:"Digital pins 0 to 13",d:"Your main input and output pins, each HIGH (5 V) or LOW (0 V). Pins marked with a tilde (~) can do PWM."},
+        analog:{n:"Analog pins A0 to A5",d:"Read a voltage from 0 to 5 V as a number from 0 to 1023. They can also work as digital pins."},
+        power:{n:"Power pins",d:"5V and 3.3V supply power to parts you connect, GND is the common return, and VIN is the board's input voltage."}
+      },
+      svg:'<svg viewBox="0 0 340 220" role="img" aria-label="Simplified Arduino Uno board with labelled parts">'+
+      '<rect x="2" y="2" width="336" height="216" rx="12" fill="var(--board)"/>'+
+      '<g class="reg" data-r="usb"><rect x="2" y="28" width="52" height="54" fill="#cbd5e1" stroke="none"/><text x="28" y="59" text-anchor="middle" font-size="11" fill="#0f172a">USB</text></g>'+
+      '<g class="reg" data-r="jack"><rect x="2" y="138" width="46" height="48" fill="#1f2937" stroke="none"/><text x="25" y="159" text-anchor="middle" font-size="10" fill="#fff">Power</text><text x="25" y="172" text-anchor="middle" font-size="10" fill="#fff">jack</text></g>'+
+      '<g class="reg" data-r="reg"><rect x="56" y="150" width="40" height="24" rx="3" fill="#374151" stroke="none"/><text x="76" y="165" text-anchor="middle" font-size="9" fill="#fff">Regulator</text></g>'+
+      '<g class="reg" data-r="usbchip"><rect x="62" y="96" width="46" height="30" rx="3" fill="#111827" stroke="none"/><text x="85" y="108" text-anchor="middle" font-size="9" fill="#fff">USB</text><text x="85" y="119" text-anchor="middle" font-size="9" fill="#fff">chip</text></g>'+
+      '<g class="reg" data-r="reset"><circle cx="90" cy="46" r="11" fill="#ef4444" stroke="none"/><text x="90" y="72" text-anchor="middle" font-size="10" fill="#fff">Reset</text></g>'+
+      '<g class="reg" data-r="crystal"><rect x="128" y="62" width="44" height="16" rx="4" fill="#cbd5e1" stroke="none"/><text x="150" y="74" text-anchor="middle" font-size="9" fill="#0f172a">16 MHz</text></g>'+
+      '<g class="reg" data-r="chip"><rect x="150" y="98" width="124" height="36" rx="3" fill="#111827" stroke="none"/><text x="212" y="120" text-anchor="middle" font-size="12" fill="#fff">ATmega328P</text></g>'+
+      '<g class="reg" data-r="digital"><rect x="100" y="8" width="226" height="18" rx="3" fill="#111827" stroke="none"/><text x="213" y="21" text-anchor="middle" font-size="11" fill="#fff">Digital pins 0–13</text></g>'+
+      '<g class="reg" data-r="analog"><rect x="218" y="192" width="106" height="18" rx="3" fill="#111827" stroke="none"/><text x="271" y="205" text-anchor="middle" font-size="11" fill="#fff">A0–A5</text></g>'+
+      '<g class="reg" data-r="power"><rect x="104" y="192" width="104" height="18" rx="3" fill="#111827" stroke="none"/><text x="156" y="205" text-anchor="middle" font-size="11" fill="#fff">5V 3.3V GND VIN</text></g>'+
+      '<g class="reg" data-r="leds"><rect x="290" y="38" width="44" height="76" rx="6" fill="#0b4f60" stroke="none"/>'+
+      '<circle cx="322" cy="50" r="4" fill="#fbbf24" stroke="none"/><text x="314" y="53" text-anchor="end" font-size="9" fill="#fff">L</text>'+
+      '<circle cx="322" cy="66" r="4" fill="#fbbf24" stroke="none"/><text x="314" y="69" text-anchor="end" font-size="9" fill="#fff">TX</text>'+
+      '<circle cx="322" cy="82" r="4" fill="#fbbf24" stroke="none"/><text x="314" y="85" text-anchor="end" font-size="9" fill="#fff">RX</text>'+
+      '<circle cx="322" cy="98" r="4" fill="#4ade80" stroke="none"/><text x="314" y="101" text-anchor="end" font-size="9" fill="#fff">ON</text></g>'+
+      '</svg>'
+    },
+    ide:{
+      regions:{
+        verify:{n:"Verify (tick)",d:"Checks your code for mistakes and compiles it. Nothing is sent to the board yet."},
+        upload:{n:"Upload (arrow)",d:"Compiles the code and sends it to the Uno over USB. The board restarts and starts running your program."},
+        board:{n:"Board and port",d:"Tells the IDE which board you have (Arduino Uno) and which USB port it is plugged into. Both must be right before you upload."},
+        editor:{n:"Editor",d:"Where you write your code. A program in Arduino is called a sketch."},
+        serial:{n:"Serial Monitor",d:"Opens a window that shows messages sent by the board. You will use it to see what your program is doing."},
+        output:{n:"Output panel",d:"Shows compile and upload progress, and error messages in red. When something fails, read the first error line."}
+      },
+      svg:'<svg viewBox="0 0 340 230" role="img" aria-label="Simplified Arduino IDE window">'+
+      '<rect x="2" y="2" width="336" height="226" rx="8" fill="var(--card)" stroke="var(--line)"/>'+
+      '<rect x="2" y="2" width="336" height="36" rx="8" fill="var(--board)"/>'+
+      '<g class="reg" data-r="verify"><circle cx="24" cy="20" r="11" fill="#e2e8f0" stroke="none"/><text x="24" y="25" text-anchor="middle" font-size="14" fill="#0f172a">✓</text></g>'+
+      '<g class="reg" data-r="upload"><circle cx="56" cy="20" r="11" fill="#e2e8f0" stroke="none"/><text x="56" y="25" text-anchor="middle" font-size="14" fill="#0f172a">→</text></g>'+
+      '<g class="reg" data-r="board"><rect x="80" y="8" width="170" height="24" rx="5" fill="#0b4f60" stroke="none"/><text x="165" y="24" text-anchor="middle" font-size="11" fill="#fff">Arduino Uno · COM3</text></g>'+
+      '<g class="reg" data-r="serial"><circle cx="312" cy="20" r="11" fill="#e2e8f0" stroke="none"/><text x="312" y="24" text-anchor="middle" font-size="10" fill="#0f172a">SM</text></g>'+
+      '<g class="reg" data-r="editor"><rect x="10" y="46" width="320" height="108" rx="4" fill="#0f172a" stroke="none"/>'+
+      '<text x="20" y="68" font-size="11" fill="#e2e8f0" font-family="monospace">void setup() {</text><text x="20" y="86" font-size="11" fill="#e2e8f0" font-family="monospace">  // runs once</text>'+
+      '<text x="20" y="104" font-size="11" fill="#e2e8f0" font-family="monospace">}</text><text x="20" y="128" font-size="11" fill="#e2e8f0" font-family="monospace">void loop() { }</text></g>'+
+      '<g class="reg" data-r="output"><rect x="10" y="162" width="320" height="58" rx="4" fill="#1e293b" stroke="none"/>'+
+      '<text x="20" y="182" font-size="11" fill="#94a3b8" font-family="monospace">Output</text><text x="20" y="200" font-size="11" fill="#7dd3a8" font-family="monospace">Done uploading.</text></g>'+
+      '</svg>'
+    }
+  };
+  function tourHtml(key){
+    var T=TOURS[key];
+    var chips='<div class="chips">'+Object.keys(T.regions).map(function(k){return '<button data-r="'+k+'">'+T.regions[k].n+'</button>'}).join("")+'</div>';
+    return '<div id="tour-'+key+'">'+T.svg+chips+'<div class="desc" aria-live="polite">Tap a part above, or a button below the picture, to see what it does.</div></div>';
+  }
+  function bindTour(key){
+    var T=TOURS[key], box=$("tour-"+key), desc=box.querySelector(".desc");
+    function sel(k){
+      box.querySelectorAll(".reg").forEach(function(g){ g.classList.toggle("sel",g.getAttribute("data-r")===k); });
+      box.querySelectorAll(".chips button").forEach(function(b){ b.classList.toggle("sel",b.getAttribute("data-r")===k); });
+      desc.innerHTML="<b>"+esc(T.regions[k].n)+".</b> "+esc(T.regions[k].d);
+    }
+    box.querySelectorAll(".reg").forEach(function(g){ g.addEventListener("click",function(){ sel(g.getAttribute("data-r")); }); });
+    box.querySelectorAll(".chips button").forEach(function(b){ b.addEventListener("click",function(){ sel(b.getAttribute("data-r")); }); });
+  }
+  function checkHtml(items){
+    return '<div id="checklist">'+items.map(function(t,i){return '<label class="chk"><input type="checkbox" data-i="'+i+'"><span>'+t+'</span></label>'}).join("")+'</div><div class="score" id="chkprog" aria-live="polite">0 of '+items.length+' done</div>';
+  }
+  function bindCheck(items){
+    var boxes=document.querySelectorAll("#checklist input");
+    function upd(){
+      var n=0; boxes.forEach(function(b){ if(b.checked) n++; b.parentNode.classList.toggle("done",b.checked); });
+      $("chkprog").textContent=n===items.length?"All done. Your Uno is ready for its first program.":n+" of "+items.length+" done";
+    }
+    boxes.forEach(function(b){ b.addEventListener("change",upd); });
+  }
+  function staHtml(c){
+    return '<div class="rv"><span>'+esc(c.sensor)+' (move the slider)</span><b id="staval">'+c.value+esc(c.unit)+'</b></div>'+
+      '<input type="range" id="staslider" min="0" max="100" value="'+c.value+'" aria-label="'+esc(c.sensor)+'">'+
+      '<div class="chain"><div class="box" id="sta1"><b>Sense</b><span id="sta1t"></span></div><div class="arrow">→</div>'+
+      '<div class="box" id="sta2"><b>Think</b><span id="sta2t"></span></div><div class="arrow">→</div>'+
+      '<div class="box" id="sta3"><b>Act</b><div class="bulb" id="stabulb"></div><span id="sta3t"></span></div></div>'+
+      '<pre class="code"><div class="ln" data-s="a"><i>1</i><span>int level = readSensor();  <span class="c">// a number</span></span></div>'+
+      '<div class="ln" data-s="b"><i>2</i><span>if (level &lt; '+c.threshold+') {</span></div>'+
+      '<div class="ln" data-s="c"><i>3</i><span>  turnLedOn();</span></div>'+
+      '<div class="ln" data-s="d"><i>4</i><span>} else {</span></div>'+
+      '<div class="ln" data-s="e"><i>5</i><span>  turnLedOff();</span></div>'+
+      '<div class="ln" data-s="f"><i>6</i><span>}</span></div></pre>'+
+      '<p class="sub" style="margin-top:8px">This is simplified code to show the idea. Real Arduino code comes in the next lessons.</p>';
+  }
+  function bindSta(c){
+    var sl=$("staslider");
+    function upd(){
+      var v=parseInt(sl.value,10), on=v<c.threshold;
+      $("staval").textContent=v+c.unit;
+      $("sta1t").textContent="reads "+v;
+      $("sta2t").textContent=v+" < "+c.threshold+"? "+(on?"yes":"no");
+      $("sta3t").textContent=on?"LED on":"LED off";
+      $("stabulb").classList.toggle("on",on);
+      var act={a:true,b:true,c:on,d:!on,e:!on,f:false};
+      document.querySelectorAll("[data-s]").forEach(function(l){ l.classList.toggle("on",!!act[l.getAttribute("data-s")]); });
+    }
+    sl.addEventListener("input",upd); upd();
+  }
+
+  function upHtml(){
+    return '<div class="stages" id="upst"><span>1 Verify</span><span>2 Upload</span><span>3 Run</span></div>'+
+      '<div class="bar"><div id="upbar"></div></div>'+
+      '<div class="leds"><span class="ld" id="ldTX"><i></i>TX</span><span class="ld" id="ldRX"><i></i>RX</span><span class="ld" id="ldL"><i></i>L (pin 13)</span></div>'+
+      '<pre class="console" id="upcon" aria-live="polite">Press the button to simulate clicking Upload.</pre>'+
+      '<div class="btns"><button class="primary" id="upgo">Simulate the upload</button></div>'+
+      '<p class="sub" style="margin-top:8px">Byte counts in a real IDE vary a little between versions.</p>';
+  }
+  function bindUp(){
+    var t0=0, lines=[
+      [0,"Compiling sketch…"],
+      [1100,"Sketch uses around 900 bytes (2%) of program storage space. Maximum is 32256 bytes."],
+      [1300,"Done compiling."],
+      [1500,"Uploading…"],
+      [3700,"Done uploading."]
+    ], shown=0, stNodes=document.querySelectorAll("#upst span");
+    function stage(n){ stNodes.forEach(function(e,i){ e.className=i<n?"done":(i===n?"on":""); }); }
+    function led(id,on){ $(id).classList.toggle("on",on); }
+    $("upgo").onclick=function(){
+      if(R.upTimer) clearInterval(R.upTimer);
+      t0=performance.now(); shown=0; $("upcon").textContent=""; $("upbar").style.width="0%"; stage(0);
+      led("ldTX",false); led("ldRX",false); led("ldL",false);
+      $("upgo").textContent="Simulate again";
+      R.upTimer=setInterval(function(){
+        if(!$("upcon")){ clearInterval(R.upTimer); R.upTimer=null; return; }
+        var t=performance.now()-t0;
+        while(shown<lines.length && t>=lines[shown][0]){ $("upcon").textContent+=(shown?"\n":"")+lines[shown][1]; shown++; }
+        if(t<1500){ stage(0); $("upbar").style.width=Math.min(100,t/1500*50)+"%"; led("ldTX",false); led("ldRX",false); led("ldL",false); }
+        else if(t<3700){ stage(1); $("upbar").style.width=(50+(t-1500)/2200*50)+"%"; led("ldTX",Math.random()>0.45); led("ldRX",Math.random()>0.55); led("ldL",false); }
+        else { stage(3); $("upbar").style.width="100%"; led("ldTX",false); led("ldRX",false); led("ldL",Math.floor((t-3700)/1000)%2===0); stNodes[2].className="on"; }
+      },80);
+    };
+  }
+
+  function stepHtml(c){
+    return '<pre class="code" id="stcode">'+c.code.map(function(line,i){return '<div class="ln" data-l="'+(i+1)+'"><i>'+(i+1)+'</i><span>'+(esc(line)||" ")+'</span></div>'}).join("")+'</pre>'+
+      '<div class="chain"><div class="box"><b>setup()</b><span id="stsetup">waiting</span></div><div class="box"><b>loop()</b><span id="stloop">waiting</span></div><div class="box"><b>LED</b><div class="bulb" id="stbulb"></div></div></div>'+
+      '<div class="desc" id="stnote" aria-live="polite">Press Next step to run the first line.</div>'+
+      '<div class="btns"><button class="primary" id="stnext">Next step</button><button id="stauto">Auto-run</button><button id="streset">Reset</button></div>';
+  }
+  function bindStep(c){
+    var n=-1, led=0;
+    function stopAuto(){ if(R.stTimer){ clearInterval(R.stTimer); R.stTimer=null; } if($("stauto")) $("stauto").textContent="Auto-run"; }
+    function paint(){
+      var st=null, round=0;
+      if(n===0) st=c.setup; else if(n>0){ st=c.loop[(n-1)%c.loop.length]; round=Math.floor((n-1)/c.loop.length)+1; }
+      document.querySelectorAll("#stcode .ln").forEach(function(l){ l.classList.toggle("on",!!st && parseInt(l.getAttribute("data-l"),10)===st.l); });
+      $("stsetup").textContent=n<0?"waiting":"ran once ✓";
+      $("stloop").textContent=n<1?"waiting":"round "+round;
+      $("stbulb").classList.toggle("on",!!led);
+      $("stnote").innerHTML=st?st.note:"Press Next step to run the first line.";
+    }
+    function next(){
+      n++;
+      var st=n===0?c.setup:c.loop[(n-1)%c.loop.length];
+      if(st.led!==undefined) led=st.led;
+      paint();
+    }
+    $("stnext").onclick=function(){ stopAuto(); next(); };
+    $("stauto").onclick=function(){
+      if(R.stTimer){ stopAuto(); return; }
+      next(); $("stauto").textContent="Pause";
+      R.stTimer=setInterval(function(){ if(!$("stnote")){ stopAuto(); return; } next(); },1100);
+    };
+    $("streset").onclick=function(){ stopAuto(); n=-1; led=0; paint(); };
+  }
+
+  function pinsHtml(pins){
+    var filters=[["all","All"],["pwm","PWM (~)"],["irq","Interrupt"],["analog","Analog in"],["comm","Serial, I2C, SPI"]];
+    return '<div id="pins"><div class="chips">'+filters.map(function(f,i){return '<button data-f="'+f[0]+'"'+(i===0?' class="sel"':'')+'>'+f[1]+'</button>'}).join("")+'</div>'+
+      '<div class="pgrid">'+pins.map(function(p,i){return '<button data-p="'+i+'" aria-label="Pin '+esc(p.name)+'">'+esc(p.name)+'</button>'}).join("")+'</div>'+
+      '<div class="desc" aria-live="polite">Tap a pin to see what it can do, or tap a filter to light up every pin with that ability.</div></div>';
+  }
+  function bindPins(pins){
+    var box=$("pins"), desc=box.querySelector(".desc"), pb=box.querySelectorAll(".pgrid button"), fb=box.querySelectorAll(".chips button");
+    fb.forEach(function(b){
+      b.onclick=function(){
+        var f=b.getAttribute("data-f");
+        fb.forEach(function(x){ x.classList.toggle("sel",x===b); });
+        pb.forEach(function(btn,i){
+          var has=f==="all"||pins[i].tags.indexOf(f)>=0;
+          btn.classList.toggle("hl",f!=="all"&&has); btn.classList.toggle("dim",f!=="all"&&!has);
+        });
+      };
+    });
+    pb.forEach(function(b){
+      b.onclick=function(){
+        var p=pins[parseInt(b.getAttribute("data-p"),10)];
+        pb.forEach(function(x){ x.classList.toggle("sel",x===b); });
+        desc.innerHTML="<b>"+esc(p.name)+".</b> "+esc(p.d);
+      };
+    });
+  }
+
+  /* ---------- electricity widgets ---------- */
+  var WIDGETS={};
+  function fmtN(n,d){ return String(Math.round(n*Math.pow(10,d))/Math.pow(10,d)); }
+  function fmtR(v){ return v>=1000000? fmtN(v/1000000,2)+" MΩ" : v>=1000? fmtN(v/1000,2)+" kΩ" : fmtN(v,1)+" Ω"; }
+
+  WIDGETS.ohm={
+    h:function(L){
+      var c=L.ohm;
+      return '<div id="ohm"><svg viewBox="0 0 340 170" role="img" aria-label="A battery and a resistor in a loop with moving current dots">'+
+        '<path id="ohmpath" d="M50 40 H290 V130 H50 Z" fill="none" stroke="var(--wire)" stroke-width="4" stroke-linejoin="round"/>'+
+        '<rect x="36" y="64" width="28" height="42" fill="var(--card)"/>'+
+        '<line x1="38" y1="74" x2="62" y2="74" stroke="var(--ink)" stroke-width="4"/>'+
+        '<line x1="44" y1="92" x2="56" y2="92" stroke="var(--ink)" stroke-width="4"/>'+
+        '<text x="74" y="78" font-size="13" fill="var(--muted)">+</text><text x="74" y="97" font-size="13" fill="var(--muted)">−</text>'+
+        '<text x="24" y="88" font-size="12" fill="var(--muted)" text-anchor="middle">V</text>'+
+        '<rect x="125" y="28" width="90" height="24" rx="5" fill="#d6b48a" stroke="#8b6b3d"/>'+
+        '<text x="170" y="20" font-size="12" fill="var(--muted)" text-anchor="middle">R</text>'+
+        '<g id="ohmdots"></g></svg>'+
+        '<div class="rv"><span>Voltage (V)</span><b id="ov"></b></div><input type="range" id="ovs" min="0" max="12" step="0.5" value="'+c.v+'" aria-label="Voltage in volts">'+
+        '<div class="rv"><span>Resistance (R)</span><b id="or"></b></div><input type="range" id="ors" min="100" max="1000" step="10" value="'+c.r+'" aria-label="Resistance in ohms">'+
+        '<div class="stats"><div class="stat"><b id="oi"></b><span>current (I)</span></div><div class="stat"><b id="op"></b><span>heat in the resistor</span></div></div>'+
+        (c.formula?'<div class="desc" id="oform" aria-live="polite"></div>':'')+
+        '<div class="warn hide" id="ow">A small 1/4 watt resistor can only handle about 250 mW. This one would overheat.</div></div>';
+    },
+    b:function(L){
+      var c=L.ohm, dots=[], svgG=$("ohmdots"), path=$("ohmpath"), len=path.getTotalLength(), pos=0, last=0, I=0;
+      for(var i=0;i<12;i++){ var d=document.createElementNS(SVGNS,"circle"); d.setAttribute("r","3.5"); d.setAttribute("fill","#fbbf24"); svgG.appendChild(d); dots.push(d); }
+      function upd(){
+        var V=parseFloat($("ovs").value), Rr=parseInt($("ors").value,10);
+        I=V/Rr; var P=V*V/Rr*1000;
+        $("ov").textContent=fmtN(V,1)+" V"; $("or").textContent=Rr+" Ω";
+        $("oi").textContent=fmtN(I*1000,1)+" mA"; $("op").textContent=fmtN(P,0)+" mW";
+        if(c.formula) $("oform").innerHTML="<b>I = V ÷ R</b> = "+fmtN(V,1)+" ÷ "+Rr+" = "+fmtN(I,4)+" A = <b>"+fmtN(I*1000,1)+" mA</b>";
+        $("ow").classList.toggle("hide",P<=250);
+      }
+      $("ovs").addEventListener("input",upd); $("ors").addEventListener("input",upd); upd();
+      R.anim=function(now){
+        if(!$("ohmdots")){ R.anim=null; return; }
+        var dt=last?(now-last)/1000:0; last=now;
+        pos=(pos+Math.min(0.6,I*1000/100)*dt)%1;
+        for(var i=0;i<dots.length;i++){ var p=path.getPointAtLength(((pos+i/dots.length)%1)*len); dots[i].setAttribute("cx",p.x); dots[i].setAttribute("cy",p.y); }
+      };
+    }
+  };
+
+  WIDGETS.drill={
+    h:function(){
+      return '<div id="drill"><p id="dq" style="font-weight:600;margin:0 0 8px"></p>'+
+        '<div class="btns" style="margin-top:0"><input class="ans" id="da" type="text" inputmode="decimal" aria-label="Your answer"><span id="dunit" style="align-self:center"></span>'+
+        '<button class="primary" id="dchk">Check</button><button id="dnext">New question</button></div>'+
+        '<div class="exp" id="dfb" aria-live="polite"></div><div class="score" id="dsc"></div></div>';
+    },
+    b:function(){
+      var Rs=[100,200,250,500,1000,2000], Vs=[5,6,10,12], q=null, right=0, total=0, done=false;
+      function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+      function nq(){
+        var V=pick(Vs), Rr=pick(Rs), I=V/Rr*1000, t=pick(["I","V","R"]);
+        q={t:t,V:V,R:Rr,I:I}; done=false;
+        var txt, unit, ans;
+        if(t==="I"){ txt="A "+Rr+" Ω resistor has "+V+" V across it. What current flows, in mA?"; unit="mA"; ans=I; q.sol="I = V ÷ R = "+V+" ÷ "+Rr+" = "+fmtN(V/Rr,4)+" A = "+fmtN(I,2)+" mA."; }
+        else if(t==="V"){ txt="A "+Rr+" Ω resistor carries "+fmtN(I,2)+" mA. What voltage is across it, in volts?"; unit="V"; ans=V; q.sol="V = I × R = "+fmtN(I/1000,4)+" × "+Rr+" = "+V+" V."; }
+        else { txt=V+" V across a resistor drives "+fmtN(I,2)+" mA through it. What is its resistance, in Ω?"; unit="Ω"; ans=Rr; q.sol="R = V ÷ I = "+V+" ÷ "+fmtN(I/1000,4)+" = "+Rr+" Ω."; }
+        q.ans=ans; $("dq").textContent=txt; $("dunit").textContent=unit; $("da").value=""; $("dfb").textContent="";
+      }
+      function check(){
+        if(done) return;
+        var a=parseFloat(String($("da").value).replace(",",".")); if(isNaN(a)){ $("dfb").textContent="Type a number first."; return; }
+        done=true; total++;
+        var ok=Math.abs(a-q.ans)<=Math.max(Math.abs(q.ans)*0.01,0.05);
+        if(ok) right++;
+        $("dfb").textContent=(ok?"Correct. ":"Not quite. ")+q.sol;
+        $("dsc").textContent=right+" correct out of "+total;
+      }
+      $("dchk").onclick=check; $("dnext").onclick=nq;
+      $("da").addEventListener("keydown",function(e){ if(e.key==="Enter") check(); });
+      nq();
+    }
+  };
+
+  WIDGETS.ledcalc={
+    h:function(){
+      return '<div id="ledc">'+
+        '<div class="frow"><label for="lcs">Supply voltage</label><select class="ldsel" id="lcs"><option value="3.3">3.3 V</option><option value="5" selected>5 V (Uno pin)</option><option value="9">9 V</option><option value="12">12 V</option></select></div>'+
+        '<div class="frow"><label for="lcc">LED colour</label><select class="ldsel" id="lcc"><option value="2.0">Red (about 2.0 V)</option><option value="2.1">Yellow (about 2.1 V)</option><option value="2.2">Green (about 2.2 V)</option><option value="3.0">Blue (about 3.0 V)</option><option value="3.2">White (about 3.2 V)</option></select></div>'+
+        '<div class="rv"><span>Current you want</span><b id="lci"></b></div><input type="range" id="lcr" min="2" max="20" step="1" value="10" aria-label="Wanted LED current in milliamps">'+
+        '<svg viewBox="0 0 340 64" role="img" aria-label="Resistor with colour bands" style="margin-top:8px"><line x1="20" y1="32" x2="320" y2="32" stroke="var(--wire)" stroke-width="3"/><rect x="100" y="12" width="140" height="40" rx="12" fill="#d6b48a" stroke="#8b6b3d"/><g id="lcb"></g></svg>'+
+        '<div class="rv" id="lcn" style="justify-content:center"></div>'+
+        '<div class="stats"><div class="stat"><b id="lc1"></b><span>exact value needed</span></div><div class="stat"><b id="lc2"></b><span>standard value to use</span></div><div class="stat"><b id="lc3"></b><span>real current</span></div><div class="stat"><b id="lc4"></b><span>heat in the resistor</span></div></div>'+
+        '<div class="warn hide" id="lcw"></div><p class="math">Formula: R = (supply − LED voltage) ÷ current. LED voltages are typical values. Check the datasheet of your LED.</p></div>';
+    },
+    b:function(){
+      var BASE=[10,12,15,18,22,27,33,39,47,56,68,82];
+      var NAMES=["black","brown","red","orange","yellow","green","blue","violet","grey","white"];
+      var HEX=["#111111","#7c3f1d","#dc2626","#f97316","#facc15","#16a34a","#2563eb","#7c3aed","#9ca3af","#f8fafc"];
+      function nextStd(x){
+        var best=Infinity;
+        for(var k=0;k<=5;k++){ for(var i=0;i<BASE.length;i++){ var v=BASE[i]*Math.pow(10,k); if(v>=x-1e-9 && v<best) best=v; } }
+        return best;
+      }
+      function bands(v){
+        var e=Math.floor(Math.log10(v)), mult=e-1, d=Math.round(v/Math.pow(10,mult)), d1=Math.floor(d/10), d2=d%10;
+        if(d>=100){ d=Math.round(d/10); mult++; d1=Math.floor(d/10); d2=d%10; }
+        return [d1,d2,mult];
+      }
+      function upd(){
+        var Vs=parseFloat($("lcs").value), Vf=parseFloat($("lcc").value), mA=parseInt($("lcr").value,10), I=mA/1000;
+        $("lci").textContent=mA+" mA";
+        var w=$("lcw"); w.classList.add("hide");
+        if(Vs<=Vf+0.2){
+          $("lc1").textContent="–"; $("lc2").textContent="–"; $("lc3").textContent="–"; $("lc4").textContent="–";
+          $("lcb").innerHTML=""; $("lcn").textContent="";
+          w.textContent="The supply voltage is too low to light this LED. Choose a higher supply or a lower-voltage LED colour."; w.classList.remove("hide"); return;
+        }
+        var ideal=(Vs-Vf)/I, std=nextStd(ideal), Ir=(Vs-Vf)/std, P=Ir*Ir*std*1000;
+        $("lc1").textContent=fmtR(ideal); $("lc2").textContent=fmtR(std); $("lc3").textContent=fmtN(Ir*1000,1)+" mA"; $("lc4").textContent=fmtN(P,0)+" mW";
+        var b=bands(std), xs=[120,146,172,214], cols=[HEX[b[0]],HEX[b[1]],HEX[b[2]],"#d4af37"], g="";
+        for(var i=0;i<4;i++) g+='<rect x="'+xs[i]+'" y="12" width="12" height="40" fill="'+cols[i]+'" stroke="#00000033"/>';
+        $("lcb").innerHTML=g;
+        $("lcn").textContent=NAMES[b[0]]+" · "+NAMES[b[1]]+" · "+NAMES[b[2]]+" · gold";
+        var msg=[];
+        if(Vs===5 && Ir*1000>20) msg.push("This is above the 20 mA that an Uno pin should supply. Choose a bigger resistor.");
+        if(P>250) msg.push("This resistor would get hotter than a 1/4 watt resistor can handle.");
+        if(Ir*1000>30) msg.push("This current is higher than most small LEDs are rated for.");
+        if(msg.length){ w.textContent=msg.join(" "); w.classList.remove("hide"); }
+      }
+      ["lcs","lcc","lcr"].forEach(function(id){ $(id).addEventListener("input",upd); $(id).addEventListener("change",upd); });
+      upd();
+    }
+  };
+
+  WIDGETS.bboard={
+    h:function(){
+      return '<div id="bb"><svg viewBox="0 0 340 322" role="group" aria-label="Breadboard. Tap two holes to test whether they are connected." style="touch-action:manipulation"></svg>'+
+        '<div class="desc" id="bbmsg" aria-live="polite">Tap any hole. The strip it belongs to lights up. Tap a second hole to test whether the two are connected.</div>'+
+        '<div class="btns"><button id="bbclr">Clear</button></div></div>';
+    },
+    b:function(){
+      var svg=$("bb").querySelector("svg"), COLS=12, holes=[], sel=[];
+      function X(i){ return 24+i*26; }
+      function mk(tag,attrs){ var e=document.createElementNS(SVGNS,tag); for(var k in attrs) e.setAttribute(k,attrs[k]); return e; }
+      svg.appendChild(mk("rect",{x:2,y:2,width:336,height:318,rx:10,fill:"var(--bg)",stroke:"var(--line)"}));
+      svg.appendChild(mk("rect",{x:8,y:152,width:324,height:20,fill:"var(--line)"}));
+      var tc=mk("text",{x:170,y:166,"text-anchor":"middle","font-size":10,fill:"var(--muted)"}); tc.textContent="centre gap: the two halves are not connected"; svg.appendChild(tc);
+      function addHole(x,y,node,label){
+        var c=mk("circle",{cx:x,cy:y,r:8,fill:"var(--card)",stroke:"var(--muted)","stroke-width":1.5,"data-n":node,"data-l":label,tabindex:0,role:"button","aria-label":label});
+        c.style.cursor="pointer"; svg.appendChild(c); holes.push(c);
+      }
+      // rails
+      var rails=[["rail+top",18,"+","#ef4444","top + rail"],["rail-top",36,"−","#2563eb","top − rail"],["rail+bot",286,"+","#ef4444","bottom + rail"],["rail-bot",304,"−","#2563eb","bottom − rail"]];
+      rails.forEach(function(r){
+        var t=mk("text",{x:8,y:r[1]+4,"font-size":12,fill:r[3],"font-weight":700}); t.textContent=r[2]; svg.appendChild(t);
+        for(var i=0;i<COLS;i++) addHole(X(i)+4,r[1],r[0],r[4]+", hole "+(i+1));
+      });
+      // main holes
+      var top="abcde", bot="fghij";
+      for(var i=0;i<COLS;i++){
+        for(var r=0;r<5;r++){
+          addHole(X(i)+4,72+r*17,"c"+i+"t",top[r].toUpperCase()+(i+1));
+          addHole(X(i)+4,184+r*17,"c"+i+"b",bot[r].toUpperCase()+(i+1));
+        }
+        var n=mk("text",{x:X(i)+4,y:56,"text-anchor":"middle","font-size":9,fill:"var(--muted)"}); n.textContent=i+1; svg.appendChild(n);
+      }
+      ["A","B","C","D","E"].forEach(function(l,r){ var t=mk("text",{x:6,y:76+r*17,"font-size":9,fill:"var(--muted)"}); t.textContent=l; svg.appendChild(t); });
+      ["F","G","H","I","J"].forEach(function(l,r){ var t=mk("text",{x:6,y:188+r*17,"font-size":9,fill:"var(--muted)"}); t.textContent=l; svg.appendChild(t); });
+
+      function paint(){
+        holes.forEach(function(h){ h.setAttribute("fill","var(--card)"); h.setAttribute("stroke","var(--muted)"); h.setAttribute("stroke-width",1.5); });
+        var colors=["#fbbf24","#60a5fa"];
+        sel.forEach(function(s,k){
+          holes.forEach(function(h){ if(h.getAttribute("data-n")===s.getAttribute("data-n")) h.setAttribute("fill",colors[k]); });
+        });
+        sel.forEach(function(s){ s.setAttribute("stroke","var(--ink)"); s.setAttribute("stroke-width",3); });
+      }
+      function msg(){
+        var m=$("bbmsg");
+        if(sel.length===0) m.textContent="Tap any hole. The strip it belongs to lights up. Tap a second hole to test whether the two are connected.";
+        else if(sel.length===1){
+          var n=sel[0].getAttribute("data-n"), l=sel[0].getAttribute("data-l");
+          m.innerHTML="<b>"+esc(l)+"</b> is lit with every hole it is connected to. "+(n.indexOf("rail")===0?"A power rail runs the whole length of the board.":"The five holes in this half of the column are linked.")+" Now tap a second hole.";
+        } else {
+          var a=sel[0], b=sel[1], ok=a.getAttribute("data-n")===b.getAttribute("data-n"), la=a.getAttribute("data-l"), lb=b.getAttribute("data-l");
+          m.innerHTML="<b>"+esc(la)+" and "+esc(lb)+(ok?" are connected.":" are not connected.")+"</b> "+(ok?"They are in the same linked strip, so current can flow between them.":"They are in different strips. A wire or a component between them would be needed.");
+        }
+      }
+      function click(h){
+        if(sel.length>=2) sel=[];
+        if(sel.length===1 && sel[0]===h){ sel=[]; } else sel.push(h);
+        paint(); msg();
+      }
+      holes.forEach(function(h){
+        h.addEventListener("click",function(){ click(h); });
+        h.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); click(h); } });
+      });
+      $("bbclr").onclick=function(){ sel=[]; paint(); msg(); };
+    }
+  };
+
+
+  WIDGETS.pinmode={
+    h:function(){
+      var modes=["OUTPUT","INPUT","INPUT_PULLUP"];
+      return '<div id="pm"><div class="chips">'+modes.map(function(m,i){return '<button data-m="'+m+'"'+(i===0?' class="sel"':'')+'>'+m+'</button>'}).join("")+'</div>'+
+        '<svg viewBox="0 0 340 150" role="img" aria-label="Pin direction diagram" style="margin-top:10px">'+
+        '<rect x="10" y="20" width="110" height="110" rx="10" fill="var(--board)"/><text x="65" y="44" fill="#fff" font-size="12" text-anchor="middle" font-weight="600">Uno pin 7</text>'+
+        '<g id="pmup" class="hide"><line x1="40" y1="60" x2="40" y2="84" stroke="#fff" stroke-width="3"/><rect x="30" y="84" width="20" height="14" fill="#fff"/><text x="62" y="76" fill="#fff" font-size="10">pull-up</text><text x="62" y="88" fill="#fff" font-size="10">to 5 V</text></g>'+
+        '<circle cx="120" cy="100" r="5" fill="#fbbf24"/><line x1="125" y1="100" x2="200" y2="100" stroke="var(--wire)" stroke-width="3"/>'+
+        '<g id="pmled"><polygon points="200,82 200,118 232,100" fill="var(--card)" stroke="var(--ink)" stroke-width="2"/><line x1="232" y1="82" x2="232" y2="118" stroke="var(--ink)" stroke-width="3"/><text x="215" y="140" font-size="11" fill="var(--muted)" text-anchor="middle">LED</text></g>'+
+        '<g id="pmbtn" class="hide"><circle cx="205" cy="100" r="5" fill="var(--ink)"/><circle cx="245" cy="100" r="5" fill="var(--ink)"/><rect x="212" y="78" width="26" height="10" rx="3" fill="var(--accent)"/><text x="225" y="128" font-size="11" fill="var(--muted)" text-anchor="middle">Button</text></g>'+
+        '<g id="pmarr"><polygon id="pmar" points="150,92 168,100 150,108" fill="var(--accent)"/></g>'+
+        '</svg><pre class="code" style="margin-top:8px"><div class="ln"><span id="pmcode"></span></div></pre><div class="desc" id="pmdesc" aria-live="polite"></div></div>';
+    },
+    b:function(){
+      var D={
+        OUTPUT:"<b>OUTPUT.</b> The pin sends voltage out. Use digitalWrite to set it HIGH (5 V) or LOW (0 V). Use it for LEDs, buzzers and the input of a driver for bigger loads.",
+        INPUT:"<b>INPUT.</b> The pin only listens and reads HIGH or LOW from outside. If nothing is connected the pin floats and reads random values, so something must set a definite level, such as an external pull-up or pull-down resistor.",
+        INPUT_PULLUP:"<b>INPUT_PULLUP.</b> Like INPUT, but a built-in resistor of roughly 20 to 50 kΩ pulls the pin up to 5 V. A button between the pin and GND then reads HIGH when not pressed and LOW when pressed, with no extra resistor."
+      };
+      var box=$("pm"), btns=box.querySelectorAll(".chips button");
+      function set(m){
+        btns.forEach(function(b){ b.classList.toggle("sel",b.getAttribute("data-m")===m); });
+        $("pmcode").textContent="pinMode(7, "+m+");";
+        $("pmdesc").innerHTML=D[m];
+        $("pmled").classList.toggle("hide",m!=="OUTPUT");
+        $("pmbtn").classList.toggle("hide",m==="OUTPUT");
+        $("pmup").classList.toggle("hide",m!=="INPUT_PULLUP");
+        $("pmar").setAttribute("points",m==="OUTPUT"?"150,92 168,100 150,108":"168,92 150,100 168,108");
+      }
+      btns.forEach(function(b){ b.onclick=function(){ set(b.getAttribute("data-m")); }; });
+      set("OUTPUT");
+    }
+  };
+
+  WIDGETS.dwrite={
+    h:function(){
+      return '<div id="dw"><div class="chain"><div class="box"><b>Code</b><span id="dwcode"></span></div><div class="arrow">→</div><div class="box"><b>Pin 13</b><span id="dwv"></span></div><div class="arrow">→</div><div class="box"><b>LED</b><div class="bulb" id="dwb"></div></div></div>'+
+        '<div class="btns"><button class="primary" id="dwh">HIGH</button><button id="dwl">LOW</button></div>'+
+        '<label class="opt"><input type="checkbox" id="dwno"> Leave out pinMode(13, OUTPUT)</label>'+
+        '<div class="desc" id="dwd" aria-live="polite"></div></div>';
+    },
+    b:function(){
+      var val=0;
+      function upd(){
+        var forgot=$("dwno").checked;
+        $("dwcode").textContent="digitalWrite(13, "+(val?"HIGH":"LOW")+");";
+        $("dwv").textContent=val?"5 V":"0 V";
+        var b=$("dwb"); b.classList.remove("on","faint");
+        if(!forgot) b.classList.toggle("on",!!val);
+        else if(val) b.classList.add("faint");
+        $("dwd").innerHTML=forgot
+          ? (val?"<b>The pin is still an INPUT.</b> Writing HIGH to an input pin only switches on its internal pull-up, so the LED glows very faintly instead of lighting properly. Always call pinMode first."
+                :"<b>The pin is still an INPUT.</b> Writing LOW does nothing visible. Add pinMode(13, OUTPUT) in setup() to make it work.")
+          : (val?"<b>HIGH</b> puts about 5 volts on the pin, and the LED lights. HIGH is the same as the number 1.":"<b>LOW</b> puts 0 volts on the pin, and the LED goes off. LOW is the same as the number 0.");
+      }
+      $("dwh").onclick=function(){ val=1; upd(); };
+      $("dwl").onclick=function(){ val=0; upd(); };
+      $("dwno").onchange=upd; upd();
+    }
+  };
+
+
+  function holdable(el,onChange){
+    function down(e){ if(e&&e.preventDefault) e.preventDefault(); el.classList.add("down"); onChange(true); }
+    function up(){ el.classList.remove("down"); onChange(false); }
+    el.addEventListener("pointerdown",function(e){ try{ el.setPointerCapture(e.pointerId); }catch(x){} down(e); });
+    ["pointerup","pointercancel","lostpointercapture"].forEach(function(t){ el.addEventListener(t,up); });
+    el.addEventListener("contextmenu",function(e){ e.preventDefault(); });
+    el.addEventListener("keydown",function(e){ if((e.key===" "||e.key==="Enter")&&!e.repeat){ e.preventDefault(); down(); } });
+    el.addEventListener("keyup",function(e){ if(e.key===" "||e.key==="Enter"){ e.preventDefault(); up(); } });
+    el.addEventListener("blur",up);
+  }
+
+  WIDGETS.tactile={
+    h:function(){
+      return '<div id="tc"><svg viewBox="0 0 340 190" role="group" aria-label="Four-legged push button. Tap two legs to test whether they are connected.">'+
+        '<rect x="110" y="38" width="120" height="114" rx="10" fill="#475569"/>'+
+        '<circle id="tccap" cx="170" cy="95" r="30" fill="var(--accent)" stroke="#00000044" stroke-width="3"/>'+
+        '<g id="tcin" class="hide"><line x1="100" y1="60" x2="100" y2="130" stroke="#fbbf24" stroke-width="4"/><line x1="240" y1="60" x2="240" y2="130" stroke="#fbbf24" stroke-width="4"/><line id="tcbr" x1="100" y1="95" x2="240" y2="95" stroke="#fbbf24" stroke-width="4" opacity="0"/></g>'+
+        [[100,60,1],[100,130,2],[240,60,3],[240,130,4]].map(function(l){
+          return '<g class="tcleg" data-l="'+l[2]+'" tabindex="0" role="button" aria-label="Leg '+l[2]+'" style="cursor:pointer"><circle cx="'+l[0]+'" cy="'+l[1]+'" r="15" fill="var(--card)" stroke="var(--muted)" stroke-width="2"/><text x="'+l[0]+'" y="'+(l[1]+5)+'" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">'+l[2]+'</text></g>';
+        }).join("")+
+        '</svg>'+
+        '<div class="btns"><button id="tcpress" aria-pressed="false">Button: not pressed</button><button id="tcshow">Show inside</button></div>'+
+        '<div class="desc" id="tcmsg" aria-live="polite">Tap two legs to test whether they are connected. Then press the button and test again.</div></div>';
+    },
+    b:function(){
+      var pressed=false, sel=[], box=$("tc");
+      var legs=box.querySelectorAll(".tcleg");
+      function pairOf(l){ return l<=2?"A":"B"; }
+      function paint(){
+        legs.forEach(function(g){
+          var l=parseInt(g.getAttribute("data-l"),10), on=sel.indexOf(l)>=0, c=g.querySelector("circle");
+          c.setAttribute("stroke",on?"#fbbf24":"var(--muted)"); c.setAttribute("stroke-width",on?4:2);
+        });
+        $("tccap").setAttribute("r",pressed?26:30); $("tccap").setAttribute("fill",pressed?"#1d4ed8":"var(--accent)");
+        $("tcbr").setAttribute("opacity",pressed?1:0);
+        $("tcpress").textContent="Button: "+(pressed?"pressed":"not pressed"); $("tcpress").setAttribute("aria-pressed",pressed);
+      }
+      function test(){
+        var m=$("tcmsg");
+        if(sel.length<2){ m.textContent=sel.length===1?"Leg "+sel[0]+" selected. Tap a second leg.":"Tap two legs to test whether they are connected. Then press the button and test again."; return; }
+        var a=sel[0], b=sel[1], same=pairOf(a)===pairOf(b);
+        if(same) m.innerHTML="<b>Legs "+a+" and "+b+": connected.</b> They are on the same side, which is always joined inside the button.";
+        else if(pressed) m.innerHTML="<b>Legs "+a+" and "+b+": connected.</b> Pressing the button joins the two sides.";
+        else m.innerHTML="<b>Legs "+a+" and "+b+": not connected.</b> They are on different sides. Press the button and test again.";
+      }
+      function pick(l){ if(sel.length>=2) sel=[]; if(sel.indexOf(l)>=0) sel=[]; else sel.push(l); paint(); test(); }
+      legs.forEach(function(g){
+        var l=parseInt(g.getAttribute("data-l"),10);
+        g.addEventListener("click",function(){ pick(l); });
+        g.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); pick(l); } });
+      });
+      $("tcpress").onclick=function(){ pressed=!pressed; paint(); test(); };
+      $("tcshow").onclick=function(){ var g=$("tcin"); g.classList.toggle("hide"); $("tcshow").textContent=g.classList.contains("hide")?"Show inside":"Hide inside"; };
+      paint();
+    }
+  };
+
+  WIDGETS.pulltest={
+    h:function(){
+      return '<div id="pt"><div class="chips"><button data-c="up" class="sel">Pull-up</button><button data-c="down">Pull-down</button></div>'+
+        '<svg viewBox="0 0 340 190" role="img" aria-label="Button and resistor circuit on a pin" style="margin-top:8px">'+
+        '<text x="196" y="26" font-size="12" fill="var(--muted)" id="ptt">5 V</text><line x1="90" y1="30" x2="190" y2="30" stroke="var(--wire)" stroke-width="3"/>'+
+        '<text x="196" y="170" font-size="12" fill="var(--muted)" id="ptb">GND</text><line x1="90" y1="160" x2="190" y2="160" stroke="var(--wire)" stroke-width="3"/>'+
+        '<line x1="140" y1="30" x2="140" y2="160" stroke="var(--wire)" stroke-width="3"/>'+
+        '<line x1="30" y1="95" x2="140" y2="95" stroke="var(--wire)" stroke-width="3"/><circle cx="140" cy="95" r="5" fill="var(--wire)"/>'+
+        '<rect x="6" y="75" width="46" height="40" rx="6" fill="var(--board)"/><text x="29" y="99" font-size="11" fill="#fff" text-anchor="middle">Pin 2</text>'+
+        // resistor and button, drawn for top and bottom positions
+        '<g id="ptrt"><rect x="128" y="45" width="24" height="38" rx="4" fill="#d6b48a" stroke="#8b6b3d"/><text x="164" y="68" font-size="11" fill="var(--muted)">10 kΩ</text></g>'+
+        '<g id="ptrb" class="hide"><rect x="128" y="107" width="24" height="38" rx="4" fill="#d6b48a" stroke="#8b6b3d"/><text x="164" y="130" font-size="11" fill="var(--muted)">10 kΩ</text></g>'+
+        '<g id="ptbt" class="hide"><rect x="126" y="48" width="28" height="30" fill="var(--card)"/><circle cx="140" cy="48" r="4" fill="var(--ink)"/><circle cx="140" cy="78" r="4" fill="var(--ink)"/><line class="ptbr" x1="140" y1="48" x2="140" y2="78" stroke="var(--ink)" stroke-width="4" opacity="0"/><text x="164" y="68" font-size="11" fill="var(--muted)">Button</text></g>'+
+        '<g id="ptbb"><rect x="126" y="112" width="28" height="30" fill="var(--card)"/><circle cx="140" cy="112" r="4" fill="var(--ink)"/><circle cx="140" cy="142" r="4" fill="var(--ink)"/><line class="ptbr" x1="140" y1="112" x2="140" y2="142" stroke="var(--ink)" stroke-width="4" opacity="0"/><text x="164" y="130" font-size="11" fill="var(--muted)">Button</text></g>'+
+        '</svg>'+
+        '<label class="opt"><input type="checkbox" id="ptno"> Remove the resistor</label>'+
+        '<div class="pinrow"><span>Pin 2 reads</span><span class="pill" id="ptpill"></span></div>'+
+        '<div class="readout" id="ptcode"></div>'+
+        '<div class="btns"><button id="pthold" aria-label="Hold to press the button">Hold to press the button</button></div>'+
+        '<div class="desc" id="ptd" aria-live="polite"></div></div>';
+    },
+    b:function(){
+      var mode="up", pressed=false, noise=0, box=$("pt");
+      var btns=box.querySelectorAll(".chips button");
+      function reading(){
+        var noRes=$("ptno").checked;
+        if(pressed) return mode==="up"?0:1;
+        if(!noRes) return mode==="up"?1:0;
+        return noise;
+      }
+      function paint(){
+        var noRes=$("ptno").checked, v=reading();
+        btns.forEach(function(b){ b.classList.toggle("sel",b.getAttribute("data-c")===mode); });
+        var up=mode==="up";
+        $("ptrt").classList.toggle("hide",!up); $("ptrb").classList.toggle("hide",up);
+        $("ptbt").classList.toggle("hide",up); $("ptbb").classList.toggle("hide",!up);
+        $("ptt").textContent="5 V"; $("ptb").textContent="GND";
+        box.querySelectorAll(".ptbr").forEach(function(l){ l.setAttribute("opacity",pressed?1:0); });
+        $("ptpill").textContent=(v?"5 V · HIGH":"0 V · LOW")+(noRes&&!pressed?" (floating)":"");
+        $("ptpill").classList.toggle("hi",!!v);
+        $("ptcode").textContent="digitalRead(2) → "+(v?"HIGH":"LOW");
+        $("ptd").innerHTML = noRes&&!pressed
+          ? "<b>The pin floats.</b> With nothing to set its level it picks up noise and reads random HIGH and LOW values. This is why every button needs a pull-up or pull-down."
+          : (up?"<b>Pull-up:</b> the resistor holds the pin HIGH. Pressing the button connects the pin to GND, so it reads LOW. Pressed means LOW."
+               :"<b>Pull-down:</b> the resistor holds the pin LOW. Pressing the button connects the pin to 5 V, so it reads HIGH. Pressed means HIGH.");
+      }
+      btns.forEach(function(b){ b.onclick=function(){ mode=b.getAttribute("data-c"); paint(); }; });
+      $("ptno").onchange=paint;
+      holdable($("pthold"),function(d){ pressed=d; paint(); });
+      var tm=setInterval(function(){
+        if(!$("pt")){ clearInterval(tm); return; }
+        if($("ptno").checked && !pressed){ noise=Math.random()>0.5?1:0; paint(); }
+      },110);
+      paint();
+    }
+  };
+
+
+  /* ---------- decisions widgets ---------- */
+  WIDGETS.vars={
+    h:function(){
+      return '<div id="vr"><div class="stats" id="vrbox"></div><p class="sub" style="margin:10px 0 6px">Tap a statement to run it:</p><div class="chips" id="vract"></div>'+
+        '<pre class="console" id="vrlog" style="min-height:74px"></pre><div class="btns"><button id="vrreset">Reset</button></div></div>';
+    },
+    b:function(L){
+      var c=L.vars, v={}, log=[];
+      function reset(){ v=JSON.parse(JSON.stringify(c.init)); log=[]; paint(); }
+      function paint(){
+        $("vrbox").innerHTML=Object.keys(v).map(function(k){ return '<div class="stat"><b>'+esc(v[k])+'</b><span>'+esc(c.types[k]+" "+k)+'</span></div>'; }).join("");
+        $("vrlog").textContent=log.length?log.slice(-5).join("\n"):"Nothing run yet.";
+      }
+      $("vract").innerHTML=c.actions.map(function(a,i){ return '<button data-i="'+i+'">'+esc(a.label)+'</button>'; }).join("");
+      $("vract").querySelectorAll("button").forEach(function(b){
+        b.onclick=function(){ var a=c.actions[parseInt(b.getAttribute("data-i"),10)]; a.fn(v); log.push(a.label); paint(); };
+      });
+      $("vrreset").onclick=reset; reset();
+    }
+  };
+
+  WIDGETS.overflow={
+    h:function(){
+      return '<div id="of"><div class="frow"><label for="oft">Data type</label><select class="ldsel" id="oft"></select></div>'+
+        '<div class="stats"><div class="stat"><b id="ofv"></b><span>current value</span></div><div class="stat"><b id="ofr" style="font-size:14px"></b><span id="ofb"></span></div></div>'+
+        '<div class="btns"><button class="primary" id="ofp">+ 1</button><button id="ofm">− 1</button><button id="ofh">Jump near the top</button><button id="ofl">Jump near the bottom</button></div>'+
+        '<div class="desc" id="ofd" aria-live="polite">Pick a type, jump near its limit, then press + 1 or − 1.</div></div>';
+    },
+    b:function(){
+      var T=[
+        {n:"byte",bits:8,s:false},{n:"int",bits:16,s:true},{n:"unsigned int",bits:16,s:false},
+        {n:"long",bits:32,s:true},{n:"unsigned long",bits:32,s:false}
+      ], cur=T[1], val=0;
+      function lo(t){ return t.s?-Math.pow(2,t.bits-1):0; }
+      function hi(t){ return t.s?Math.pow(2,t.bits-1)-1:Math.pow(2,t.bits)-1; }
+      function wrap(t,x){ var size=Math.pow(2,t.bits), m=lo(t); return (((x-m)%size)+size)%size+m; }
+      function fmt(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,","); }
+      function paint(msg){
+        $("ofv").textContent=fmt(val); $("ofr").textContent=fmt(lo(cur))+" to "+fmt(hi(cur)); $("ofb").textContent=(cur.bits/8)+" byte"+(cur.bits>8?"s":"")+" of memory";
+        if(msg) $("ofd").innerHTML=msg;
+      }
+      $("oft").innerHTML=T.map(function(t,i){return '<option value="'+i+'"'+(t===cur?' selected':'')+'>'+t.n+'</option>'}).join("");
+      $("oft").onchange=function(){ cur=T[parseInt(this.value,10)]; val=0; paint("Range for <b>"+cur.n+"</b>: "+fmt(lo(cur))+" to "+fmt(hi(cur))+"."); };
+      function step(d){
+        var before=val, raw=val+d; val=wrap(cur,raw);
+        paint(raw!==val ? "<b>Overflow!</b> "+fmt(before)+(d>0?" + 1":" − 1")+" does not fit in a "+cur.n+", so it wraps around to <b>"+fmt(val)+"</b>. There is no error message, so choose a type big enough for your values." : "");
+        if(raw===val) $("ofd").textContent=fmt(before)+(d>0?" + 1 = ":" − 1 = ")+fmt(val)+".";
+      }
+      $("ofp").onclick=function(){ step(1); }; $("ofm").onclick=function(){ step(-1); };
+      $("ofh").onclick=function(){ val=hi(cur)-2; paint("Now press + 1 three times."); };
+      $("ofl").onclick=function(){ val=lo(cur)+2; paint("Now press − 1 three times."); };
+      paint();
+    }
+  };
+
+  WIDGETS.ifflow={
+    h:function(L){
+      var c=L.ifflow;
+      return '<div id="if"><div class="rv"><span>'+esc(c.label)+' (move the slider)</span><b id="ifval"></b></div>'+
+        '<input type="range" id="ifsl" min="'+c.min+'" max="'+c.max+'" value="'+c.value+'" aria-label="'+esc(c.label)+'">'+
+        '<pre class="code" id="ifcode">'+c.lines.map(function(l,i){return '<div class="ln" data-l="'+i+'"><i>'+(i+1)+'</i><span>'+(esc(l.t)||" ")+'</span></div>'}).join("")+'</pre>'+
+        '<div class="desc" id="ifres" aria-live="polite"></div></div>';
+    },
+    b:function(L){
+      var c=L.ifflow, sl=$("ifsl");
+      function upd(){
+        var v=parseInt(sl.value,10), hit=-1;
+        for(var i=0;i<c.branches.length;i++){ if(c.branches[i].test(v)){ hit=i; break; } }
+        $("ifval").textContent=v+" "+c.unit;
+        document.querySelectorAll("#ifcode .ln").forEach(function(ln){
+          var idx=parseInt(ln.getAttribute("data-l"),10), on=false, l=c.lines[idx];
+          if(l.b===undefined) on=true && l.always===true;
+          else on=(l.b===hit) || (l.head===true && l.b<=hit);
+          ln.classList.toggle("on",on);
+        });
+        $("ifres").innerHTML=hit>=0?"<b>"+esc(c.branches[hit].why(v))+"</b> "+esc(c.branches[hit].result):"No branch ran.";
+      }
+      sl.addEventListener("input",upd); upd();
+    }
+  };
+
+  WIDGETS.ops={
+    h:function(){
+      return '<div id="op">'+
+        '<div class="rv"><span>a</span><b id="opa"></b></div><input type="range" id="opas" min="0" max="20" value="7" aria-label="Value of a">'+
+        '<div class="rv"><span>b</span><b id="opb"></b></div><input type="range" id="opbs" min="0" max="20" value="12" aria-label="Value of b">'+
+        '<table class="cmp" id="optab"></table></div>';
+    },
+    b:function(){
+      function tf(x){ return '<span class="tf '+(x?"t":"f")+'">'+(x?"true":"false")+'</span>'; }
+      function upd(){
+        var a=parseInt($("opas").value,10), b=parseInt($("opbs").value,10);
+        $("opa").textContent=a; $("opb").textContent=b;
+        var rows=[
+          ["a == b",a==b],["a != b",a!=b],["a &lt; b",a<b],["a &gt; b",a>b],["a &lt;= b",a<=b],["a &gt;= b",a>=b],
+          ["a &gt; 10 &amp;&amp; b &gt; 10  (both)",a>10&&b>10],["a &gt; 10 || b &gt; 10  (either)",a>10||b>10],["!(a &gt; 10)  (not)",!(a>10)]
+        ];
+        $("optab").innerHTML='<tr><th>Expression</th><th>Result</th></tr>'+rows.map(function(r){ return '<tr><td><code>'+r[0]+'</code></td><td>'+tf(r[1])+'</td></tr>'; }).join("");
+      }
+      $("opas").addEventListener("input",upd); $("opbs").addEventListener("input",upd); upd();
+    }
+  };
+
+  WIDGETS.traffic={
+    h:function(){
+      var code=[
+        "const int RED = 13;","const int YELLOW = 12;","const int GREEN = 11;","const int BUTTON = 2;","",
+        "void setup() {","  pinMode(RED, OUTPUT);","  pinMode(YELLOW, OUTPUT);","  pinMode(GREEN, OUTPUT);","  pinMode(BUTTON, INPUT_PULLUP);","}","",
+        "void loop() {","  digitalWrite(GREEN, HIGH);","  delay(4000);","  digitalWrite(GREEN, LOW);",
+        "  digitalWrite(YELLOW, HIGH);","  delay(1500);","  digitalWrite(YELLOW, LOW);",
+        "  digitalWrite(RED, HIGH);","  if (digitalRead(BUTTON) == LOW) {  // pedestrian waiting?","    delay(8000);","  } else {","    delay(4000);","  }","  digitalWrite(RED, LOW);","}"
+      ];
+      return '<div id="tf"><div style="display:flex;gap:14px;align-items:center"><svg viewBox="0 0 90 190" style="width:90px;flex:none" role="img" aria-label="Traffic light"><rect x="10" y="4" width="70" height="182" rx="14" fill="#1f2937"/>'+
+        '<circle id="tfr" cx="45" cy="42" r="22" fill="#4b1d1d"/><circle id="tfy" cx="45" cy="95" r="22" fill="#4b3d12"/><circle id="tfg" cx="45" cy="148" r="22" fill="#14391f"/></svg>'+
+        '<div style="flex:1"><div class="readout" id="tfro" style="min-height:66px">Press Run to start the lights.</div></div></div>'+
+        '<pre class="code" style="margin-top:10px" id="tfcode">'+code.map(function(l,i){var parts=l.split("//"),h=esc(parts[0])+(parts.length>1?'<span class="c">//'+esc(parts.slice(1).join("//"))+'</span>':""); return '<div class="ln" data-l="'+(i+1)+'"><i>'+(i+1)+'</i><span>'+(h||" ")+'</span></div>';}).join("")+'</pre>'+
+        '<div class="btns"><button class="primary" id="tfrun">Run</button><button id="tfhold" aria-label="Hold to press the pedestrian button">Hold: pedestrian button</button></div></div>';
+    },
+    b:function(){
+      var running=false, idx=0, until=0, btn=false, ped=false, tm=null;
+      var lamps={r:["#ef4444","#4b1d1d"],y:["#facc15","#4b3d12"],g:["#22c55e","#14391f"]};
+      function lights(which){ ["r","y","g"].forEach(function(k){ $("tf"+k).setAttribute("fill",k===which?lamps[k][0]:lamps[k][1]); }); }
+      function lines(a){ document.querySelectorAll("#tfcode .ln").forEach(function(l){ l.classList.toggle("on",a.indexOf(parseInt(l.getAttribute("data-l"),10))>=0); }); }
+      function enter(now){
+        if(idx===0){ lights("g"); lines([14,15]); until=now+4000; $("tfro").textContent="Green for 4 seconds. Hold the pedestrian button before the red light starts."; }
+        else if(idx===1){ lights("y"); lines([17,18]); until=now+1500; $("tfro").textContent="Yellow for 1.5 seconds."; }
+        else { ped=btn; lights("r"); lines(ped?[20,21,22]:[20,21,24]); until=now+(ped?8000:4000);
+          $("tfro").textContent="Red. The Uno read the button once, at the start of red: "+(ped?"pressed, so red lasts 8 seconds.":"not pressed, so red lasts 4 seconds."); }
+      }
+      function tick(){
+        if(!$("tf")){ clearInterval(tm); return; }
+        if(!running) return;
+        var now=performance.now();
+        if(now>=until){ idx=(idx+1)%3; enter(now); }
+      }
+      $("tfrun").onclick=function(){
+        running=!running; $("tfrun").textContent=running?"Stop":"Run";
+        if(running){ idx=0; enter(performance.now()); } else { lights(""); lines([]); $("tfro").textContent="Press Run to start the lights."; }
+      };
+      holdable($("tfhold"),function(d){ btn=d; });
+      tm=setInterval(tick,50);
+    }
+  };
+
+
+  /* ---------- loop widgets ---------- */
+  WIDGETS.forloop={
+    h:function(L){
+      var c=L.forloop;
+      return '<div id="fl"><div class="frow"><label for="flend">Limit</label><input type="range" id="flend" min="1" max="8" value="'+c.end+'"><b id="flendv"></b></div>'+
+        '<div class="frow"><label for="flop">Test</label><select class="ldsel" id="flop"><option value="&lt;">i &lt; limit</option><option value="&lt;=">i &lt;= limit</option></select></div>'+
+        (c.rules?'<div class="frow"><label for="flrule">Body rule</label><select class="ldsel" id="flrule"><option value="none">none</option><option value="continue">continue when i == 2</option><option value="break">break when i == 3</option></select></div>':'')+
+        '<pre class="code" id="flcode"></pre><div class="stats"><div class="stat"><b id="fli">–</b><span>i</span></div><div class="stat"><b id="flc">0</b><span>times body ran</span></div></div>'+
+        '<pre class="console" id="fllog" style="min-height:70px"></pre>'+
+        '<div class="btns"><button class="primary" id="flstep">Step</button><button id="flrun">Run all</button><button id="flreset">Reset</button></div></div>';
+    },
+    b:function(L){
+      var c=L.forloop, i, ran, st, log, done;
+      function op(){ return $("flop").value; }
+      function rule(){ return c.rules?$("flrule").value:"none"; }
+      function lim(){ return parseInt($("flend").value,10); }
+      function test(){ return op()==="<"? i<lim() : i<=lim(); }
+      function code(){
+        var h="for (int i = 0; i "+op()+" "+lim()+"; i++) {";
+        var body=c.body.slice();
+        if(rule()==="continue") body=["  if (i == 2) continue;"].concat(body);
+        if(rule()==="break") body=["  if (i == 3) break;"].concat(body);
+        var lines=[h].concat(body,["}"]);
+        $("flcode").innerHTML=lines.map(function(t,k){return '<div class="ln" data-l="'+k+'"><i>'+(k+1)+'</i><span>'+esc(t)+'</span></div>';}).join("");
+        return lines.length;
+      }
+      var n;
+      function hl(a){ document.querySelectorAll("#flcode .ln").forEach(function(l){ l.classList.toggle("on",a.indexOf(parseInt(l.getAttribute("data-l"),10))>=0); }); }
+      function reset(){ i=0; ran=0; st="test"; log=[]; done=false; $("flendv").textContent=lim(); n=code(); paint("Press Step to run one stage."); hl([]); }
+      function paint(m){ $("fli").textContent=done?"–":i; $("flc").textContent=ran; $("fllog").textContent=(log.length?log.slice(-6).join("\n")+"\n":"")+m; }
+      function step(){
+        if(done) return;
+        var r=rule();
+        if(st==="test"){
+          hl([0]);
+          if(test()){ st="body"; paint("Test i "+op()+" "+lim()+" is true, so run the body."); }
+          else { done=true; paint("Test is false, so the loop ends."); }
+        } else if(st==="body"){
+          if(r==="continue"&&i===2){ log.push("i = 2: continue, skip the rest"); hl([1]); st="inc"; paint("continue jumps straight to i++."); return; }
+          if(r==="break"&&i===3){ log.push("i = 3: break"); hl([1]); done=true; paint("break leaves the loop immediately."); return; }
+          ran++; log.push("body ran with i = "+i); hl(r==="none"?[1]:[2]); st="inc"; paint("Body done.");
+        } else { i++; hl([0]); st="test"; paint("i++ makes i = "+i+"."); }
+      }
+      $("flstep").onclick=step;
+      $("flrun").onclick=function(){ var g=0; while(!done&&g++<200) step(); };
+      $("flreset").onclick=reset;
+      $("flend").addEventListener("input",reset); $("flop").onchange=reset;
+      if(c.rules) $("flrule").onchange=reset;
+      reset();
+    }
+  };
+
+  WIDGETS.whilesim={
+    h:function(){
+      return '<div id="ws"><pre class="code"><div class="ln" data-l="0"><i>1</i><span>int count = 0;</span></div><div class="ln" data-l="1"><i>2</i><span>while (digitalRead(2) == LOW) {</span></div><div class="ln" data-l="2"><i>3</i><span>  count++;</span></div><div class="ln" data-l="3"><i>4</i><span>  delay(100);</span></div><div class="ln" data-l="4"><i>5</i><span>}</span></div><div class="ln" data-l="5"><i>6</i><span>Serial.println(count);</span></div></pre>'+
+        '<div class="stats"><div class="stat"><b id="wsc">0</b><span>count</span></div><div class="stat"><b id="wss">waiting</b><span>state</span></div></div>'+
+        '<div class="btns"><button id="wshold" style="min-height:56px;flex:1;font-weight:600;touch-action:none;user-select:none;-webkit-user-select:none" aria-label="Hold the button on pin 2">Hold button (pin 2 LOW)</button><button id="wsreset">Reset</button></div>'+
+        '<div class="desc" id="wsd" aria-live="polite">Hold the button. The loop counts every 100 ms while the button is held and exits when you let go.</div></div>';
+    },
+    b:function(){
+      var held=false, count=0, tm;
+      function hl(a){ document.querySelectorAll("#ws .ln").forEach(function(l){ l.classList.toggle("on",a.indexOf(parseInt(l.getAttribute("data-l"),10))>=0); }); }
+      holdable($("wshold"),function(d){
+        if(d&&!held){ count=count; $("wss").textContent="inside while"; hl([1,2,3]); }
+        if(!d&&held){ $("wss").textContent="loop ended"; hl([5]); $("wsd").textContent="Released: the condition is false, so the loop ended and the Uno printed "+count+" ("+(count*100)+" ms held)."; }
+        held=d;
+      });
+      tm=setInterval(function(){ if(!$("ws")){clearInterval(tm);return;} if(held){ count++; $("wsc").textContent=count; } },100);
+      $("wsreset").onclick=function(){ count=0; $("wsc").textContent=0; $("wss").textContent="waiting"; hl([]); $("wsd").textContent="Hold the button again."; };
+    }
+  };
+
+  WIDGETS.arr={
+    h:function(L){
+      var c=L.arr;
+      return '<div id="ar"><pre class="code"><div class="ln"><i>1</i><span>'+esc(c.decl)+'</span></div></pre>'+
+        '<div class="stats" id="arbox"></div><div class="rv"><span>index</span><b id="arix"></b></div><input type="range" id="aris" min="0" max="'+(c.vals.length+1)+'" value="0" aria-label="Array index">'+
+        '<div class="desc" id="arres" aria-live="polite"></div></div>';
+    },
+    b:function(L){
+      var c=L.arr, v=c.vals;
+      function upd(){
+        var k=parseInt($("aris").value,10);
+        $("arix").textContent=k;
+        $("arbox").innerHTML=v.map(function(x,j){ return '<div class="stat"'+(j===k?' style="outline:2px solid var(--accent)"':'')+'><b>'+esc(x)+'</b><span>['+j+']</span></div>'; }).join("");
+        $("arres").innerHTML=k<v.length?'<code>'+esc(c.name)+'['+k+']</code> is <b>'+esc(v[k])+'</b>.':'<b>Out of range.</b> <code>'+esc(c.name)+'['+k+']</code> reads memory past the end of the array. The Uno gives no error and returns an unpredictable value. Valid indexes are 0 to '+(v.length-1)+'.';
+      }
+      $("aris").addEventListener("input",upd); upd();
+    }
+  };
+
+  WIDGETS.chaser={
+    h:function(){
+      var code=["const int pins[] = {2, 3, 4, 5, 6};","const int N = 5;","","void loop() {","  for (int i = 0; i < N; i++) {","    digitalWrite(pins[i], HIGH);","    delay(100);","    digitalWrite(pins[i], LOW);","  }","  for (int i = N - 2; i > 0; i--) {","    digitalWrite(pins[i], HIGH);","    delay(100);","    digitalWrite(pins[i], LOW);","  }","}"];
+      var leds="";for(var k=0;k<5;k++) leds+='<circle class="chl" id="chl'+k+'" cx="'+(30+k*50)+'" cy="24" r="16" fill="#4b1d1d"/><text x="'+(30+k*50)+'" y="60" text-anchor="middle" font-size="11" fill="currentColor">pin '+(2+k)+'</text>';
+      return '<div id="ch"><svg viewBox="0 0 280 70" style="width:100%;max-width:340px" role="img" aria-label="Row of five LEDs">'+leds+'</svg>'+
+        '<pre class="code" id="chcode">'+code.map(function(l,i){return '<div class="ln" data-l="'+i+'"><i>'+(i+1)+'</i><span>'+(esc(l)||" ")+'</span></div>';}).join("")+'</pre>'+
+        '<div class="btns"><button class="primary" id="chrun">Run</button></div><div class="desc" id="chd" aria-live="polite">Press Run to see the light travel to the right and come back.</div></div>';
+    },
+    b:function(){
+      var seq=[0,1,2,3,4,3,2,1], pos=0, on=false, tm;
+      function show(k,line){ for(var j=0;j<5;j++) $("chl"+j).setAttribute("fill",j===k?"#ef4444":"#4b1d1d");
+        document.querySelectorAll("#chcode .ln").forEach(function(l){ l.classList.toggle("on",parseInt(l.getAttribute("data-l"),10)===line); }); }
+      $("chrun").onclick=function(){ on=!on; $("chrun").textContent=on?"Stop":"Run"; if(!on){ show(-1,-1); } pos=0; };
+      tm=setInterval(function(){
+        if(!$("ch")){ clearInterval(tm); return; }
+        if(!on) return;
+        var k=seq[pos%seq.length], fwd=(pos%seq.length)<5;
+        show(k,fwd?5:10); $("chd").textContent="i = "+(fwd?k:k)+": pins["+k+"] = "+(2+k)+" is HIGH, then LOW after 100 ms.";
+        pos++;
+      },350);
+    }
+  };
+
+
+  /* ---------- serial widgets ---------- */
+  WIDGETS.serialmon={
+    h:function(L){
+      var c=L.serial;
+      return '<div id="sm"><pre class="code">'+c.code.map(function(l,i){return '<div class="ln" data-l="'+i+'"><i>'+(i+1)+'</i><span>'+(esc(l)||" ")+'</span></div>';}).join("")+'</pre>'+
+        '<div class="rv"><span>Serial Monitor</span><b id="smst"></b></div>'+
+        '<pre class="console" id="smlog" style="min-height:110px;max-height:170px;overflow:auto"></pre>'+
+        (c.mode==="led"?'<div class="frow"><input id="smin" type="text" class="ldsel" placeholder="type on or off" aria-label="Text to send" autocapitalize="off" autocomplete="off"><button class="primary" id="smsend">Send</button></div><svg viewBox="0 0 60 40" style="width:60px" role="img" aria-label="LED"><circle id="smled" cx="30" cy="20" r="14" fill="#4b3d12"/></svg>':'')+
+        (c.mode==="change"?'<div class="btns"><button id="smhold" style="min-height:56px;flex:1;font-weight:600;touch-action:none;user-select:none;-webkit-user-select:none" aria-label="Hold the button">Hold button</button></div>':'')+
+        '<div class="btns">'+(c.mode==="led"?'':'<button class="primary" id="smrun">Run</button>')+'<button id="smclr">Clear</button></div></div>';
+    },
+    b:function(L){
+      var c=L.serial, log=[], tm, n=0, running=false, held=false, last=false, presses=0;
+      function hl(a){ document.querySelectorAll("#sm .ln").forEach(function(l){ l.classList.toggle("on",a.indexOf(parseInt(l.getAttribute("data-l"),10))>=0); }); }
+      function out(t){ log.push(t); if(log.length>40) log.shift(); $("smlog").textContent=log.join("\n"); $("smlog").scrollTop=1e6; }
+      $("smst").textContent="9600 baud";
+      $("smclr").onclick=function(){ log=[]; n=0; presses=0; $("smlog").textContent=""; };
+      if(c.mode==="print"){
+        $("smrun").onclick=function(){ running=!running; $("smrun").textContent=running?"Stop":"Run"; if(!running) hl([]); };
+        tm=setInterval(function(){ if(!$("sm")){clearInterval(tm);return;} if(!running) return; hl([c.hl||0]); out(c.line(n)); n++; },600);
+      }
+      if(c.mode==="led"){
+        function send(){
+          var t=$("smin").value.trim(); if(!t) return; $("smin").value=""; out("> "+t); hl([4,5]);
+          var lc=t.toLowerCase();
+          if(lc==="on"){ $("smled").setAttribute("fill","#facc15"); out("LED is ON"); }
+          else if(lc==="off"){ $("smled").setAttribute("fill","#4b3d12"); out("LED is OFF"); }
+          else out("Unknown command: "+t);
+        }
+        $("smsend").onclick=send; $("smin").addEventListener("keydown",function(e){ if(e.key==="Enter") send(); });
+      }
+      if(c.mode==="change"){
+        holdable($("smhold"),function(d){ held=d; });
+        $("smrun").onclick=function(){ running=!running; $("smrun").textContent=running?"Stop":"Run"; if(running){ last=held; out("Ready."); } };
+        tm=setInterval(function(){
+          if(!$("sm")){clearInterval(tm);return;}
+          if(!running) return;
+          if(held!==last){ last=held; if(held){ presses++; out("Button pressed ("+presses+" so far)"); } else out("Button released"); hl([6]); }
+          else hl([]);
+        },40);
+      }
+    }
+  };
+
+  WIDGETS.baud={
+    h:function(){
+      return '<div id="bd"><div class="frow"><label for="bdu">Uno baud</label><select class="ldsel" id="bdu"></select></div>'+
+        '<div class="frow"><label for="bdm">Monitor baud</label><select class="ldsel" id="bdm"></select></div>'+
+        '<pre class="code"><div class="ln"><i>1</i><span id="bdc"></span></div></pre>'+
+        '<pre class="console" id="bdo" style="min-height:70px"></pre><div class="desc" id="bdd" aria-live="polite"></div></div>';
+    },
+    b:function(){
+      var R=[300,1200,2400,4800,9600,19200,57600,115200], msg="Hello, Uno! Temperature = 24.5 C";
+      var opts=R.map(function(r){return '<option value="'+r+'"'+(r===9600?' selected':'')+'>'+r+'</option>'}).join("");
+      $("bdu").innerHTML=opts; $("bdm").innerHTML=opts;
+      function garble(s,seed){ var ch="#@%&?~^*¿Ø¤§"; var o="",h=seed; for(var i=0;i<s.length;i++){ h=(h*31+s.charCodeAt(i)+7)%9973; o+= s[i]===" "?(h%3?" ":ch[h%ch.length]):ch[h%ch.length]; } return o; }
+      function upd(){
+        var u=parseInt($("bdu").value,10), m=parseInt($("bdm").value,10);
+        $("bdc").textContent="Serial.begin("+u+");";
+        if(u===m){ $("bdo").textContent=msg; $("bdd").textContent="The two speeds match, so the text is readable."; }
+        else { $("bdo").textContent=garble(msg,u+m); $("bdd").innerHTML="<b>Mismatch.</b> The Uno sends at "+u+" baud but the monitor listens at "+m+" baud, so the bits are misread. Set the Serial Monitor to the same number as <code>Serial.begin()</code>."; }
+      }
+      $("bdu").onchange=upd; $("bdm").onchange=upd; upd();
+    }
+  };
+
+
+  /* ---------- analog / ADC widgets ---------- */
+  function adcOf(v){ return Math.max(0,Math.min(1023,Math.floor(v*1024/5))); }
+  function ldrOhms(light){ return 100000*Math.pow(0.01,light/100); }
+
+  WIDGETS.adc={
+    h:function(){
+      return '<div id="ad"><div class="rv"><span>Voltage on A0</span><b id="adv"></b></div><input type="range" id="ads" min="0" max="500" value="125" aria-label="Voltage on A0">'+
+        '<div class="stats"><div class="stat"><b id="adn">0</b><span>analogRead(A0)</span></div><div class="stat"><b id="adb" style="font-size:14px">0</b><span>10-bit binary</span></div></div>'+
+        '<div class="desc" id="add" aria-live="polite"></div></div>';
+    },
+    b:function(){
+      function upd(){
+        var v=parseInt($("ads").value,10)/100, n=adcOf(v);
+        $("adv").textContent=v.toFixed(2)+" V"; $("adn").textContent=n;
+        var b=n.toString(2); while(b.length<10) b="0"+b; $("adb").textContent=b;
+        $("add").innerHTML="Each step is 5 V ÷ 1024, about <b>4.9 mV</b>. "+v.toFixed(2)+" V falls in step <b>"+n+"</b> of 0 to 1023.";
+      }
+      $("ads").addEventListener("input",upd); upd();
+    }
+  };
+
+  WIDGETS.pot={
+    h:function(){
+      return '<div id="pt"><svg viewBox="0 0 260 150" style="width:100%;max-width:340px" role="img" aria-label="Potentiometer with wiper">'+
+        '<text x="20" y="18" font-size="12" fill="currentColor">5V</text><text x="20" y="144" font-size="12" fill="currentColor">GND</text>'+
+        '<rect x="60" y="10" width="26" height="130" rx="6" fill="none" stroke="currentColor" stroke-width="2"/>'+
+        '<path id="ptw" d="M86 75 L130 75" stroke="#ef4444" stroke-width="3"/><circle id="ptd" cx="130" cy="75" r="5" fill="#ef4444"/>'+
+        '<text x="140" y="79" font-size="12" fill="currentColor">wiper to A0</text></svg>'+
+        '<div class="rv"><span>Knob position</span><b id="ptp"></b></div><input type="range" id="pts" min="0" max="100" value="50" aria-label="Knob position">'+
+        '<div class="stats"><div class="stat"><b id="ptv">0</b><span>volts at wiper</span></div><div class="stat"><b id="ptn">0</b><span>analogRead</span></div></div></div>';
+    },
+    b:function(){
+      function upd(){
+        var p=parseInt($("pts").value,10), y=140-(p/100)*130, v=5*p/100;
+        $("ptw").setAttribute("d","M86 "+y+" L130 "+y); $("ptd").setAttribute("cy",y);
+        $("ptp").textContent=p+"%"; $("ptv").textContent=v.toFixed(2)+" V"; $("ptn").textContent=adcOf(v);
+      }
+      $("pts").addEventListener("input",upd); upd();
+    }
+  };
+
+  WIDGETS.mapw={
+    h:function(){
+      return '<div id="mp"><div class="rv"><span>analogRead value</span><b id="mpr"></b></div><input type="range" id="mps" min="0" max="1023" value="512" aria-label="Raw reading">'+
+        '<div class="frow"><label for="mpt">Convert to</label><select class="ldsel" id="mpt"><option value="0,100">0 to 100 (percent)</option><option value="0,255">0 to 255 (brightness)</option><option value="0,5000">0 to 5000 (millivolts)</option><option value="-50,150">−50 to 150 (temperature)</option></select></div>'+
+        '<pre class="code"><div class="ln"><i>1</i><span id="mpc"></span></div></pre>'+
+        '<div class="stats"><div class="stat"><b id="mpo">0</b><span>map() result</span></div><div class="stat"><b id="mpf">0</b><span>volts, float maths</span></div></div>'+
+        '<div class="desc">Integer maths drops decimals: <code>raw * 5 / 1023</code> gives 2 for raw = 512. Use <code>raw * 5.0 / 1023.0</code> for 2.50.</div></div>';
+    },
+    b:function(){
+      function mapI(x,a,b,c,d){ return Math.trunc((x-a)*(d-c)/(b-a))+c; }
+      function upd(){
+        var r=parseInt($("mps").value,10), t=$("mpt").value.split(",").map(Number);
+        $("mpr").textContent=r; $("mpc").textContent="map(raw, 0, 1023, "+t[0]+", "+t[1]+");";
+        $("mpo").textContent=mapI(r,0,1023,t[0],t[1]); $("mpf").textContent=(r*5/1023).toFixed(2)+" V";
+      }
+      $("mps").addEventListener("input",upd); $("mpt").onchange=upd; upd();
+    }
+  };
+
+  WIDGETS.ldr={
+    h:function(){
+      return '<div id="ld"><div class="rv"><span>Light level</span><b id="ldl"></b></div><input type="range" id="lds" min="0" max="100" value="50" aria-label="Light level">'+
+        '<div class="frow"><label for="ldw">LDR connects to</label><select class="ldsel" id="ldw"><option value="5v">5V (10 kΩ to GND)</option><option value="gnd">GND (10 kΩ to 5V)</option></select></div>'+
+        '<div class="stats"><div class="stat"><b id="ldr">0</b><span>LDR resistance</span></div><div class="stat"><b id="ldv">0</b><span>voltage at A0</span></div><div class="stat"><b id="ldn">0</b><span>analogRead</span></div></div>'+
+        '<div class="desc" id="ldd" aria-live="polite"></div></div>';
+    },
+    b:function(){
+      function fk(r){ return r>=1000?(r/1000).toFixed(1)+" kΩ":Math.round(r)+" Ω"; }
+      function upd(){
+        var l=parseInt($("lds").value,10), r=ldrOhms(l), fixed=10000, top5=$("ldw").value==="5v";
+        var v=top5? 5*fixed/(r+fixed) : 5*r/(r+fixed);
+        $("ldl").textContent=l+"%"; $("ldr").textContent=fk(r); $("ldv").textContent=v.toFixed(2)+" V"; $("ldn").textContent=adcOf(v);
+        $("ldd").textContent=top5?"LDR on the 5V side: more light means lower resistance, so the voltage and reading go up.":"LDR on the GND side: more light means lower resistance, so the voltage and reading go down.";
+      }
+      $("lds").addEventListener("input",upd); $("ldw").onchange=upd; upd();
+    }
+  };
+
+  WIDGETS.nightlight={
+    h:function(){
+      return '<div id="nl"><div class="rv"><span>Light level</span><b id="nll"></b></div><input type="range" id="nls" min="0" max="100" value="50" aria-label="Light level">'+
+        '<div class="frow"><label><input type="checkbox" id="nln"> Add sensor noise</label></div><div class="frow"><label><input type="checkbox" id="nlh"> Use two thresholds (hysteresis)</label></div>'+
+        '<div style="display:flex;gap:14px;align-items:center"><svg viewBox="0 0 60 40" style="width:70px;flex:none" role="img" aria-label="Night light LED"><circle id="nlled" cx="30" cy="20" r="16" fill="#4b3d12"/></svg>'+
+        '<div class="stats" style="flex:1"><div class="stat"><b id="nlr">0</b><span>reading</span></div><div class="stat"><b id="nlc">0</b><span>LED changes</span></div></div></div>'+
+        '<pre class="code" id="nlcode"></pre><div class="btns"><button id="nlreset">Reset count</button></div></div>';
+    },
+    b:function(){
+      var on=false, ch=0, tm, seed=1;
+      function rnd(){ seed=(seed*16807)%2147483647; return seed/2147483647; }
+      function render(){
+        var h=$("nlh").checked;
+        var lines=h?["if (reading < 450) on = true;","if (reading > 550) on = false;","digitalWrite(13, on);"]:["on = (reading < 500);","digitalWrite(13, on);"];
+        $("nlcode").innerHTML=lines.map(function(t,i){return '<div class="ln"><i>'+(i+1)+'</i><span>'+esc(t)+'</span></div>';}).join("");
+      }
+      $("nlh").onchange=render; render();
+      $("nlreset").onclick=function(){ ch=0; $("nlc").textContent=0; };
+      tm=setInterval(function(){
+        if(!$("nl")){ clearInterval(tm); return; }
+        var l=parseInt($("nls").value,10); $("nll").textContent=l+"%";
+        var base=adcOf(5*10000/(ldrOhms(l)+10000)), rd=base+($("nln").checked?Math.round((rnd()-0.5)*80):0);
+        rd=Math.max(0,Math.min(1023,rd)); $("nlr").textContent=rd;
+        var prev=on;
+        if($("nlh").checked){ if(rd<450) on=true; else if(rd>550) on=false; } else on=rd<500;
+        if(on!==prev){ ch++; $("nlc").textContent=ch; }
+        $("nlled").setAttribute("fill",on?"#facc15":"#4b3d12");
+      },100);
+    }
+  };
+
+
+  /* ---------- wiring diagrams ---------- */
+  WIDGETS.wire={
+    h:function(L){
+      var v=L.wire, S='stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"';
+      function t(x,y,s,a){ return '<text x="'+x+'" y="'+y+'" font-size="11" fill="currentColor" text-anchor="'+(a||"start")+'">'+s+'</text>'; }
+      function dot(x,y){ return '<circle cx="'+x+'" cy="'+y+'" r="3.5" fill="currentColor"/>'; }
+      function res(x,y1,y2,lab){ return '<rect x="'+(x-8)+'" y="'+y1+'" width="16" height="'+(y2-y1)+'" '+S+'/>'+t(x+14,(y1+y2)/2+4,lab); }
+      var g='<rect x="8" y="8" width="82" height="224" rx="8" '+S+'/>'+t(49,124,"Arduino",'middle')+t(49,138,"Uno",'middle');
+      var pins=v==="button"?[["Pin 2",75],["GND",215]]:[["13",30],["5V",75],["A0",125],["GND",215]];
+      g+=pins.map(function(p){ return '<circle cx="90" cy="'+p[1]+'" r="3" fill="currentColor"/>'+t(84,p[1]+4,p[0],'end'); }).join("");
+      if(v==="button"){
+        g+='<path d="M90 75 H170" '+S+'/><circle cx="170" cy="75" r="4" fill="currentColor"/><circle cx="230" cy="75" r="4" fill="currentColor"/>'+
+          '<path d="M176 56 H224 M200 56 V66" '+S+'/><path d="M230 75 H290 V215 H90" '+S+'/>'+
+          t(200,100,"push button",'middle')+t(200,118,"(diagonal legs)",'middle');
+      } else if(v==="pot"){
+        g+='<path d="M90 75 H170 V92" '+S+'/><rect x="162" y="92" width="16" height="84" '+S+'/><path d="M170 176 V215 H90" '+S+'/>'+
+          '<path d="M90 125 H146 V134 H160" '+S+'/><path d="M153 129 L161 134 L153 139" '+S+'/>'+
+          t(184,84,"left pin (5V)")+t(184,198,"right pin (GND)")+t(186,138,"middle pin (wiper)")+dot(170,75);
+      } else if(v==="ldr"||v==="night"){
+        g+='<path d="M90 75 H150 V84" '+S+'/><rect x="142" y="84" width="16" height="30" '+S+'/><circle cx="150" cy="99" r="17" '+S+'/>'+
+          '<path d="M118 76 l10 10 m-1 -8 l1 8 l-8 1 M118 92 l10 10 m-1 -8 l1 8 l-8 1" '+S+'/>'+
+          '<path d="M150 114 V125 M90 125 H150" '+S+'/>'+dot(150,125)+
+          '<path d="M150 125 V140" '+S+'/>'+res(150,140,172,"")+'<path d="M150 172 V215 H90" '+S+'/>'+
+          t(172,102,"LDR")+t(172,160,"10 kΩ");
+        if(v==="night"){
+          g+='<path d="M150 215 H250" '+S+'/>'+dot(150,215)+
+            '<path d="M90 30 H250 V44" '+S+'/>'+res(250,44,76,"")+t(270,64,"220 Ω")+
+            '<path d="M250 76 V96" '+S+'/><path d="M240 96 H260 L250 116 Z" '+S+'/><path d="M240 118 H260" '+S+'/><path d="M250 118 V215" '+S+'/>'+
+            '<path d="M264 100 l8 -8 M270 108 l8 -8" '+S+'/>'+t(270,128,"LED")+t(190,44,"pin 13");
+        }
+      }
+      return '<div id="wr"><svg viewBox="0 0 340 240" style="width:100%;max-width:400px" role="img" aria-label="Wiring diagram">'+g+'</svg><p class="sub" style="margin:6px 0 0">Dots mark wires that join. The LED long leg (anode) faces the 220 Ω resistor side.</p></div>';
+    },
+    b:function(){}
+  };
+
+  function renderExplainer(){
+    var h='<div class="tag">'+esc(L.level)+' · Lesson '+esc(L.num)+'</div><h1>'+esc(L.title)+'</h1><p class="lead">'+esc(L.lead)+'</p><p class="parts">'+esc(L.parts)+'</p>';
+    L.sections.forEach(function(sec,i){
+      h+='<section class="card"><h2><span class="n">'+(i+1)+'</span>'+esc(sec.title)+'</h2><div class="prose">'+sec.html+'</div>'+
+         (WIDGETS[sec.widget]?WIDGETS[sec.widget].h(L):sec.widget==="senseact"?staHtml(L.senseact):sec.widget==="checklist"?checkHtml(L.checklist):sec.widget==="uploadsim"?upHtml():sec.widget==="stepper"?stepHtml(L.stepper):sec.widget==="pins"?pinsHtml(L.pins):sec.widget?tourHtml(sec.widget):"")+'</section>';
+    });
+    h+='<section class="card"><h2><span class="n">'+(L.sections.length+1)+'</span>Check yourself</h2><div id="quiz"></div><div class="score" id="score" aria-live="polite"></div></section>';
+    $("app").innerHTML=h;
+    window.scrollTo(0,0);
+    L.sections.forEach(function(sec){ if(WIDGETS[sec.widget]) WIDGETS[sec.widget].b(L); else if(sec.widget==="senseact") bindSta(L.senseact); else if(sec.widget==="checklist") bindCheck(L.checklist); else if(sec.widget==="uploadsim") bindUp(); else if(sec.widget==="stepper") bindStep(L.stepper); else if(sec.widget==="pins") bindPins(L.pins); else if(sec.widget) bindTour(sec.widget); });
+    buildQuiz();
+  }
+
+  /* ---------- quiz ---------- */
+  function buildQuiz(){
+    var answered=0, correct=0, box=$("quiz");
+    L.quiz.forEach(function(item,qi){
+      var d=document.createElement("div"); d.className="q";
+      var p=document.createElement("p"); p.textContent=(qi+1)+". "+item.q; d.appendChild(p);
+      var ch=document.createElement("div"); ch.className="ch"; var ex=document.createElement("div"); ex.className="exp";
+      var order=item.a.map(function(_,k){return k;});
+      var numeric=item.a.every(function(t){ return /^[-−]?[\d,.]+$/.test(String(t).trim()); });
+      var tf=item.a.length===2&&/^(true|false)$/i.test(item.a[0])&&/^(true|false)$/i.test(item.a[1]);
+      if(!numeric&&!tf){ for(var k=order.length-1;k>0;k--){ var j=Math.floor(Math.random()*(k+1)), t0=order[k]; order[k]=order[j]; order[j]=t0; } }
+      order.forEach(function(ai){
+        var t=item.a[ai];
+        var b=document.createElement("button"); b.textContent=t;
+        b.onclick=function(){
+          if(d.getAttribute("data-done")) return; d.setAttribute("data-done","1"); answered++;
+          ch.querySelectorAll("button")[order.indexOf(item.c)].classList.add("right");
+          if(ai===item.c){ correct++; ex.textContent="Correct. "+item.e; } else { b.classList.add("wrong"); ex.textContent="Not quite. "+item.e; }
+          if(answered===L.quiz.length) $("score").textContent="You got "+correct+" of "+L.quiz.length+". "+(correct===L.quiz.length?L.next:"Re-run the circuit above and try again.");
+        };
+        ch.appendChild(b);
+      });
+      d.appendChild(ch); d.appendChild(ex); box.appendChild(d);
+    });
+  }
+
+  var savedList=[]; try{ savedList=JSON.parse(localStorage.getItem("course_codes")||"[]"); }catch(e){}
+  if(G&&savedList.length&&window.crypto&&crypto.subtle){ Promise.all(savedList.map(function(c){ return tryCode(c).catch(function(){}); })).then(function(){ fillPick(); route(); }); }
+  else route();
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
