@@ -3,6 +3,7 @@
   title: "External interrupts",
   lead: "Catch a pulse that happens while your loop() is busy, using an interrupt on pin 2. About 12 minutes.",
   parts: "Parts: Arduino Uno, a pushbutton or a signal source, jumper wires, USB cable.",
+  learn: ["What an interrupt is", "How attachInterrupt() catches a pulse", "Why a slow loop() misses pulses without one"],
   circuit: {
     type: "usb", pinLabel: "USB serial link",
     steps: [
@@ -12,21 +13,21 @@
     math: "A normal check with <code>digitalRead()</code> only sees the pin when loop() gets to it. If loop() is busy for 200 ms, any pulse shorter than that can be missed. An <b>interrupt</b> makes the hardware pause loop(), run a short function (the ISR), then resume. On the Uno only <b>pin 2</b> (INT0) and <b>pin 3</b> (INT1) support attachInterrupt()."
   },
   code: [
-    "volatile unsigned int pulses = 0;",
+    "volatile unsigned int pulses = 0;  // volatile = may change at any moment (inside an ISR)",
     "",
-    "void onPulse() {",
-    "  pulses++;",
+    "void onPulse() {  // the ISR: runs automatically at each pulse",
+    "  pulses++;  // count the pulse",
     "}",
     "",
-    "void setup() {",
+    "void setup() {  // runs once at start-up",
     "  Serial.begin(9600);",
-    "  pinMode(2, INPUT_PULLUP);",
+    "  pinMode(2, INPUT_PULLUP);  // pulse input on pin 2",
     "  {{mode}}",
     "}",
     "",
-    "void loop() {",
-    "  delay({{busy}});",
-    "  Serial.println(pulses);",
+    "void loop() {  // runs again and again",
+    "  delay({{busy}});  // pretend to be busy: pulses are still counted",
+    "  Serial.println(pulses);  // show how many pulses arrived",
     "}"
   ],
   setupLines: [8, 9, 10, 11],

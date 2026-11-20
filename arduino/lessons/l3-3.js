@@ -4,6 +4,7 @@
   title: "Make an LED blink",
   lead: "Wire the circuit, run the code, then change the timing. About 4 minutes.",
   parts: "Parts: Arduino Uno, 220 ohm resistor, LED, breadboard, 2 jumper wires.",
+  learn: ["How to wire an LED with a resistor to pin 13", "How setup(), loop() and delay() make it blink", "How the delay values change the blink rate"],
 
   // Circuit card. prewired:true skips the step-by-step wiring.
   circuit: {
@@ -20,15 +21,15 @@
 
   // Code lines. {{id}} becomes an editable number box. // starts a comment.
   code: [
-    "void setup() {",
+    "void setup() {  // runs once, when the Uno starts",
     "  pinMode(13, OUTPUT);  // pin 13 sends voltage out",
     "}",
     "",
-    "void loop() {",
+    "void loop() {  // runs again and again, forever",
     "  digitalWrite(13, HIGH);  // LED on",
-    "  delay({{d1}});",
+    "  delay({{d1}});  // wait, in milliseconds",
     "  digitalWrite(13, LOW);   // LED off",
-    "  delay({{d2}});",
+    "  delay({{d2}});  // wait, then loop() starts over",
     "}"
   ],
   setupLines: [2],

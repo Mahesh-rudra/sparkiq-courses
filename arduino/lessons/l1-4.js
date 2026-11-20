@@ -5,6 +5,7 @@
   title: "Your first upload: the Blink example",
   lead: "Upload a ready-made program to your Uno and watch the board respond. About 5 minutes. No wiring needed.",
   parts: "You need: your Uno connected with the board and port selected, as in Lesson 1.3.",
+  learn: ["How to open the Blink example and upload it", "How to tell that an upload worked", "What to check when an upload fails"],
 
   sections: [
     {

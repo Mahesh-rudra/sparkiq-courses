@@ -5,6 +5,7 @@
   title: "What is a microcontroller?",
   lead: "Meet the tiny computer inside the Arduino Uno and what it can do. About 4 minutes, nothing to wire.",
   parts: "Parts needed: none. If you have an Uno, keep it next to you for the board tour.",
+  learn: ["What a microcontroller is and how it differs from a computer", "What the Arduino Uno can (and cannot) do", "Where microcontrollers hide in everyday things"],
 
   sections: [
     {

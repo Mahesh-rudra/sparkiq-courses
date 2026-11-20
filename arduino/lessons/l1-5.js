@@ -5,6 +5,7 @@
   title: "setup() and loop(), line by line",
   lead: "Step through the Blink sketch one line at a time and see which parts run once and which repeat. About 5 minutes.",
   parts: "You need: nothing new. This is the same Blink code you uploaded in Lesson 1.4.",
+  learn: ["What setup() does and why it runs only once", "What loop() does and why it repeats forever", "How to read a sketch one line at a time"],
 
   sections: [
     {

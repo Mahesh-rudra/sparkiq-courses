@@ -5,6 +5,7 @@
   title: "LED and resistor value",
   lead: "Work out the right resistor for any LED and supply, and learn to read its colour bands. About 6 minutes.",
   parts: "You need: nothing. If you have resistors, keep a few next to you to read their bands.",
+  learn: ["How to choose a resistor for an LED", "How to read the colour bands on a resistor", "Why an LED without a resistor can burn out"],
 
   sections: [
     {

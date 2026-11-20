@@ -3,6 +3,7 @@
   title: "ADC reference voltage and resolution",
   lead: "Get four times more detail from a small sensor signal by changing the ADC's reference. About 12 minutes.",
   parts: "Parts: Arduino Uno, an LM35 temperature sensor (10 mV per °C), jumper wires.",
+  learn: ["What the ADC reference voltage is", "How changing it gives finer detail", "How to convert readings with the right reference"],
   circuit: {
     type: "disp", kind: "sensor", dev: "LM35", groups: 2, pinLabel: "A0 reads the LM35",
     rows: [
@@ -17,17 +18,17 @@
     math: "The ADC turns 0 V up to its <b>reference voltage</b> into 0 to 1023. With the default 5 V reference, one step is 5 ÷ 1023 = 4.9 mV, which is 0.49 °C on an LM35. The Uno also has a 1.1 V internal reference: one step is 1.1 ÷ 1023 = 1.07 mV, which is 0.11 °C, but anything above 1.1 V (110 °C) is clipped. The number in your maths must match the reference you chose."
   },
   code: [
-    "void setup() {",
-    "  Serial.begin(9600);",
-    "  analogReference({{ref}});",
+    "void setup() {  // runs once at start-up",
+    "  Serial.begin(9600);  // open the Serial Monitor",
+    "  analogReference({{ref}});  // choose the ADC's full-scale (reference) voltage",
     "}",
     "",
-    "void loop() {",
-    "  int raw = analogRead(A0);",
-    "  float volts = raw * {{vref}} / 1023.0;",
-    "  float tempC = volts * 100.0;",
-    "  Serial.println(tempC);",
-    "  delay(500);",
+    "void loop() {  // runs again and again",
+    "  int raw = analogRead(A0);  // 0 to 1023",
+    "  float volts = raw * {{vref}} / 1023.0;  // volts = raw x reference / 1023",
+    "  float tempC = volts * 100.0;  // TMP36-style: 10 mV per °C",
+    "  Serial.println(tempC);  // print the temperature",
+    "  delay(500);  // two readings per second",
     "}"
   ],
   setupLines: [1, 2, 3, 4],

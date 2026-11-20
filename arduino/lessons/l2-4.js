@@ -5,6 +5,7 @@
   title: "Breadboard connections",
   lead: "Learn which holes are connected inside a breadboard so your circuits work the first time. About 5 minutes.",
   parts: "You need: nothing, but a breadboard in front of you makes it easier.",
+  learn: ["Which breadboard holes are joined inside", "How to place parts so they connect properly", "The common wiring mistakes to avoid"],
 
   sections: [
     {

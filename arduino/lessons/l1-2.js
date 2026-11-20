@@ -30,6 +30,7 @@
     title: "Tour of the Arduino Uno board",
     lead: "Learn what every part of the board does and what each pin can do. About 5 minutes. Nothing to wire.",
     parts: "You need: nothing, but have your Uno next to you and find each part as you read.",
+    learn: ["The main parts of the Uno board and what each one does", "What the digital, analog and power pins are for", "How to find pin 13, GND and 5V on the board"],
 
     sections: [
       {

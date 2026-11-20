@@ -3,6 +3,7 @@
   title: "Power options and current limits",
   lead: "Pick a supply for your project, and work out how hot the Uno's own regulator gets. About 12 minutes.",
   parts: "Parts: Arduino Uno. A USB cable, a 9 V battery or a 12 V adapter, depending on the option.",
+  learn: ["How to choose a power supply", "How much heat the Uno's regulator makes", "Why a high input voltage wastes energy"],
   circuit: {
     type: "usb", pinLabel: "Supply input",
     steps: [
@@ -12,17 +13,17 @@
     math: "A USB port gives 5 V and the Uno's fuse limits it to about <b>500 mA</b>. On the barrel jack and VIN, a <b>linear regulator</b> drops the extra voltage and turns it into heat: <b>P = (Vin − 5 V) × I</b>. With a typical thermal resistance of around 50 °C/W on the board, every watt raises the regulator by about 50 °C, so more than roughly 1 W of heat is a problem. The values here are typical; check your board's datasheet."
   },
   code: [
-    "const float VIN = {{vin}};",
-    "const float LOAD_mA = 300;",
+    "const float VIN = {{vin}};  // input voltage",
+    "const float LOAD_mA = 300;  // current the load draws (mA)",
     "",
-    "void setup() {",
+    "void setup() {  // runs once at start-up",
     "  Serial.begin(9600);",
     "}",
     "",
-    "void loop() {",
-    "  float watts = (VIN - 5.0) * LOAD_mA / 1000.0;",
-    "  Serial.println(watts);",
-    "  delay(1000);",
+    "void loop() {  // runs again and again",
+    "  float watts = (VIN - 5.0) * LOAD_mA / 1000.0;  // the regulator burns (Vin - 5 V) x current as heat",
+    "  Serial.println(watts);  // print the heat in watts",
+    "  delay(1000);  // once per second",
     "}"
   ],
   setupLines: [4, 5, 6],

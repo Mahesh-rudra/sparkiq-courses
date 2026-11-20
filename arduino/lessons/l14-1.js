@@ -3,6 +3,7 @@
   title: "Flash, SRAM and EEPROM",
   lead: "The Uno has three kinds of memory, and only 2 KB of the one your variables live in. About 8 minutes.",
   parts: "Parts: Arduino Uno and its USB cable. Nothing else to wire.",
+  learn: ["The three kinds of memory: flash, SRAM and EEPROM", "What each one is used for", "Why 2 KB of SRAM runs out quickly"],
   circuit: {
     type: "usb", pinLabel: "USB serial link",
     steps: [
@@ -12,18 +13,18 @@
     math: "<b>Flash</b> (32 KB) holds your program and survives power off. <b>SRAM</b> (2 KB) holds variables while the program runs and is wiped at power off. <b>EEPROM</b> (1 KB) keeps small values through power off, and you write it deliberately. An array takes <b>count × size of one item</b>: byte is 1, int is 2, long is 4. The core and Serial also use roughly 200 bytes of SRAM."
   },
   code: [
-    "const int N = {{n}};",
+    "const int N = {{n}};  // how many readings we keep",
     "",
-    "{{type}} readings[N];",
+    "{{type}} readings[N];  // an array: N numbers stored in SRAM",
     "",
-    "void setup() {",
+    "void setup() {  // runs once at start-up",
     "  Serial.begin(9600);",
     "}",
     "",
-    "void loop() {",
-    "  readings[0] = analogRead(A0);",
-    "  Serial.println(sizeof(readings));",
-    "  delay(1000);",
+    "void loop() {  // runs again and again",
+    "  readings[0] = analogRead(A0);  // store one reading",
+    "  Serial.println(sizeof(readings));  // bytes the array takes in SRAM",
+    "  delay(1000);  // one print per second",
     "}"
   ],
   setupLines: [6, 7],

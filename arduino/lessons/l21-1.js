@@ -3,6 +3,7 @@
   title: "HC-05 Bluetooth control",
   lead: "Switch an LED from your phone through an HC-05 module, and protect its 3.3 V input. About 14 minutes.",
   parts: "Parts: Arduino Uno, an HC-05 Bluetooth module, 1 kΩ and 2 kΩ resistors, an LED with a 220 Ω resistor on pin 13, jumper wires, a phone with a Bluetooth terminal app.",
+  learn: ["How an HC-05 module talks to a phone", "How to switch an LED from the phone", "Why the module's input needs 3.3 V protection"],
   circuit: {
     type: "disp", kind: "sensor", dev: "HC-05", groups: 4, pinLabel: "Pins 10 and 11 (SoftwareSerial)",
     rows: [
@@ -20,19 +21,19 @@
     math: "The HC-05's RXD pin is 3.3 V. The divider gives <b>Vout = 5 V × 2 kΩ ÷ (1 kΩ + 2 kΩ) = 3.33 V</b>. In normal (data) mode the module defaults to <b>9600 baud</b>; its AT-command mode uses <b>38400</b>. Pair with the phone first (the PIN is usually 1234 or 0000), then open a Bluetooth terminal app and send characters."
   },
   code: [
-    "#include <SoftwareSerial.h>",
-    "SoftwareSerial bt(10, 11);",
+    "#include <SoftwareSerial.h>  // software UART on any two pins",
+    "SoftwareSerial bt(10, 11);  // pin 10 = receive, pin 11 = transmit",
     "",
-    "void setup() {",
-    "  pinMode(13, OUTPUT);",
-    "  bt.begin({{baud}});",
+    "void setup() {  // runs once at start-up",
+    "  pinMode(13, OUTPUT);  // LED on pin 13",
+    "  bt.begin({{baud}});  // the HC-05's baud rate",
     "}",
     "",
-    "void loop() {",
-    "  if (bt.available()) {",
-    "    char c = bt.read();",
-    "    if (c == '1') digitalWrite(13, HIGH);",
-    "    if (c == '0') digitalWrite(13, LOW);",
+    "void loop() {  // runs again and again",
+    "  if (bt.available()) {  // did the phone send a character?",
+    "    char c = bt.read();  // read one character",
+    "    if (c == '1') digitalWrite(13, HIGH);  // '1' = LED on",
+    "    if (c == '0') digitalWrite(13, LOW);  // '0' = LED off",
     "  }",
     "}"
   ],

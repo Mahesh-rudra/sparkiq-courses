@@ -5,6 +5,7 @@
   title: "Install the Arduino IDE and connect your Uno",
   lead: "Set up the free software, plug in the board, and choose the right board and port. About 6 minutes. Your first upload comes in the next lesson.",
   parts: "You need: a computer (Windows, macOS or Linux), an Arduino Uno, and a USB cable that carries data.",
+  learn: ["How to install the Arduino IDE", "How to connect the Uno with a USB cable", "How to choose the right board and port"],
 
   sections: [
     {

@@ -5,6 +5,7 @@
   title: "Voltage, current and resistance",
   lead: "Three ideas explain almost every circuit you will build. See how they affect each other. About 5 minutes.",
   parts: "You need: nothing. Just your imagination and a slider.",
+  learn: ["What voltage, current and resistance mean", "How the three depend on each other", "Why a circuit needs a complete loop"],
 
   sections: [
     {

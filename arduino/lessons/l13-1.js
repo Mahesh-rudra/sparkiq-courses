@@ -3,6 +3,7 @@
   title: "The transistor switch",
   lead: "An Uno pin can only supply about 20 mA. A transistor lets it switch a load ten times bigger. About 10 minutes.",
   parts: "Parts: Arduino Uno, one 2N2222 (or BC547) NPN transistor, a base resistor, a 5 V load that draws about 100 mA (a small buzzer, motor or LED strip), jumper wires.",
+  learn: ["Why a pin cannot drive a big load directly", "How a transistor switches a larger current", "How to choose the base resistor"],
   circuit: {
     type: "disp", kind: "load", dev: "2N2222 NPN", groups: 2, pinLabel: "Pin 9 drives the base",
     rows: [
@@ -17,17 +18,17 @@
     math: "The base needs a small current to open the switch: <b>Ib = (5 V − 0.7 V) ÷ Rb</b>. The transistor can then pass roughly <b>hFE × Ib</b> in the collector, with hFE around 100 for a 2N2222. With 1 kΩ, Ib is 4.3 mA and the transistor can pass up to 430 mA. With 10 kΩ, Ib is only 0.43 mA, so it can pass about 43 mA and a 100 mA load is starved."
   },
   code: [
-    "const int GATE = 9;",
+    "const int GATE = 9;  // the transistor gate pin",
     "const long BASE_OHMS = {{rb}};  // the base resistor you fitted",
     "",
-    "void setup() {",
+    "void setup() {  // runs once at start-up",
     "  pinMode(GATE, OUTPUT);",
     "}",
     "",
-    "void loop() {",
-    "  digitalWrite(GATE, HIGH);",
+    "void loop() {  // runs again and again",
+    "  digitalWrite(GATE, HIGH);  // transistor on: the load gets power",
     "  delay({{d}});",
-    "  digitalWrite(GATE, LOW);",
+    "  digitalWrite(GATE, LOW);  // transistor off: the load is off",
     "  delay({{d}});",
     "}"
   ],

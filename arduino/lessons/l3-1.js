@@ -5,6 +5,7 @@
   title: "pinMode: input or output?",
   lead: "Every pin must be told whether it sends or listens. Learn the three modes and when to use each. About 5 minutes.",
   parts: "You need: nothing to wire. Just follow along.",
+  learn: ["The three pin modes: OUTPUT, INPUT and INPUT_PULLUP", "When to use each one", "How to set a pin up with pinMode()"],
 
   sections: [
     {

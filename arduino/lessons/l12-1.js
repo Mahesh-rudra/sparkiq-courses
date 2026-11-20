@@ -3,6 +3,7 @@
   title: "Temperature with the TMP36",
   lead: "Turn a voltage into degrees Celsius, and fix a sensor that reads a little off. About 10 minutes.",
   parts: "Parts: Arduino Uno, one TMP36 temperature sensor, jumper wires.",
+  learn: ["How the TMP36 turns temperature into voltage", "How to convert a reading to degrees Celsius", "How to correct a sensor that reads a little off"],
   circuit: {
     type: "disp", kind: "sensor", dev: "TMP36", groups: 2, pinLabel: "A0 reads the TMP36 output",
     rows: [
@@ -17,19 +18,19 @@
     math: "The TMP36 outputs 0.5 V at 0 °C and adds 10 mV for every degree. So <b>°C = (volts − 0.5) × 100</b>. At 25 °C the output is 0.75 V, and the ADC reads about 153. Plugging it in backwards can make it very hot, so check the flat face."
   },
   code: [
-    "const int SENSOR = A0;",
+    "const int SENSOR = A0;  // TMP36 output goes to A0",
     "",
-    "void setup() {",
-    "  Serial.begin(9600);",
+    "void setup() {  // runs once at start-up",
+    "  Serial.begin(9600);  // open the Serial Monitor",
     "}",
     "",
-    "void loop() {",
-    "  int raw = analogRead(SENSOR);",
-    "  float volts = raw * 5.0 / 1023.0;",
-    "  float tempC = (volts - 0.5) * 100.0 + {{off}};",
-    "  Serial.print(tempC);",
+    "void loop() {  // runs again and again",
+    "  int raw = analogRead(SENSOR);  // 0 to 1023",
+    "  float volts = raw * 5.0 / 1023.0;  // convert the reading to volts (5 V / 1023)",
+    "  float tempC = (volts - 0.5) * 100.0 + {{off}};  // TMP36: 0.5 V at 0 °C, 10 mV per °C",
+    "  Serial.print(tempC);  // print the temperature",
     "  Serial.println(\" C\");",
-    "  delay(500);",
+    "  delay(500);  // two readings per second",
     "}"
   ],
   setupLines: [4, 5],

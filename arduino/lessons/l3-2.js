@@ -5,6 +5,7 @@
   title: "digitalWrite: HIGH and LOW",
   lead: "Switch a pin on and off from code, and see what goes wrong if you skip pinMode. About 4 minutes.",
   parts: "You need: nothing to wire. Pin 13 and an LED, as in Lesson 3.3, are shown on screen.",
+  learn: ["How digitalWrite() turns a pin HIGH or LOW", "What HIGH and LOW mean as voltages", "What goes wrong if you forget pinMode()"],
 
   sections: [
     {

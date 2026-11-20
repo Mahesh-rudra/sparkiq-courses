@@ -3,6 +3,7 @@
   title: "UART between two boards",
   lead: "Send text from one Uno to another over two wires, and see what a baud-rate mismatch does. About 12 minutes.",
   parts: "Parts: two Arduino Uno boards, three jumper wires, two USB cables.",
+  learn: ["How UART sends text over two wires", "Why both sides need the same baud rate", "How to link two boards"],
   circuit: {
     type: "disp", kind: "sensor", dev: "Second Uno (receiver)", groups: 3, pinLabel: "Sender pin 11 and pin 10",
     rows: [
@@ -19,17 +20,17 @@
     math: "UART has no clock wire. Both sides agree on a <b>baud rate</b>, and the receiver samples each bit in the middle of where it expects it. Each byte is 10 bits (start, 8 data, stop), so at 9600 baud it takes 10 ÷ 9600 = 1.04 ms. If the two rates differ by more than about 3 to 5%, the sampling drifts out of the bit and the text turns to garbage. Avoid pins 0 and 1 for this: they are shared with the USB link."
   },
   code: [
-    "#include <SoftwareSerial.h>",
-    "SoftwareSerial link(10, 11);",
+    "#include <SoftwareSerial.h>  // software UART on any two pins",
+    "SoftwareSerial link(10, 11);  // pin 10 = receive, pin 11 = transmit",
     "",
-    "void setup() {",
-    "  Serial.begin(9600);",
-    "  link.begin({{baud}});",
+    "void setup() {  // runs once at start-up",
+    "  Serial.begin(9600);  // the link to the computer",
+    "  link.begin({{baud}});  // the link to the other board",
     "}",
     "",
-    "void loop() {",
-    "  if (link.available()) {",
-    "    Serial.write(link.read());",
+    "void loop() {  // runs again and again",
+    "  if (link.available()) {  // has the other board sent anything?",
+    "    Serial.write(link.read());  // pass it on to the Serial Monitor",
     "  }",
     "}"
   ],

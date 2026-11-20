@@ -4,6 +4,7 @@
   title: "delay(): making the Uno wait",
   lead: "delay() pauses the program, which is useful and also a trap. See why the Uno cannot read a button while it waits. About 5 minutes.",
   parts: "Parts: the LED circuit from Lesson 3.3 and the push button from Lesson 4.3.",
+  learn: ["What delay() really does", "Why the Uno cannot read a button while it waits", "Why long delays make a program feel stuck"],
 
   circuit: {
     type: "button",
@@ -16,19 +17,19 @@
   },
 
   code: [
-    "void setup() {",
-    "  pinMode(13, OUTPUT);",
-    "  pinMode(2, INPUT_PULLUP);",
+    "void setup() {  // runs once at start-up",
+    "  pinMode(13, OUTPUT);  // pin 13 drives the LED",
+    "  pinMode(2, INPUT_PULLUP);  // pin 2 reads the button",
     "}",
     "",
-    "void loop() {",
-    "  if (digitalRead(2) == LOW) {  // pressed?",
-    "    digitalWrite(13, LOW);      // stay off",
+    "void loop() {  // runs again and again",
+    "  if (digitalRead(2) == LOW) {  // LOW means the button is pressed",
+    "    digitalWrite(13, LOW);  // pressed: keep the LED off",
     "  } else {",
-    "    digitalWrite(13, HIGH);",
-    "    delay({{wait}});",
-    "    digitalWrite(13, LOW);",
-    "    delay({{wait}});",
+    "    digitalWrite(13, HIGH);  // not pressed: blink",
+    "    delay({{wait}});  // wait (the Uno does nothing else now)",
+    "    digitalWrite(13, LOW);  // LED off",
+    "    delay({{wait}});  // wait again",
     "  }",
     "}"
   ],

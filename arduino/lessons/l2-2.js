@@ -5,6 +5,7 @@
   title: "Ohm's law",
   lead: "One formula links voltage, current and resistance. Learn it, see it work, then practise. About 6 minutes.",
   parts: "You need: nothing, but a pencil and paper help for the practice.",
+  learn: ["Ohm's law: V = I x R", "How to find any one of the three from the other two", "How to check your answer makes sense"],
 
   sections: [
     {
