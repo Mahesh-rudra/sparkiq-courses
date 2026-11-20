@@ -4,432 +4,482 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Learn Arduino Uno in your browser | SparkIQ</title>
-<meta name="description" content="82 interactive Arduino Uno lessons in two levels. Wire the circuit, run the code, experiment. No hardware needed.">
-
+<meta name="description" content="111 interactive Arduino Uno lessons in three levels. Wire the circuit, run the code, experiment. No hardware needed.">
+<meta name="theme-color" content="#2A1B6B">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-body{margin:0}
-a{text-decoration:none}
-details>summary{cursor:pointer;list-style:none}
-details>summary::-webkit-details-marker{display:none}
-</style>
+:root{
+  --ink:#1B1340; --muted:#5A5478; --cream:#FFF8EE; --card:#FFFFFF;
+  --purple:#6C4DF6; --deep:#2A1B6B; --pink:#FF4D8D; --orange:#FF9F1C; --yellow:#FFD23F;
+  --teal:#10BFA6; --blue:#2D9CFF; --line:#EADFCB;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.pop{font-family:Poppins,Inter,sans-serif}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+section{scroll-margin-top:72px}
 
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;background:rgba(42,27,107,.96);backdrop-filter:blur(8px)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:Poppins,sans-serif;font-weight:800;font-size:22px;color:#fff;display:flex;align-items:center;gap:8px}
+.logo i{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--yellow),var(--orange));font-style:normal;font-size:17px}
+.logo span{color:#C9BFFF;font-weight:600;font-size:15px}
+.links{display:flex;gap:6px;align-items:center}
+.links a{color:#E6E0FF;font-size:15px;font-weight:500;padding:8px 12px;border-radius:999px}
+.links a:hover{background:rgba(255,255,255,.12)}
+.links .cta{background:var(--yellow);color:var(--ink);font-weight:700}
+.links .cta:hover{background:#FFE06E}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 28px;border-radius:14px;font-weight:700;font-family:Poppins,sans-serif;font-size:16px;border:0;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.yellow{background:var(--yellow);color:var(--ink);box-shadow:0 6px 0 #D9A900}
+.btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:2px solid rgba(255,255,255,.4)}
+.btn.dark{background:var(--ink);color:#fff;box-shadow:0 6px 0 #000}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;color:#fff;background:linear-gradient(135deg,#2A1B6B 0%,#5B3FE0 55%,#8E4DF0 100%)}
+.blob{position:absolute;border-radius:50%;filter:blur(2px);opacity:.9;pointer-events:none}
+.b1{width:260px;height:260px;background:var(--pink);right:-80px;top:-80px;opacity:.55}
+.b2{width:180px;height:180px;background:var(--teal);left:-60px;bottom:40px;opacity:.5}
+.b3{width:90px;height:90px;background:var(--yellow);left:46%;top:36px;opacity:.7}
+.hero .wrap{position:relative;display:flex;flex-wrap:wrap;gap:44px;align-items:center;padding-top:56px;padding-bottom:84px}
+.hero .txt{flex:1 1 460px;min-width:0}
+.pill{display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:7px 16px;font-size:14px;font-weight:600}
+.hero h1{font-weight:800;font-size:54px;line-height:1.08;margin:22px 0 18px;letter-spacing:-.02em}
+.hl{background:linear-gradient(transparent 62%,var(--pink) 62%);padding:0 4px}
+.hero p.lead{font-size:19px;color:#E8E2FF;margin:0 0 30px;max-width:540px}
+.hero .btns{display:flex;flex-wrap:wrap;gap:16px}
+.hero .note{margin-top:22px;font-size:14px;color:#CFC6FF}
+.hero .vis{flex:1 1 380px;min-width:0}
+
+.screen{background:#150E38;border-radius:22px;border:3px solid rgba(255,255,255,.18);box-shadow:0 24px 60px rgba(10,5,40,.5);overflow:hidden}
+.screen .bar{display:flex;align-items:center;gap:7px;padding:12px 16px;background:#0F0A2B;font-size:13px;color:#B7AEEA}
+.dot{width:11px;height:11px;border-radius:50%}
+.screen .body{padding:20px}
+.code{font-family:'Courier New',monospace;font-size:15px;line-height:1.9;color:#D7D0FF}
+.code div{padding:0 10px;margin:0 -10px;border-radius:6px;white-space:pre;overflow-x:auto}
+.code .on1{animation:hl1 2s steps(1) infinite}
+.code .on2{animation:hl2 2s steps(1) infinite}
+@keyframes hl1{0%{background:var(--yellow);color:var(--ink)}50%{background:transparent;color:#D7D0FF}}
+@keyframes hl2{0%{background:transparent;color:#D7D0FF}50%{background:var(--pink);color:#fff}}
+.stage{display:flex;align-items:center;gap:18px;margin-top:16px;padding-top:16px;border-top:1px dashed rgba(255,255,255,.2)}
+.led{width:58px;height:58px;flex:0 0 58px}
+.led .glow{animation:glow 2s steps(1) infinite}
+@keyframes glow{0%{opacity:1}50%{opacity:.08}}
+.stage small{font-size:14px;color:#C9BFFF;line-height:1.45}
+.sticker{position:absolute;font-family:Poppins,sans-serif;font-weight:700;font-size:14px;padding:8px 14px;border-radius:999px;box-shadow:0 6px 0 rgba(0,0,0,.25)}
+.vis{position:relative}
+.st1{background:var(--yellow);color:var(--ink);top:-22px;right:8px;transform:rotate(5deg)}
+.st2{background:var(--teal);color:#fff;bottom:-18px;left:10px;transform:rotate(-4deg)}
+
+/* STATS */
+.stats{background:#fff;border-bottom:1px solid var(--line)}
+.stats .wrap{display:flex;flex-wrap:wrap;gap:18px;padding-top:30px;padding-bottom:30px}
+.stat{flex:1 1 200px;display:flex;align-items:center;gap:14px}
+.stat .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:26px;flex:0 0 52px}
+.stat b{display:block;font-family:Poppins,sans-serif;font-size:26px;line-height:1.1}
+.stat span{font-size:14px;color:var(--muted)}
+
+/* SECTIONS */
+.sect{padding:76px 22px 24px}
+.sect h2{font-weight:800;font-size:40px;line-height:1.15;margin:0 0 12px;letter-spacing:-.01em}
+.sect .sub{color:var(--muted);max-width:660px;margin:0 0 38px}
+.eyebrow{display:inline-block;font-family:Poppins,sans-serif;font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--purple);margin-bottom:10px}
+
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.step{background:#fff;border-radius:24px;padding:26px;border:2px solid var(--line);position:relative}
+.step .n{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:24px;margin-bottom:14px}
+.step h3{margin:0 0 6px;font-size:21px}
+.step p{margin:0;color:var(--muted);font-size:16px}
+.step:nth-child(1) .n{background:#D9F7F2}.step:nth-child(2) .n{background:#E3EEFF}.step:nth-child(3) .n{background:#FFE9C7}.step:nth-child(4) .n{background:#FFDDEA}
+
+/* PRICING */
+.price-wrap{background:linear-gradient(180deg,var(--cream) 0%,#F1EBFF 100%);padding-bottom:70px;margin-top:40px}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;align-items:stretch}
+.plan{background:#fff;border-radius:28px;padding:0 0 28px;overflow:hidden;border:3px solid transparent;display:flex;flex-direction:column;box-shadow:0 14px 34px rgba(60,40,140,.12)}
+.plan .top{padding:26px 28px 22px;color:#fff}
+.plan .lvl{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+.plan h3{margin:4px 0 0;font-size:28px;font-weight:800}
+.plan .tag{font-size:15px;opacity:.95;margin-top:2px}
+.p1 .top{background:linear-gradient(135deg,#0DA58F,#2BD4B8)}
+.p2 .top{background:linear-gradient(135deg,#2D7BFF,#7A5CFF)}
+.p3 .top{background:linear-gradient(135deg,#FF4D8D,#FF9F1C)}
+.plan .in{padding:24px 28px 0;display:flex;flex-direction:column;flex:1}
+.amt{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.amt b{font-family:Poppins,sans-serif;font-size:50px;line-height:1;font-weight:800}
+.amt s{color:var(--muted);font-size:19px}
+.launch{display:inline-block;margin:10px 0 18px;background:#FFF2C2;color:#7A5A00;font-weight:600;font-size:14px;padding:4px 12px;border-radius:999px}
+.plan ul{list-style:none;margin:0 0 24px;padding:0;display:flex;flex-direction:column;gap:10px;font-size:16px;flex:1}
+.plan li{display:flex;gap:10px}
+.plan li:before{content:"✓";font-weight:800;color:var(--teal);flex:0 0 auto}
+.p2 li:before{color:var(--purple)}.p3 li:before{color:var(--pink)}
+.plan .btn{width:100%}
+.p1 .btn{background:var(--teal);color:#fff;box-shadow:0 6px 0 #0A8472}
+.p2 .btn{background:var(--purple);color:#fff;box-shadow:0 6px 0 #4A31C4}
+.p3 .btn{background:var(--pink);color:#fff;box-shadow:0 6px 0 #C93069}
+.try{display:block;text-align:center;margin-top:16px;font-weight:600;font-size:15px;color:var(--purple)}
+.try:hover{text-decoration:underline}
+.pay{margin-top:10px;font-size:13px;color:var(--muted);text-align:center}
+
+.bundle{margin-top:28px;border-radius:30px;padding:34px;color:#fff;display:flex;flex-wrap:wrap;gap:24px 44px;align-items:center;background:linear-gradient(120deg,#2A1B6B,#6C4DF6 55%,#FF4D8D);position:relative;overflow:hidden;box-shadow:0 14px 34px rgba(60,40,140,.25)}
+.bundle .ribbon{display:inline-block;background:var(--yellow);color:var(--ink);font-family:Poppins,sans-serif;font-weight:800;font-size:13px;padding:5px 14px;border-radius:999px;letter-spacing:.04em}
+.bundle h3{margin:12px 0 8px;font-size:30px;font-weight:800}
+.bundle p{margin:0;color:#EDE8FF}
+.bundle .l{flex:1 1 380px;min-width:0}
+.bundle .r{flex:0 1 300px;min-width:0}
+.bundle .amt b{font-size:52px}.bundle .amt s{color:#D8D0FF}
+.bundle .btn{width:100%;margin-top:14px}
+.save{display:inline-block;margin-top:10px;font-size:14px;color:#FFE9A8;font-weight:600}
+
+/* SYLLABUS */
+.lvl-box{background:#fff;border-radius:24px;border:2px solid var(--line);margin-bottom:16px;overflow:hidden}
+.lvl-box>summary{display:flex;align-items:center;gap:14px;padding:20px 24px;cursor:pointer;list-style:none;font-family:Poppins,sans-serif;font-weight:700;font-size:21px}
+.lvl-box>summary::-webkit-details-marker{display:none}
+.lvl-box>summary .chip{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;color:#fff;font-size:20px;flex:0 0 42px}
+.lvl-box>summary small{display:block;font-family:Inter,sans-serif;font-weight:500;font-size:14px;color:var(--muted)}
+.lvl-box>summary:after{content:"＋";margin-left:auto;font-size:24px;color:var(--purple)}
+.lvl-box[open]>summary:after{content:"－"}
+.lvl-box .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;padding:6px 20px 22px}
+.sec{display:flex;gap:14px;align-items:flex-start;border-radius:18px;padding:16px 18px;background:#FBF8FF}
+.sec.c1{background:#EBFAF7}.sec.c2{background:#EEF4FF}.sec.c3{background:#FFF0F5}
+.secnum{flex:0 0 40px;height:40px;border-radius:12px;display:grid;place-items:center;font-family:Poppins,sans-serif;font-weight:800;color:#fff;font-size:16px}
+.c1 .secnum{background:var(--teal)}.c2 .secnum{background:var(--purple)}.c3 .secnum{background:var(--pink)}
+.secbody{flex:1;min-width:0}
+.sectitle{font-family:Poppins,sans-serif;font-weight:700;font-size:17px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.secbody p{margin:4px 0 0;font-size:14.5px;color:var(--muted);line-height:1.5}
+.badge{font-family:Inter,sans-serif;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px}
+.badge.free{background:var(--yellow);color:var(--ink)}
+.badge.try{background:#fff;border:1px solid #C9C2E8;color:var(--purple)}
+.seccount{flex:0 0 auto;text-align:center;font-family:Poppins,sans-serif;font-weight:800;font-size:22px;line-height:1}
+.seccount small{display:block;font-family:Inter,sans-serif;font-weight:500;font-size:11px;color:var(--muted);margin-top:3px}
+
+/* WHO */
+.who{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.who div{background:#fff;border:2px solid var(--line);border-radius:24px;padding:26px}
+.who .e{font-size:34px}
+.who b{display:block;font-family:Poppins,sans-serif;font-size:19px;margin:8px 0 4px}
+.who span{color:var(--muted);font-size:16px}
+
+/* FAQ */
+.faq{max-width:820px}
+.faq details{background:#fff;border:2px solid var(--line);border-radius:18px;padding:18px 22px;margin-bottom:12px}
+.faq summary{font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";font-weight:800;color:var(--purple);font-size:22px;line-height:1}
+.faq details[open] summary:after{content:"–"}
+.faq details div{color:var(--muted);margin-top:12px;font-size:16px}
+.faq a{color:var(--purple);font-weight:600}
+
+/* FINAL CTA */
+.final{margin:56px 0 0;background:linear-gradient(135deg,#2A1B6B,#6C4DF6);color:#fff;text-align:center;padding:68px 22px;position:relative;overflow:hidden}
+.final h2{font-weight:800;font-size:38px;margin:0 0 12px;line-height:1.15}
+.final p{margin:0 auto 28px;color:#E2DBFF;max-width:520px}
+
+footer{background:#fff;border-top:1px solid var(--line);padding:30px 0 90px;font-size:15px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between}
+footer a{color:var(--purple);font-weight:600}
+
+
+.pm{position:fixed;inset:0;z-index:100;background:rgba(27,19,64,.72);display:none;align-items:center;justify-content:center;padding:18px}
+.pm.show{display:flex}
+.pm .box{background:#fff;border-radius:26px;max-width:440px;width:100%;padding:30px 26px;text-align:center;box-shadow:0 24px 60px rgba(10,5,40,.5)}
+.pm h3{font-family:Poppins,sans-serif;font-weight:800;font-size:24px;margin:8px 0 6px}
+.pm p{color:var(--muted);margin:0 0 14px;font-size:16px}
+.pm .code{font-family:'Courier New',monospace;font-weight:700;font-size:22px;letter-spacing:.06em;background:#F1EBFF;color:var(--deep);border-radius:14px;padding:14px;margin:12px 0;word-break:break-all;user-select:all}
+.pm .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.pm .btn{min-height:46px;padding:0 20px;font-size:15px}
+.pm .btn.light{background:#F1EBFF;color:var(--deep);box-shadow:none}
+.pm small{display:block;margin-top:14px;color:var(--muted);font-size:13px}
+
+/* MOBILE BAR */
+.mbar{display:none}
+@media(max-width:760px){
+  body{font-size:16px}
+  .links a:not(.cta){display:none}
+  .hero h1{font-size:36px}
+  .hero .wrap{padding-top:36px;padding-bottom:64px}
+  .sect{padding-top:54px}.sect h2{font-size:30px}
+  .final h2{font-size:28px}
+  .lvl-box .grid{grid-template-columns:1fr}
+  .mbar{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(255,255,255,.97);padding:10px 14px;border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(40,20,100,.12)}
+  .mbar a{flex:1;min-height:46px;display:flex;align-items:center;justify-content:center;border-radius:12px;font-family:Poppins,sans-serif;font-weight:700;font-size:15px}
+  .mbar .a{background:var(--purple);color:#fff}.mbar .b{background:var(--yellow);color:var(--ink)}
+  .st1,.st2{display:none}
+}
+@media(prefers-reduced-motion:reduce){.code .on1,.code .on2,.led .glow{animation:none}.code .on1{background:var(--yellow);color:var(--ink)}html{scroll-behavior:auto}.btn:hover{transform:none}}
+</style>
 </head>
 <body>
 
+<nav class="nav"><div class="wrap">
+  <a class="logo" href="#top"><i>⚡</i>SparkIQ <span>Arduino</span></a>
+  <div class="links">
+    <a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#syllabus">Syllabus</a><a href="#faq">FAQ</a>
+    <a class="cta" href="arduino/#1-1">Try free</a>
+  </div>
+</div></nav>
 
-<div style="width:100%;background:#F7F8F5;color:#14201C;font-family:Inter,system-ui,sans-serif;font-size:17px;line-height:1.55">
+<header class="hero" id="top">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="wrap">
+    <div class="txt">
+      <span class="pill">🎓 3 courses · 111 interactive lessons · no kit needed</span>
+      <h1>Learn Arduino by <span class="hl">wiring it</span> and running it, in your browser</h1>
+      <p class="lead">Short, hands-on lessons take you from your first blinking LED to sensors, displays, motors and real projects. Wire the circuit, watch the code run line by line, change it, and see what happens.</p>
+      <div class="btns">
+        <a class="btn yellow" href="arduino/#1-1">▶ Try free lessons</a>
+        <a class="btn ghost" href="#pricing">See the courses</a>
+      </div>
+      <div class="note">Works on phone and laptop · Pay by UPI, card or netbanking</div>
+    </div>
+    <div class="vis">
+      <span class="sticker st1">⚡ Live circuit</span>
+      <div class="screen">
+        <div class="bar"><span class="dot" style="background:#FF5F57"></span><span class="dot" style="background:#FEBC2E"></span><span class="dot" style="background:#28C840"></span><span style="margin-left:8px">Lesson 3.3 · Make an LED blink</span></div>
+        <div class="body">
+          <div class="code">
+            <div>void loop() {</div>
+            <div class="on1">  digitalWrite(13, HIGH);</div>
+            <div>  delay(500);</div>
+            <div class="on2">  digitalWrite(13, LOW);</div>
+            <div>  delay(500);</div>
+            <div>}</div>
+          </div>
+          <div class="stage">
+            <svg class="led" viewBox="0 0 58 58" aria-hidden="true"><circle class="glow" cx="29" cy="29" r="28" fill="#FFD23F" opacity=".25"/><circle class="glow" cx="29" cy="29" r="16" fill="#FFD23F"/><circle cx="29" cy="29" r="16" fill="none" stroke="#FFD23F" stroke-width="2" opacity=".6"/></svg>
+            <small>Pin 13 goes HIGH and the LED lights up. Change the delay and watch it respond.</small>
+          </div>
+        </div>
+      </div>
+      <span class="sticker st2">🧠 Quiz after every lesson</span>
+    </div>
+  </div>
+</header>
 
-<!-- NAV + HERO -->
-<div style="background:#10201B;color:#F7F8F5">
-<div style="max-width:1120px;margin:0 auto;padding:0 24px">
-<div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:24px 0">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">SparkIQ <span style="font-weight:500;color:#9FB8AE">· Arduino</span></div>
-<div style="display:flex;flex-wrap:wrap;gap:24px;align-items:center;font-size:15px">
-<a href="#syllabus" style="color:#D6E4DD">Syllabus</a>
-<a href="#pricing" style="color:#D6E4DD">Pricing</a>
-<a href="#faq" style="color:#D6E4DD">FAQ</a>
-</div>
-</div>
-<div style="display:flex;flex-wrap:wrap;gap:48px;align-items:center;padding:48px 0 88px">
-<div style="flex:1 1 480px;min-width:0">
-<div style="display:inline-block;border:1px solid #3E5C50;border-radius:999px;padding:6px 14px;font-size:14px;color:#BFD6CB">Two courses · 82 interactive lessons · no hardware needed</div>
-<h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:56px;line-height:1.08;margin:24px 0 20px;letter-spacing:-0.02em">Learn Arduino Uno by wiring it and running it, right in your browser</h1>
-<p style="margin:0 0 32px;font-size:19px;color:#CFE0D8;max-width:560px">Short lessons take you from your first blinking LED to buttons, sensors, displays, motors and your own libraries. Wire the circuit, run the code line by line, change it, and see what happens.</p>
-<div style="display:flex;flex-wrap:wrap;gap:16px">
-<a href="arduino/#1-1" style="display:inline-flex;align-items:center;min-height:48px;padding:0 28px;border-radius:10px;background:#F5A524;color:#10201B;font-weight:600">Try the free lessons</a>
-<a href="#pricing" style="display:inline-flex;align-items:center;min-height:48px;padding:0 28px;border-radius:10px;border:1.5px solid #6F8F81;color:#F7F8F5;font-weight:600">See the courses</a>
-</div>
-</div>
-<div style="flex:1 1 380px;min-width:0">
-<div style="background:#0A1511;border:1px solid #2A4339;border-radius:16px;padding:24px">
-<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;font-size:13px;color:#9FB8AE"><span>Lesson 3.3 · Make an LED blink</span><span>Running</span></div>
-<div style="font-family:'Courier New',monospace;font-size:15px;line-height:1.8;color:#CFE0D8;white-space:pre">void loop() {</div>
-<div style="font-family:'Courier New',monospace;font-size:15px;line-height:1.8;color:#10201B;white-space:pre;background:#F5A524;border-radius:4px;padding:0 8px;margin:0 -8px">  digitalWrite(13, HIGH);</div>
-<div style="font-family:'Courier New',monospace;font-size:15px;line-height:1.8;color:#CFE0D8;white-space:pre">  delay(500);</div>
-<div style="font-family:'Courier New',monospace;font-size:15px;line-height:1.8;color:#CFE0D8;white-space:pre">  digitalWrite(13, LOW);</div>
-<div style="font-family:'Courier New',monospace;font-size:15px;line-height:1.8;color:#CFE0D8;white-space:pre">  delay(500);</div>
-<div style="font-family:'Courier New',monospace;font-size:15px;line-height:1.8;color:#CFE0D8;white-space:pre">}</div>
-<div style="margin-top:20px;padding-top:20px;border-top:1px solid #2A4339;display:flex;align-items:center;gap:16px">
-<svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="26" fill="#F5A524" opacity="0.18"/><circle cx="28" cy="28" r="14" fill="#F5A524"/></svg>
-<div style="font-size:14px;color:#BFD6CB">Pin 13 is HIGH, so the LED is on. Change the delay and watch it respond.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+<div class="stats"><div class="wrap">
+  <div class="stat"><div class="ic" style="background:#D9F7F2">📚</div><div><b>111</b><span>lessons in 21 sections</span></div></div>
+  <div class="stat"><div class="ic" style="background:#E3EEFF">🔌</div><div><b>₹0</b><span>of parts needed to start</span></div></div>
+  <div class="stat"><div class="ic" style="background:#FFE9C7">🎁</div><div><b>Free</b><span>lessons in every level</span></div></div>
+  <div class="stat"><div class="ic" style="background:#FFDDEA">📱</div><div><b>Phone</b><span>friendly, any screen</span></div></div>
+</div></div>
 
-<!-- STATS -->
-<div style="background:#FFFFFF;border-bottom:1px solid #E1E6E2">
-<div style="max-width:1120px;margin:0 auto;padding:32px 24px;display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between">
-<div style="flex:1 1 200px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:36px;color:#0B7A66">82</div><div style="color:#4B5A55;font-size:15px">interactive lessons in two courses</div></div>
-<div style="flex:1 1 200px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:36px;color:#0B7A66">15</div><div style="color:#4B5A55;font-size:15px">sections, from blink to input devices</div></div>
-<div style="flex:1 1 200px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:36px;color:#0B7A66">0</div><div style="color:#4B5A55;font-size:15px">parts to buy to start learning</div></div>
-<div style="flex:1 1 200px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:36px;color:#0B7A66">Phone</div><div style="color:#4B5A55;font-size:15px">friendly, works on any screen</div></div>
-</div>
-</div>
+<section id="how"><div class="wrap sect">
+  <span class="eyebrow">How it works</span>
+  <h2>Every lesson works the same way</h2>
+  <p class="sub">You do not just read about Arduino. In each lesson you build the circuit and watch your code run.</p>
+  <div class="steps">
+    <div class="step"><div class="n">🔧</div><h3>1. Wire it</h3><p>Connect each wire on a virtual Uno, one step at a time, with the circuit diagram beside you.</p></div>
+    <div class="step"><div class="n">▶️</div><h3>2. Run the code</h3><p>See each line highlight as it runs, with a live graph, Serial Monitor or scope showing the result.</p></div>
+    <div class="step"><div class="n">🎛️</div><h3>3. Experiment</h3><p>Change values in the code, turn a knob, press a button, and see what happens straight away.</p></div>
+    <div class="step"><div class="n">🏆</div><h3>4. Challenge and quiz</h3><p>Finish with a short challenge and a quiz, so you know you understood before you move on.</p></div>
+  </div>
+</div></section>
 
-<!-- HOW IT WORKS -->
-<div style="max-width:1120px;margin:0 auto;padding:88px 24px 40px">
-<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:40px;line-height:1.15;margin:0 0 16px;letter-spacing:-0.01em">Every lesson works the same way</h2>
-<p style="margin:0 0 40px;color:#4B5A55;max-width:640px">You do not just read about Arduino. In each lesson you build the circuit and watch your code run.</p>
-<div style="display:flex;flex-wrap:wrap;gap:24px">
-<div style="flex:1 1 240px;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:28px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#0B7A66;font-size:15px">STEP 1</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;margin:8px 0">Wire it</div><div style="color:#4B5A55;font-size:16px">Connect each wire on a virtual Uno, one step at a time, with the circuit diagram beside you.</div></div>
-<div style="flex:1 1 240px;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:28px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#0B7A66;font-size:15px">STEP 2</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;margin:8px 0">Run the code</div><div style="color:#4B5A55;font-size:16px">See each line highlight as it runs, with a live graph, Serial Monitor or scope showing the result.</div></div>
-<div style="flex:1 1 240px;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:28px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#0B7A66;font-size:15px">STEP 3</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;margin:8px 0">Experiment</div><div style="color:#4B5A55;font-size:16px">Change values in the code, turn a knob, press a button, and see what happens straight away.</div></div>
-<div style="flex:1 1 240px;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:28px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#0B7A66;font-size:15px">STEP 4</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;margin:8px 0">Challenge and quiz</div><div style="color:#4B5A55;font-size:16px">Finish with a short challenge and a quiz, so you know you understood before you move on.</div></div>
-</div>
-</div>
+<section id="pricing" class="price-wrap"><div class="wrap sect">
+  <span class="eyebrow">Courses and pricing</span>
+  <h2>Pick your level</h2>
+  <p class="sub">Try the free lessons first. New to Arduino? Start with Level 1. Level 2 is for you if you know variables, if, loops, analogRead and PWM. Level 3 is for you if you are comfortable with millis(), libraries and sensors.</p>
 
-<!-- SYLLABUS -->
-<div id="syllabus" style="max-width:1120px;margin:0 auto;padding:56px 24px 40px">
-<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:40px;line-height:1.15;margin:0 0 16px;letter-spacing:-0.01em">Syllabus</h2>
-<p style="margin:0 0 40px;color:#4B5A55;max-width:640px">Three courses, 21 sections and 111 lessons, in the order you should learn them. Level 1 (sections 1 to 9) covers the basics. Level 2 (sections 10 to 15) goes intermediate. Level 3 (sections 16 to 21) is advanced. Each course is sold separately, and each has free lessons to try.</p>
-<div style="display:flex;flex-direction:column;gap:16px">
+  <div class="plans">
+    <div class="plan p1" id="level1">
+      <div class="top"><div class="lvl">Level 1</div><h3>Basics</h3><div class="tag">Blink your first LED, build real habits</div></div>
+      <div class="in">
+        <div class="amt"><b>₹499</b><s>₹999</s></div>
+        <span class="launch">🎉 Launch price, first 30 students</span>
+        <ul>
+          <li>45 lessons in 9 sections</li>
+          <li>Sections 1 and 2 (9 lessons) are free</li>
+          <li>Wiring, code, experiments, challenges and quizzes</li>
+          <li>Works in your browser, including on a phone</li>
+        </ul>
+        <a class="btn" href="#pricing" data-plan="l1">Enrol in Level 1</a>
+        <a class="try" href="arduino/#1-1">▶ Try the free lessons</a>
+      </div>
+    </div>
 
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:#0B7A66;margin:8px 0 -4px">Level 1 · Basics</div>
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">1</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Getting started</div>
-<div style="background:#F5A524;color:#10201B;font-size:13px;font-weight:600;border-radius:999px;padding:2px 12px">Free</div>
-</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">What a microcontroller is, a tour of the Uno, installing the IDE, your first Blink upload, setup() and loop().</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">5 lessons</div>
-</div>
+    <div class="plan p2" id="level2">
+      <div class="top"><div class="lvl">Level 2</div><h3>Intermediate</h3><div class="tag">Displays, sensors, motors and more</div></div>
+      <div class="in">
+        <div class="amt"><b>₹499</b><s>₹999</s></div>
+        <span class="launch">🎉 Launch price, first 30 students</span>
+        <ul>
+          <li>37 lessons in 6 sections</li>
+          <li>First lesson of every section is free</li>
+          <li>LCD, OLED, TMP36, HC-SR04, servo, EEPROM</li>
+          <li>Works in your browser, including on a phone</li>
+        </ul>
+        <a class="btn" href="#pricing" data-plan="l2">Enrol in Level 2</a>
+        <a class="try" href="arduino/#10-1">▶ Try a free lesson</a>
+      </div>
+    </div>
 
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">2</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Electronics basics</div>
-<div style="background:#F5A524;color:#10201B;font-size:13px;font-weight:600;border-radius:999px;padding:2px 12px">Free</div>
-</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">Voltage, current and resistance, Ohm's law, choosing an LED resistor, breadboard connections.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">4 lessons</div>
-</div>
+    <div class="plan p3" id="level3">
+      <div class="top"><div class="lvl">Level 3</div><h3>Advanced</h3><div class="tag">Think like an embedded engineer</div></div>
+      <div class="in">
+        <div class="amt"><b>₹499</b><s>₹999</s></div>
+        <span class="launch">🎉 Launch price, first 30 students</span>
+        <ul>
+          <li>29 lessons in 6 sections</li>
+          <li>First lesson of every section is free</li>
+          <li>Interrupts, timers, SPI, I2C, SD logging, sleep modes</li>
+          <li>Ends with a battery data logger project</li>
+        </ul>
+        <a class="btn" href="#pricing" data-plan="l3">Enrol in Level 3</a>
+        <a class="try" href="arduino/#16-1">▶ Try a free lesson</a>
+      </div>
+    </div>
+  </div>
 
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">3</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Digital output</div>
+  <div class="bundle" id="bundle">
+    <div class="l">
+      <span class="ribbon">⭐ BEST VALUE</span>
+      <h3>All three levels, one price</h3>
+      <p>Levels 1, 2 and 3: 111 lessons in 21 sections, from your first Blink to a battery data logger. One purchase, one access code, every lesson unlocked.</p>
+    </div>
+    <div class="r">
+      <div class="amt"><b>₹1,099</b><s>₹2,997</s></div>
+      <div class="save">Cheaper than the three launch prices (₹1,497)</div>
+      <a class="btn yellow" href="#pricing" data-plan="bundle">Enrol in all three levels</a>
+    </div>
+  </div>
+  <div class="pay" style="margin-top:16px">Pay by UPI, card or netbanking. Secure checkout by Razorpay. Sold by Vedax Global.</div>
+</div></section>
 
-</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">pinMode, digitalWrite, blinking an LED, delay(), blink patterns and SOS.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">5 lessons</div>
-</div>
+<section id="syllabus"><div class="wrap sect">
+  <span class="eyebrow">Syllabus</span>
+  <h2>What you will learn</h2>
+  <p class="sub">21 sections and 111 lessons, in the order you should learn them. Tap a level to open it.</p>
 
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">4</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Buttons</div>
+  <details class="lvl-box" open>
+    <summary><span class="chip" style="background:var(--teal)">1</span><span>Level 1 · Basics<small>Sections 1 to 9 · 45 lessons · sections 1 and 2 free</small></span></summary>
+    <div class="grid">
+<div class="sec c1"><div class="secnum">1</div><div class="secbody"><div class="sectitle">Getting started <span class="badge free">FREE</span></div><p>What a microcontroller is, a tour of the Uno, installing the IDE, your first Blink upload, setup() and loop().</p></div><div class="seccount">5<small>lessons</small></div></div>
+<div class="sec c1"><div class="secnum">2</div><div class="secbody"><div class="sectitle">Electronics basics <span class="badge free">FREE</span></div><p>Voltage, current and resistance, Ohm&#x27;s law, choosing an LED resistor, breadboard connections.</p></div><div class="seccount">4<small>lessons</small></div></div>
+<div class="sec c1"><div class="secnum">3</div><div class="secbody"><div class="sectitle">Digital output </div><p>pinMode, digitalWrite, blinking an LED, delay(), blink patterns and SOS.</p></div><div class="seccount">5<small>lessons</small></div></div>
+<div class="sec c1"><div class="secnum">4</div><div class="secbody"><div class="sectitle">Buttons </div><p>Push buttons, pull-up and pull-down resistors, toggling an LED, debouncing with delay and millis().</p></div><div class="seccount">5<small>lessons</small></div></div>
+<div class="sec c1"><div class="secnum">5</div><div class="secbody"><div class="sectitle">Variables and decisions </div><p>Variables, data types and overflow, if and else, comparison operators, a traffic light project.</p></div><div class="seccount">5<small>lessons</small></div></div>
+<div class="sec c1"><div class="secnum">6</div><div class="secbody"><div class="sectitle">Loops and arrays </div><p>for and while loops, break and continue, arrays, an LED chaser project.</p></div><div class="seccount">5<small>lessons</small></div></div>
+<div class="sec c1"><div class="secnum">7</div><div class="secbody"><div class="sectitle">Serial Monitor </div><p>Printing from the Uno, baud rate, reading input from the computer, a button press logger.</p></div><div class="seccount">4<small>lessons</small></div></div>
+<div class="sec c1"><div class="secnum">8</div><div class="secbody"><div class="sectitle">Analog input </div><p>Analog versus digital, analogRead and the ADC, potentiometers, map(), light sensors and noise, an automatic night light.</p></div><div class="seccount">6<small>lessons</small></div></div>
+<div class="sec c1"><div class="secnum">9</div><div class="secbody"><div class="sectitle">PWM and colour </div><p>PWM, fading, dimming with a knob, gamma, RGB colour mixing, an auto-dimming night light.</p></div><div class="seccount">6<small>lessons</small></div></div>
+    </div>
+  </details>
 
-</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">Push buttons, pull-up and pull-down resistors, toggling an LED, debouncing with delay and millis().</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">5 lessons</div>
-</div>
+  <details class="lvl-box">
+    <summary><span class="chip" style="background:var(--purple)">2</span><span>Level 2 · Intermediate<small>Sections 10 to 15 · 37 lessons</small></span></summary>
+    <div class="grid">
+<div class="sec c2"><div class="secnum">10</div><div class="secbody"><div class="sectitle">Better programming <span class="badge try">1st lesson free</span></div><p>Functions, parameters and return values, constants, strings, why delay() blocks, millis() timing, a three-blinker project.</p></div><div class="seccount">7<small>lessons</small></div></div>
+<div class="sec c2"><div class="secnum">11</div><div class="secbody"><div class="sectitle">Displays <span class="badge try">1st lesson free</span></div><p>7-segment display, the 74HC595 shift register, 16×2 LCD, I2C LCD, OLED graphics, an uptime clock.</p></div><div class="seccount">6<small>lessons</small></div></div>
+<div class="sec c2"><div class="secnum">12</div><div class="secbody"><div class="sectitle">Sensors <span class="badge try">1st lesson free</span></div><p>TMP36 temperature, a thermostat with hysteresis, HC-SR04 distance, a parking sensor, PIR motion, a smart fan.</p></div><div class="seccount">6<small>lessons</small></div></div>
+<div class="sec c2"><div class="secnum">13</div><div class="secbody"><div class="sectitle">Motors and loads <span class="badge try">1st lesson free</span></div><p>Transistor switch, DC motor speed, relay module, servo sweep, servo with a knob, motor direction with an H-bridge.</p></div><div class="seccount">6<small>lessons</small></div></div>
+<div class="sec c2"><div class="secnum">14</div><div class="secbody"><div class="sectitle">Memory and libraries <span class="badge try">1st lesson free</span></div><p>Flash, SRAM and EEPROM, saving memory with F(), keeping values through a reset, EEPROM wear, writing your own class, a boot counter.</p></div><div class="seccount">6<small>lessons</small></div></div>
+<div class="sec c2"><div class="secnum">15</div><div class="secbody"><div class="sectitle">Input devices <span class="badge try">1st lesson free</span></div><p>4×4 keypad, rotary encoder, joystick, infrared remote, many buttons on one pin, a parking sensor with LCD as the final project.</p></div><div class="seccount">6<small>lessons</small></div></div>
+    </div>
+  </details>
 
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">5</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Variables and decisions</div>
+  <details class="lvl-box">
+    <summary><span class="chip" style="background:var(--pink)">3</span><span>Level 3 · Advanced<small>Sections 16 to 21 · 29 lessons</small></span></summary>
+    <div class="grid">
+<div class="sec c3"><div class="secnum">16</div><div class="secbody"><div class="sectitle">Advanced analog <span class="badge try">1st lesson free</span></div><p>ADC reference and resolution, noise and the moving average, measuring battery voltage, measuring current and calibrating zero.</p></div><div class="seccount">4<small>lessons</small></div></div>
+<div class="sec c3"><div class="secnum">17</div><div class="secbody"><div class="sectitle">Interrupts and timers <span class="badge try">1st lesson free</span></div><p>External and pin-change interrupts, writing a safe ISR, timers and prescalers, a timer interrupt for fixed sampling, changing the PWM frequency.</p></div><div class="seccount">6<small>lessons</small></div></div>
+<div class="sec c3"><div class="secnum">18</div><div class="secbody"><div class="sectitle">Communication <span class="badge try">1st lesson free</span></div><p>UART between two boards, the I2C bus scanner, SPI, SD card logging, the DS3231 clock, reading a datasheet timing diagram.</p></div><div class="seccount">6<small>lessons</small></div></div>
+<div class="sec c3"><div class="secnum">19</div><div class="secbody"><div class="sectitle">Program design <span class="badge try">1st lesson free</span></div><p>State machines, non-blocking multitasking, splitting code into files, writing a simple class.</p></div><div class="seccount">4<small>lessons</small></div></div>
+<div class="sec c3"><div class="secnum">20</div><div class="secbody"><div class="sectitle">Power and hardware <span class="badge try">1st lesson free</span></div><p>Power options and current limits, regulators and battery life, sleep modes and the watchdog, decoupling, breadboard to perfboard.</p></div><div class="seccount">5<small>lessons</small></div></div>
+<div class="sec c3"><div class="secnum">21</div><div class="secbody"><div class="sectitle">Wireless and the next step <span class="badge try">1st lesson free</span></div><p>HC-05 Bluetooth control, reading phone commands, moving from Uno to ESP32, and the project: a battery data logger.</p></div><div class="seccount">4<small>lessons</small></div></div>
+    </div>
+  </details>
+</div></section>
 
-</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">Variables, data types and overflow, if and else, comparison operators, a traffic light project.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">5 lessons</div>
-</div>
+<section><div class="wrap sect">
+  <span class="eyebrow">Who it is for</span>
+  <h2>Made for complete beginners</h2>
+  <p class="sub">If you can use a phone or a laptop, you can start. Every idea is explained from the ground up, from what a microcontroller is to why an LED needs a resistor.</p>
+  <div class="who">
+    <div><span class="e">🎒</span><b>Students and school kids</b><span>Learn electronics and coding together, at your own pace.</span></div>
+    <div><span class="e">🛠️</span><b>Hobbyists and makers</b><span>Build a solid base before you spend money on parts.</span></div>
+    <div><span class="e">👩‍🏫</span><b>Teachers and parents</b><span>A ready-made, hands-on way to teach Arduino without lab hardware.</span></div>
+  </div>
+</div></section>
 
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">6</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Loops and arrays</div>
+<section id="faq"><div class="wrap sect faq">
+  <span class="eyebrow">FAQ</span>
+  <h2>Questions</h2>
+  <p class="sub" style="margin-bottom:28px">Not here? Email us and we will help.</p>
+  <details><summary>Do I need an Arduino board?</summary><div>No. The lessons use a virtual Arduino Uno in your browser, so you can learn everything without buying any parts. When you later buy a board, what you learned carries over.</div></details>
+  <details><summary>Can I learn on my phone?</summary><div>Yes. The lessons are built to work on a phone screen as well as on a laptop.</div></details>
+  <details><summary>I have never done electronics or coding. Is that fine?</summary><div>Yes. Level 1 starts with what a microcontroller is and builds up one idea at a time.</div></details>
+  <details><summary>What is free?</summary><div>In Level 1, sections 1 and 2 (nine lessons) are free: the Uno board, installing the IDE, your first Blink upload and basic electronics. In Levels 2 and 3, the first lesson of every section is free, so you can see displays, sensors, motors, memory and input devices working before you buy.</div></details>
+  <details><summary>Do I need Level 1 before Level 2?</summary><div>You need the skills, not the purchase. Level 2 assumes you can use variables, if, loops, analogRead and PWM. If you are new to Arduino, start with Level 1. If you want everything, the bundle gives all three levels for ₹1,099.</div></details>
+  <details><summary>What is in Level 3?</summary><div>Level 3 is advanced: interrupts and timers, communication buses, power saving and a final data-logger project. It assumes Level 2 skills: millis(), libraries, sensors and displays.</div></details>
+  <details><summary>How do I get help if I am stuck?</summary><div>Email <a href="mailto:help@vedaxglobal.com">help@vedaxglobal.com</a> with your name, the lesson number and what you see on screen. A screenshot helps.</div></details>
+</div></section>
 
-</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">for and while loops, break and continue, arrays, an LED chaser project.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">5 lessons</div>
-</div>
-
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">7</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Serial Monitor</div>
-
-</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">Printing from the Uno, baud rate, reading input from the computer, a button press logger.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">4 lessons</div>
-</div>
-
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">8</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Analog input</div>
-
-</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">Analog versus digital, analogRead and the ADC, potentiometers, map(), light sensors and noise, an automatic night light.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">6 lessons</div>
-</div>
-
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">9</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">PWM and colour</div>
-
-</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">PWM, fading, dimming with a knob, gamma, RGB colour mixing, an auto-dimming night light.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">6 lessons</div>
-</div>
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:#0B7A66;margin:24px 0 -4px">Level 2 · Intermediate</div>
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">10</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Better programming</div>
-
-</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">Functions, parameters and return values, constants, strings, why delay() blocks, millis() timing, a three-blinker project.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">7 lessons</div>
-</div>
-
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">11</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Displays</div>
-
-</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">7-segment display, the 74HC595 shift register, 16×2 LCD, I2C LCD, OLED graphics, an uptime clock.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">6 lessons</div>
-</div>
-
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">12</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Sensors</div>
-
-</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">TMP36 temperature, a thermostat with hysteresis, HC-SR04 distance, a parking sensor, PIR motion, a smart fan.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">6 lessons</div>
+<div class="final">
+  <h2>Ready to make your first LED blink?</h2>
+  <p>Start with the free lessons. No sign-up, no kit, no risk.</p>
+  <a class="btn yellow" href="arduino/#1-1">▶ Try free lessons now</a>
 </div>
 
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">13</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Motors and loads</div>
+<footer><div class="wrap">
+  <div>© SparkIQ, a brand of Vedax Global</div>
+  <div>Help: <a href="mailto:help@vedaxglobal.com">help@vedaxglobal.com</a></div>
+</div></footer>
 
-</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">Transistor switch, DC motor speed, relay module, servo sweep, servo with a knob, motor direction with an H-bridge.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">6 lessons</div>
-</div>
-
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">14</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Memory and libraries</div>
-
-</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">Flash, SRAM and EEPROM, saving memory with F(), keeping values through a reset, EEPROM wear, writing your own class, a boot counter.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">6 lessons</div>
-</div>
-
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">15</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Input devices</div>
-
-</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">4×4 keypad, rotary encoder, joystick, infrared remote, many buttons on one pin, a parking sensor with LCD as the final project.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">6 lessons</div>
-</div>
+<div class="mbar"><a class="b" href="arduino/#1-1">▶ Try free</a><a class="a" href="#pricing">See prices</a></div>
 
 
-</div>
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:#0B7A66;margin:24px 0 -4px">Level 3 · Advanced</div>
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">16</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Advanced analog</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">ADC reference and resolution, noise and the moving average, measuring battery voltage, measuring current and calibrating zero.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">4 lessons</div>
-</div>
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">17</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Interrupts and timers</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">External and pin-change interrupts, writing a safe ISR, timers and prescalers, a timer interrupt for fixed sampling, changing the PWM frequency.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">6 lessons</div>
-</div>
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">18</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Communication</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">UART between two boards, the I2C bus scanner, SPI, SD card logging, the DS3231 clock, reading a datasheet timing diagram.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">6 lessons</div>
-</div>
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">19</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Program design</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">State machines, non-blocking multitasking, splitting code into files, writing a simple class.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">4 lessons</div>
-</div>
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">20</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Power and hardware</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">Power options and current limits, regulators and battery life, sleep modes and the watchdog, decoupling, breadboard to perfboard.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">5 lessons</div>
-</div>
-<div style="display:flex;flex-wrap:wrap;gap:16px 24px;align-items:flex-start;background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:24px 28px">
-<div style="flex:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:32px;color:#0B7A66;line-height:1">21</div>
-<div style="flex:1 1 420px;min-width:0">
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px">Wireless and the next step</div>
-<div style="color:#4B5A55;font-size:16px;margin-top:6px">HC-05 Bluetooth control, reading phone commands, moving from Uno to ESP32, and the project: a battery data logger.</div>
-</div>
-<div style="flex:0 0 auto;color:#4B5A55;font-size:15px;padding-top:6px">4 lessons</div>
-</div>
-</div>
-
-<!-- WHO FOR -->
-<div style="max-width:1120px;margin:0 auto;padding:56px 24px 40px">
-<div style="display:flex;flex-wrap:wrap;gap:48px">
-<div style="flex:1 1 400px;min-width:0">
-<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:40px;line-height:1.15;margin:0 0 16px;letter-spacing:-0.01em">Made for complete beginners</h2>
-<p style="margin:0;color:#4B5A55">If you can use a phone or a laptop, you can start. Every idea is explained from the ground up, from what a microcontroller is to why an LED needs a resistor.</p>
-</div>
-<div style="flex:1 1 400px;min-width:0;display:flex;flex-direction:column;gap:16px">
-<div style="background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:20px 24px"><b>Students and school kids</b><div style="color:#4B5A55;font-size:16px">Learn electronics and coding together, at your own pace.</div></div>
-<div style="background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:20px 24px"><b>Hobbyists and makers</b><div style="color:#4B5A55;font-size:16px">Build a solid base before you spend money on parts.</div></div>
-<div style="background:#FFFFFF;border:1px solid #E1E6E2;border-radius:16px;padding:20px 24px"><b>Teachers and parents</b><div style="color:#4B5A55;font-size:16px">A ready-made, hands-on way to teach Arduino without lab hardware.</div></div>
-</div>
-</div>
-</div>
-
-<!-- PRICING -->
-<div id="pricing" style="background:#10201B;color:#F7F8F5;margin-top:56px">
-<div style="max-width:1120px;margin:0 auto;padding:88px 24px">
-<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:40px;line-height:1.15;margin:0 0 16px;letter-spacing:-0.01em">Three courses, each with its own price</h2>
-<p style="margin:0 0 12px;color:#CFE0D8;max-width:640px">Sold by Vedax Global.</p>
-<p style="margin:0 0 40px;color:#CFE0D8;max-width:640px">Try the free lessons first. Start with Level 1 if you are new to Arduino. Level 2 is for you if you already know variables, if, loops, analogRead and PWM. Level 3 is for you if you are comfortable with millis(), libraries and sensors.</p>
-<div style="display:flex;flex-wrap:wrap;gap:24px;align-items:stretch">
-<div id="level1" style="flex:1 1 360px;min-width:0;background:#F7F8F5;color:#14201C;border-radius:20px;padding:32px">
-<div style="font-size:15px;color:#4B5A55">Arduino Uno course</div>
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;margin:4px 0 8px">Level 1 · Basics</div>
-<div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;margin:4px 0 4px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:48px">₹499</div><div style="font-size:18px;color:#4B5A55;text-decoration:line-through">₹999</div></div><div style="font-size:15px;color:#4B5A55;margin-bottom:20px">Launch price for the first 30 students. The regular price is ₹999.</div>
-<div style="display:flex;flex-direction:column;gap:10px;font-size:16px;margin-bottom:28px">
-<div>45 lessons in 9 sections</div>
-<div>Sections 1 and 2 (9 lessons) are free</div>
-<div>Wiring, code, experiments, challenges and quizzes</div>
-<div>Works in your browser, including on a phone</div>
-<div>[ACCESS PERIOD, e.g. lifetime access]</div>
-<div>[REFUND POLICY, e.g. 7-day refund]</div>
-</div>
-<a href="ENROLL_URL_L1" style="display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:10px;background:#0B7A66;color:#FFFFFF;font-weight:600">Enrol in Level 1</a>
-<div style="margin-top:12px;font-size:14px;color:#4B5A55;text-align:center">Pay by UPI, card or netbanking · [GST INVOICE NOTE]</div>
-</div>
-<div id="level2" style="flex:1 1 360px;min-width:0;background:#F7F8F5;color:#14201C;border-radius:20px;padding:32px">
-<div style="font-size:15px;color:#4B5A55">Arduino Uno course</div>
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;margin:4px 0 8px">Level 2 · Intermediate</div>
-<div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;margin:4px 0 4px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:48px">₹499</div><div style="font-size:18px;color:#4B5A55;text-decoration:line-through">₹999</div></div><div style="font-size:15px;color:#4B5A55;margin-bottom:20px">Launch price for the first 30 students. The regular price is ₹999.</div>
-<div style="display:flex;flex-direction:column;gap:10px;font-size:16px;margin-bottom:28px">
-<div>37 lessons in 6 sections</div>
-<div>The first lesson of every section is free</div>
-<div>Wiring, code, experiments, challenges and quizzes</div>
-<div>Works in your browser, including on a phone</div>
-<div>[ACCESS PERIOD, e.g. lifetime access]</div>
-<div>[REFUND POLICY, e.g. 7-day refund]</div>
-</div>
-<a href="ENROLL_URL_L2" style="display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:10px;background:#0B7A66;color:#FFFFFF;font-weight:600">Enrol in Level 2</a>
-<div style="margin-top:12px;font-size:14px;color:#4B5A55;text-align:center">Pay by UPI, card or netbanking · [GST INVOICE NOTE]</div>
-<div id="level3" style="flex:1 1 360px;min-width:0;background:#F7F8F5;color:#14201C;border-radius:20px;padding:32px">
-<div style="font-size:15px;color:#4B5A55">Arduino Uno course</div>
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;margin:4px 0 8px">Level 3 · Advanced</div>
-<div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;margin:4px 0 4px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:48px">₹499</div><div style="font-size:18px;color:#4B5A55;text-decoration:line-through">₹999</div></div><div style="font-size:15px;color:#4B5A55;margin-bottom:20px">Launch price for the first 30 students. The regular price is ₹999.</div>
-<div style="display:flex;flex-direction:column;gap:10px;font-size:16px;margin-bottom:28px">
-<div>29 lessons in 6 sections</div>
-<div>The first lesson of every section is free</div>
-<div>Interrupts, timers, SPI, I2C, SD logging, sleep modes</div>
-<div>Ends with a battery data logger project</div>
-<div>[ACCESS PERIOD, e.g. lifetime access]</div>
-<div>[REFUND POLICY, e.g. 7-day refund]</div>
-</div>
-<a href="ENROLL_URL_L3" style="display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:10px;background:#0B7A66;color:#FFFFFF;font-weight:600">Enrol in Level 3</a>
-<div style="margin-top:12px;font-size:14px;color:#4B5A55;text-align:center">Pay by UPI, card or netbanking · [GST INVOICE NOTE]</div>
-</div>
-</div>
-<div id="bundle" style="margin-top:24px;background:#0B7A66;color:#FFFFFF;border-radius:20px;padding:32px;display:flex;flex-wrap:wrap;gap:24px 40px;align-items:center">
-<div style="flex:1 1 380px;min-width:0">
-<div style="font-size:15px;color:#CFE0D8">Best value</div>
-<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:28px;margin:4px 0 8px">All three levels, one price</div>
-<div style="color:#E3F1EC;font-size:16px">Levels 1, 2 and 3: 111 lessons in 21 sections, from your first Blink to a battery data logger. One purchase, one access code, every lesson unlocked.</div>
-<div style="color:#CFE0D8;font-size:15px;margin-top:10px">Bought separately at the launch price the three levels cost ₹1,497, and at the regular price ₹2,997.</div>
-</div>
-<div style="flex:0 1 280px;min-width:0">
-<div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;margin-bottom:16px"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:48px">₹1,099</div><div style="font-size:18px;color:#CFE0D8;text-decoration:line-through">₹2,997</div></div>
-<a href="ENROLL_URL_BUNDLE" style="display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:10px;background:#FFFFFF;color:#0B7A66;font-weight:600">Enrol in all three levels</a>
-<div style="margin-top:12px;font-size:14px;color:#CFE0D8;text-align:center">Pay by UPI, card or netbanking · [GST INVOICE NOTE]</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<!-- FAQ -->
-<div id="faq" style="max-width:820px;margin:0 auto;padding:88px 24px 56px">
-<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:40px;line-height:1.15;margin:0 0 32px;letter-spacing:-0.01em">Questions</h2>
-<div style="display:flex;flex-direction:column;gap:12px">
-<details style="background:#FFFFFF;border:1px solid #E1E6E2;border-radius:12px;padding:20px 24px"><summary style="font-weight:600">Do I need an Arduino board?</summary><div style="color:#4B5A55;margin-top:12px;font-size:16px">No. The lessons use a virtual Arduino Uno in your browser, so you can learn everything without buying any parts. When you later buy a board, what you learned carries over.</div></details>
-<details style="background:#FFFFFF;border:1px solid #E1E6E2;border-radius:12px;padding:20px 24px"><summary style="font-weight:600">Can I learn on my phone?</summary><div style="color:#4B5A55;margin-top:12px;font-size:16px">Yes. The lessons are built to work on a phone screen as well as on a laptop.</div></details>
-<details style="background:#FFFFFF;border:1px solid #E1E6E2;border-radius:12px;padding:20px 24px"><summary style="font-weight:600">I have never done electronics or coding. Is that fine?</summary><div style="color:#4B5A55;margin-top:12px;font-size:16px">Yes. Yes. Level 1 starts with what a microcontroller is and builds up one idea at a time.</div></details>
-<details style="background:#FFFFFF;border:1px solid #E1E6E2;border-radius:12px;padding:20px 24px"><summary style="font-weight:600">What is free?</summary><div style="color:#4B5A55;margin-top:12px;font-size:16px">In Level 1, sections 1 and 2 (nine lessons) are free: the Uno board, installing the IDE, your first Blink upload and basic electronics. In Levels 2 and 3, the first lesson of every section is free, so you can see displays, sensors, motors, memory and input devices working before you buy.</div></details>
-<details style="background:#FFFFFF;border:1px solid #E1E6E2;border-radius:12px;padding:20px 24px"><summary style="font-weight:600">Do I need Level 1 before Level 2?</summary><div style="color:#4B5A55;margin-top:12px;font-size:16px">You need the skills, not the purchase. Level 2 assumes you can use variables, if, loops, analogRead and PWM. If you are new to Arduino, start with Level 1. If you want all the levels, the bundle gives all three for ₹1,099.</div></details>
-<details style="background:#FFFFFF;border:1px solid #E1E6E2;border-radius:12px;padding:20px 24px"><summary style="font-weight:600">What is in Level 3?</summary><div style="color:#4B5A55;margin-top:12px;font-size:16px">Level 3 is advanced: interrupts and timers, communication buses, power saving and a final data-logger project. It assumes Level 2 skills: millis(), libraries, sensors and displays. The bundle gives all three levels for ₹1,099.</div></details>
-<details style="background:#FFFFFF;border:1px solid #E1E6E2;border-radius:12px;padding:20px 24px"><summary style="font-weight:600">How do I get help if I am stuck?</summary><div style="color:#4B5A55;margin-top:12px;font-size:16px">Email <a href="mailto:help@vedaxglobal.com" style="color:#0B7A66">help@vedaxglobal.com</a> with your name, the lesson number and what you see on screen. A screenshot helps.</div></details>
-</div>
-</div>
-
-<!-- FOOTER -->
-<div style="border-top:1px solid #E1E6E2;background:#FFFFFF">
-<div style="max-width:1120px;margin:0 auto;padding:32px 24px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;font-size:15px;color:#4B5A55">
-<div>© SparkIQ, a brand of Vedax Global · <a href="mailto:help@vedaxglobal.com" style="color:inherit">help@vedaxglobal.com</a></div>
-<div style="display:flex;flex-wrap:wrap;gap:24px"><span>[TERMS]</span><span>[PRIVACY POLICY]</span><span>[REFUND POLICY]</span></div>
-</div>
-</div>
-
-</div>
-
+<div class="pm" id="pm" role="dialog" aria-modal="true" aria-live="polite"><div class="box" id="pmbox"></div></div>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+(function(){
+  // Set this to your deployed Worker address (see the payments README), for example https://sparkiq-pay.yourname.workers.dev
+  var PAY_API="WORKER_URL";
+  var pm=document.getElementById("pm"), box=document.getElementById("pmbox");
+  function esc(t){ return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+  function show(html){ box.innerHTML=html; pm.classList.add("show"); var c=document.getElementById("pmclose"); if(c) c.onclick=function(){ pm.classList.remove("show"); }; }
+  function note(icon,title,text){ show('<div style="font-size:42px">'+icon+'</div><h3>'+esc(title)+'</h3><p>'+esc(text)+'</p><div class="row"><button class="btn dark" id="pmclose">OK</button></div>'); }
+  function api(path,body){
+    return fetch(PAY_API.replace(/\/$/,"")+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
+      .then(function(r){ return r.json().then(function(j){ if(!r.ok) throw new Error(j.error||"Request failed"); return j; }); });
+  }
+  function success(v){
+    show('<div style="font-size:46px">🎉</div><h3>Payment received</h3><p>Welcome to <b>'+esc(v.name)+'</b>. Your access code:</p>'+
+      '<div class="code" id="pmcode">'+esc(v.code)+'</div>'+
+      '<div class="row"><button class="btn light" id="pmcopy">Copy code</button><a class="btn yellow" href="arduino/">Open the course</a></div>'+
+      '<small>Copy or screenshot this code and keep it safe. Razorpay also emails you a receipt. Lost your code? Email help@vedaxglobal.com with your payment ID.</small>');
+    document.getElementById("pmcopy").onclick=function(){ var b=this; try{ navigator.clipboard.writeText(v.code); b.textContent="Copied"; }catch(e){ b.textContent="Select and copy"; } };
+  }
+  function start(plan){
+    if(!/^https:/.test(PAY_API)){ note("⏳","Payments open soon","Online payment is being set up. Please email help@vedaxglobal.com and we will enrol you."); return; }
+    note("⏳","Opening secure checkout","Please wait a moment…");
+    api("/api/create-order",{plan:plan}).then(function(o){
+      pm.classList.remove("show");
+      var rz=new Razorpay({
+        key:o.key_id, amount:o.amount, currency:o.currency, order_id:o.order_id,
+        name:"SparkIQ", description:o.name, theme:{color:"#6C4DF6"},
+        handler:function(r){
+          note("⏳","Confirming your payment","Please do not close this page…");
+          api("/api/verify-payment",{razorpay_order_id:r.razorpay_order_id,razorpay_payment_id:r.razorpay_payment_id,razorpay_signature:r.razorpay_signature})
+            .then(success)
+            .catch(function(e){ note("⚠️","We could not confirm the payment",(e.message||"Error")+". If money was deducted, email help@vedaxglobal.com with payment ID "+r.razorpay_payment_id+"."); });
+        },
+        modal:{ ondismiss:function(){ note("ℹ️","Payment cancelled","No money was taken. You can try again any time."); } }
+      });
+      rz.on("payment.failed",function(r){ note("⚠️","Payment failed",(r&&r.error&&r.error.description)||"Please try again or use another payment method."); });
+      rz.open();
+    }).catch(function(e){ note("⚠️","Could not start payment",(e.message||"Error")+". Please try again."); });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("[data-plan]"),function(b){
+    b.addEventListener("click",function(e){ e.preventDefault(); start(b.getAttribute("data-plan")); });
+  });
+  pm.addEventListener("click",function(e){ if(e.target===pm && !document.getElementById("pmcode")) pm.classList.remove("show"); });
+})();
+</script>
 </body>
 </html>

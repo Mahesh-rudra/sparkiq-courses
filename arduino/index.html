@@ -6,16 +6,17 @@
 <title>SparkIQ Arduino Course: Interactive Lessons</title>
 <style>
 :root{
-  --bg:#f6f7fb;--card:#ffffff;--ink:#1b2430;--muted:#5d6b7c;--line:#dfe4ec;
-  --accent:#2563eb;--accent-ink:#ffffff;--ok:#16a34a;--bad:#dc2626;--warn-bg:#fef3c7;--warn-ink:#7c4a03;
-  --code-bg:#0f172a;--code-ink:#e2e8f0;--code-hl:#1e3a8a;--code-dim:#64748b;
-  --board:#0e7490;--wire:#334155;--ghost:#b6c0cf;--led:#ef4444;--graph:#2563eb;--graph2:#d97706;
+  --bg:#fff8ee;--card:#ffffff;--ink:#1b1340;--muted:#5d5878;--line:#eadfcb;
+  --accent:#6c4df6;--accent-ink:#ffffff;--ok:#12a066;--bad:#e5365a;--warn-bg:#fff2c2;--warn-ink:#7a5a00;
+  --code-bg:#150e38;--code-ink:#e6e0ff;--code-hl:#4a35b8;--code-dim:#8f86c9;
+  --board:#0e7490;--wire:#334155;--ghost:#c9bfdf;--led:#ef4444;--graph:#6c4df6;--graph2:#ff9f1c;
+  --pink:#ff4d8d;--yellow:#ffd23f;--teal:#10bfa6;--deep:#2a1b6b;
 }
 @media (prefers-color-scheme:dark){
   :root{
-    --bg:#0b1020;--card:#141b2e;--ink:#e8edf6;--muted:#93a1b5;--line:#26324b;
-    --accent:#60a5fa;--accent-ink:#0b1020;--ok:#4ade80;--bad:#f87171;--warn-bg:#3b2a07;--warn-ink:#fcd34d;
-    --code-bg:#070b16;--code-hl:#1d3a7a;--board:#0e7490;--wire:#cbd5e1;--ghost:#3a4764;--graph:#60a5fa;--graph2:#fbbf24;
+    --bg:#120c2b;--card:#1c1544;--ink:#efeaff;--muted:#a79fcf;--line:#31266a;
+    --accent:#a593ff;--accent-ink:#120c2b;--ok:#4ade80;--bad:#ff7a93;--warn-bg:#3b2a07;--warn-ink:#fcd34d;
+    --code-bg:#0b0720;--code-hl:#4a35b8;--board:#0e7490;--wire:#cbd5e1;--ghost:#3a3170;--graph:#a593ff;--graph2:#fbbf24;
   }
 }
 *{box-sizing:border-box}
@@ -127,10 +128,70 @@ details p{margin:6px 0 4px;color:var(--muted)}
 #tfhold.down{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 #tfhold{min-height:56px;flex:1;font-weight:600;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 code{font:13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+
+h1,h2,.brand,.lock h2{font-family:Poppins,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.top{background:linear-gradient(135deg,#2a1b6b,#6c4df6 60%,#8e4df0);color:#fff;position:sticky;top:0;z-index:20;box-shadow:0 4px 18px rgba(42,27,107,.25)}
+.top .in{max-width:600px;margin:0 auto;padding:10px 14px 12px}
+.top .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{font-weight:800;font-size:18px;color:#fff;text-decoration:none;display:flex;align-items:center;gap:8px}
+.brand i{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--yellow),#ff9f1c);font-style:normal;font-size:15px}
+.top .back{color:#e6e0ff;font-size:14px;text-decoration:none;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.14)}
+.prog{margin-top:8px;display:flex;align-items:center;gap:10px;font-size:13px;color:#e6e0ff}
+.prog .track{flex:1;height:8px;border-radius:6px;background:rgba(255,255,255,.22);overflow:hidden}
+.prog .fill{height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,var(--yellow),var(--pink));transition:width .4s}
+.prog b{white-space:nowrap;font-weight:600}
+main{padding-top:14px}
+.nav button{border-radius:12px;font-weight:700;border-width:2px;border-color:var(--line);min-width:44px}
+.nav select{border-width:2px;border-radius:12px;font-weight:500}
+.tag{display:inline-block;background:color-mix(in srgb,var(--accent) 14%,var(--card));color:var(--accent);font-weight:700;font-size:12.5px;letter-spacing:.03em;padding:3px 12px;border-radius:999px}
+h1{font-weight:800;letter-spacing:-.01em}
+.card{border-width:2px;border-radius:20px;box-shadow:0 6px 18px rgba(60,40,140,.06)}
+h2 .n{background:linear-gradient(135deg,var(--accent),var(--pink));border-radius:10px;width:28px;height:28px;color:#fff}
+button{border-width:2px;border-radius:12px}
+button.primary{background:var(--accent);border-color:var(--accent);box-shadow:0 4px 0 color-mix(in srgb,var(--accent) 60%,#000)}
+button.primary:active{transform:translateY(2px);box-shadow:0 2px 0 color-mix(in srgb,var(--accent) 60%,#000)}
+.step{background:color-mix(in srgb,var(--accent) 8%,var(--card));border-radius:14px}
+.stat{background:color-mix(in srgb,var(--accent) 7%,var(--card));border-radius:14px}
+.score{color:var(--accent)}
+.lock{text-align:center;padding:26px 20px}
+.lock .ico{font-size:46px;line-height:1}
+.lock h2{justify-content:center;font-size:22px;margin:10px 0 6px}
+.lock ul{list-style:none;margin:14px auto;padding:0;max-width:340px;text-align:left;font-size:15px;display:flex;flex-direction:column;gap:6px}
+.lock li:before{content:"✓ ";color:var(--ok);font-weight:800}
+.lock .codebox{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.lock .codebox input{width:210px;text-transform:uppercase;letter-spacing:.06em}
+.lock .buy{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;margin-top:12px;border-radius:12px;background:var(--yellow);color:#1b1340;font-weight:700;text-decoration:none;box-shadow:0 4px 0 #d9a900;font-family:Poppins,system-ui,sans-serif}
+.lock .or{color:var(--muted);font-size:13px;margin:16px 0 0}
+
+@media(min-width:700px){body.single main,body.single .top .in{max-width:760px}}
+@media(min-width:1000px){
+  body.two main,body.two .top .in{max-width:1180px}
+  body.two #app{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 22px;align-items:start}
+  body.two #app>.tag,body.two #app>h1,body.two #app>.lead,body.two #app>.parts{grid-column:1/-1;max-width:820px}
+  body.two #app>.tag{justify-self:start}
+  body.two h1{font-size:34px}
+  body.two .lead{font-size:18px}
+  body.two .card{padding:22px}
+  body.two .nav{max-width:820px}
+}
+
+@media(min-width:1000px){
+  body.flow main,body.flow .top .in{max-width:1180px}
+  body.flow .nav{max-width:820px}
+  body.flow #app{columns:2;column-gap:22px}
+  body.flow #app>.tag,body.flow #app>h1,body.flow #app>.lead,body.flow #app>.parts{column-span:all;max-width:820px}
+  body.flow #app>.card,body.flow #app>section{break-inside:avoid}
+  body.flow h1{font-size:34px}
+}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 <script src="lessons/manifest.js"></script>
 </head>
 <body>
+<header class="top"><div class="in">
+  <div class="row"><a class="brand" href="../"><i>⚡</i>SparkIQ <span style="font-weight:600;font-size:14px;color:#c9bfff">Arduino</span></a><a class="back" href="../">All courses</a></div>
+  <div class="prog" aria-label="Course progress"><div class="track"><div class="fill" id="progfill"></div></div><b id="progtxt"></b></div>
+</div></header>
 <main>
   <nav class="nav" aria-label="Lessons">
     <button id="prev" aria-label="Previous lesson">‹</button>
@@ -221,7 +282,9 @@ code{font:13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
     var id=(location.hash||"").replace("#","");
     var m=M.filter(function(x){return x.id===id})[0]||M[0];
     if(!m){ $("app").textContent="No lessons yet."; return; }
-    pick.value=m.id;
+    pick.value=m.id; document.body.className="single";
+    (function(){ var i=0; for(var k=0;k<M.length;k++) if(M[k].id===m.id){ i=k; break; }
+      $("progfill").style.width=((i+1)/M.length*100)+"%"; $("progtxt").textContent="Lesson "+(i+1)+" of "+M.length; })();
     $("prev").disabled=idx()===0; $("next").disabled=idx()===M.length-1;
     running=false; L=null; if(R.upTimer){ clearInterval(R.upTimer); R.upTimer=null; } if(R.stTimer){ clearInterval(R.stTimer); R.stTimer=null; } R.anim=null;
     if(window.__L[m.id]){ render(window.__L[m.id]); return; }
@@ -251,12 +314,15 @@ code{font:13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 
   function showLock(m,msg){
     var C=(G&&G.courses&&G.courses[m.course])||{};
-    var buy=C.buy?'<p class="sub"><a href="'+esc(C.buy)+'">Enrol to get your access code</a></p>':"";
-    $("app").innerHTML='<section class="card"><h2>This lesson is for enrolled students</h2>'+
-      '<p class="sub">Lesson '+esc(m.num)+', '+esc(m.title)+', is part of <b>'+esc(C.name||"the course")+'</b>. Enter your access code to unlock it. '+esc(C.freeText||"")+'</p>'+
-      '<div class="btns"><input id="code" class="ans" style="width:220px" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Access code" aria-label="Access code">'+
+    var buy=C.buy?'<a class="buy" href="'+esc(C.buy)+'">Get '+esc(C.name||"the course")+'</a>':"";
+    $("app").innerHTML='<section class="card lock"><div class="ico">🔒</div><h2>This lesson is for enrolled students</h2>'+
+      '<p class="sub">Lesson '+esc(m.num)+', <b>'+esc(m.title)+'</b>, is part of '+esc(C.name||"the course")+'.</p>'+
+      '<ul><li>Step-by-step wiring on a virtual Uno</li><li>Live code, graphs and experiments</li><li>Challenge and quiz in every lesson</li></ul>'+
+      (buy?buy+'<p class="or">Already enrolled? Enter your access code.</p>':'<p class="or">Enter your access code to unlock it.</p>')+
+      '<div class="codebox"><input id="code" class="ans" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ARDU-XXXX-XXXX" aria-label="Access code">'+
       '<button class="primary" id="unlock">Unlock</button></div>'+
-      '<p class="sub" id="lockmsg" role="status" aria-live="polite">'+esc(msg||"")+'</p>'+buy+'</section>';
+      '<p class="sub" id="lockmsg" role="status" aria-live="polite" style="margin-top:10px">'+esc(msg||"")+'</p>'+
+      '<p class="sub">'+esc(C.freeText||"")+'</p></section>';
     var go1=function(){
       var v=$("code").value; if(!v.trim()) return;
       $("lockmsg").textContent="Checking…";
@@ -508,6 +574,7 @@ code{font:13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 
   function render(lesson){
 
+    document.body.className=(lesson.kind==="explainer")?"flow":"two";
     L=lesson; if(L.kind==="explainer"){ running=false; curLines=""; hist=[]; renderExplainer(); return; } wired=L.circuit.prewired?need():0; running=false; noRes=false; btn=false; curLines=""; hist=[];
     if(L.kind==="explainer"){ renderExplainer(); return; }
     var react=!!L.reactive, holdBtn=react&&!L.input&&(L.circuit.type==="button"||L.circuit.type==="traffic"); inVal=L.input?L.input.value:0;
